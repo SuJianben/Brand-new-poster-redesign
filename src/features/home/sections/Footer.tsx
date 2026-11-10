@@ -37,32 +37,32 @@ export function Footer({ settings = {} }: { settings?: Settings }) {
           </div>
           <nav className="footer-column" aria-label="Shop">
             <span>01 / SHOP</span>
-            <a href="#shop">All posters</a>
-            <a href="#shop" onClick={() => setFilter("Philosophy")}>
-              Philosophy
+            <a href={settings.all_posters_url ?? "#shop"}>{settings.all_posters_label ?? "All posters"}</a>
+            <a href={settings.philosophy_url ?? "#shop"} onClick={() => setFilter("Philosophy")}>
+              {settings.philosophy_label ?? "Philosophy"}
             </a>
-            <a href="#shop" onClick={() => setFilter("Satire")}>
-              Satire
+            <a href={settings.satire_url ?? "#shop"} onClick={() => setFilter("Satire")}>
+              {settings.satire_label ?? "Satire"}
             </a>
-            <a href="#shop" onClick={() => setFilter("Icons")}>
-              Cult icons
+            <a href={settings.cult_icons_url ?? "#shop"} onClick={() => setFilter("Icons")}>
+              {settings.cult_icons_label ?? "Cult icons"}
             </a>
-            <a href="#shop">New drops</a>
+            <a href={settings.new_drops_url ?? "#shop"}>{settings.new_drops_label ?? "New drops"}</a>
           </nav>
           <nav className="footer-column" aria-label="Information">
             <span>02 / INFO</span>
-            <a href="#manifesto">Events</a>
-            <a href="#top">Print quality</a>
-            <a href="#top">Shipping & returns</a>
-            <a href="#faq">FAQ</a>
-            <a href="#about">About us</a>
+            <a href={settings.events_url ?? "#manifesto"}>{settings.events_label ?? "Events"}</a>
+            <a href={settings.quality_url ?? "#top"}>{settings.quality_label ?? "Print quality"}</a>
+            <a href={settings.shipping_url ?? "#top"}>{settings.shipping_label ?? "Shipping & returns"}</a>
+            <a href={settings.faq_url ?? "#faq"}>{settings.faq_label ?? "FAQ"}</a>
+            <a href={settings.about_url ?? "#about"}>{settings.about_label ?? "About us"}</a>
           </nav>
           <nav className="footer-column" aria-label="Social media">
             <span>03 / FOLLOW</span>
-            <a href="#top">Instagram →</a>
-            <a href="#top">TikTok →</a>
-            <a href="#top">Pinterest →</a>
-            <a href="#top">Spotify →</a>
+            <a href={settings.instagram_url ?? "#top"}>{settings.instagram_label ?? "Instagram →"}</a>
+            <a href={settings.tiktok_url ?? "#top"}>{settings.tiktok_label ?? "TikTok →"}</a>
+            <a href={settings.pinterest_url ?? "#top"}>{settings.pinterest_label ?? "Pinterest →"}</a>
+            <a href={settings.spotify_url ?? "#top"}>{settings.spotify_label ?? "Spotify →"}</a>
           </nav>
         </div>
         <div className="footer-bottom">

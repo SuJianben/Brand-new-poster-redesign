@@ -17,9 +17,9 @@ export function Header({ settings = {} }: { settings?: Settings }) {
             <span>ODD</span>WALL<span className="logo-dot">!</span>
           </a>
           <nav className="desktop-nav" aria-label="Main navigation">
-            <a href="#shop">Shop all</a>
-            <a href="#manifesto">Events</a>
-            <a href="#series">Collections</a>
+            <a href={settings.shop_link_url ?? "#shop"}>{settings.shop_link_label ?? "Shop all"}</a>
+            <a href={settings.events_link_url ?? "#manifesto"}>{settings.events_link_label ?? "Events"}</a>
+            <a href={settings.collections_link_url ?? "#series"}>{settings.collections_link_label ?? "Collections"}</a>
           </nav>
           <div className="header-actions">
             <button
@@ -47,9 +47,9 @@ export function Header({ settings = {} }: { settings?: Settings }) {
           </div>
         </header>
         <nav className="mobile-link-bar" aria-label="Mobile navigation">
-          <a href="#shop">Shop all</a>
-          <a href="#manifesto">Events</a>
-          <a href="#series">Collections</a>
+          <a href={settings.shop_link_url ?? "#shop"}>{settings.shop_link_label ?? "Shop all"}</a>
+          <a href={settings.events_link_url ?? "#manifesto"}>{settings.events_link_label ?? "Events"}</a>
+          <a href={settings.collections_link_url ?? "#series"}>{settings.collections_link_label ?? "Collections"}</a>
         </nav>
       </div>
 
