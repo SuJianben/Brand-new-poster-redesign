@@ -1,5 +1,4 @@
 import { configuredItems } from "../configuredItems";
-import { Icon } from "../Icon";
 import { socialPosts } from "../data";
 
 type Settings = Record<string, string | undefined>;
@@ -16,9 +15,6 @@ export function Community({ settings = {} }: { settings?: Settings }) {
             <p>
               Tag <strong>@ODDWALL.STUDIO</strong> for a chance to end up on this very wall.
             </p>
-            <a href="#community">
-              Follow the chaos <Icon name="arrow" />
-            </a>
           </div>
         </div>
         <div className="social-grid">
@@ -32,12 +28,12 @@ export function Community({ settings = {} }: { settings?: Settings }) {
               <small>Photo · {post.credit}</small>
             </a>
           ))}
-          <blockquote>
-            <div>★★★★★</div>
-            <p>“The print quality is unreal. My blank wall finally has a personality.”</p>
-            <cite>— JAMIE, VERIFIED BUYER</cite>
-          </blockquote>
         </div>
+        <blockquote className="social-quote">
+          <div>★★★★★</div>
+          <p>“The print quality is unreal. My blank wall finally has a personality.”</p>
+          <cite>— JAMIE, VERIFIED BUYER</cite>
+        </blockquote>
       </section>
     </>
   );

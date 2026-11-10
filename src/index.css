@@ -1320,18 +1320,6 @@ main {
   line-height: 1.6;
   font-size: 13px;
 }
-.social-intro a {
-  display: inline-flex;
-  align-items: center;
-  gap: 30px;
-  margin-top: 10px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--ink);
-  font-weight: 800;
-}
-.social-intro svg {
-  width: 20px;
-}
 .social-grid {
   display: grid;
   grid-template-columns: 1.25fr 1fr 0.85fr 0.85fr;
@@ -1391,9 +1379,8 @@ main {
   background: rgba(242, 239, 230, 0.8);
   font-size: 6px;
 }
-.social-grid blockquote {
-  grid-column: 1 / -1;
-  margin: 0;
+.social-quote {
+  margin: 14px 0 0;
   padding: 38px;
   border: 2px solid var(--ink);
   background: var(--lime);
@@ -1401,17 +1388,16 @@ main {
   flex-direction: column;
   justify-content: center;
 }
-.social-grid blockquote div {
+.social-quote div {
   letter-spacing: 4px;
   color: var(--orange);
 }
-.social-grid blockquote p {
-  max-width: 580px;
+.social-quote p {
   margin: 18px 0;
   font: clamp(20px, 2.4vw, 35px)/1.15 "Archivo Black";
   letter-spacing: -2px;
 }
-.social-grid blockquote cite {
+.social-quote cite {
   font-size: 9px;
   font-style: normal;
   font-weight: 800;
@@ -2075,9 +2061,6 @@ footer {
   .social-post.post-1 {
     grid-column: span 2;
   }
-  .social-grid blockquote {
-    grid-column: span 2;
-  }
   .series-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2392,13 +2375,11 @@ footer {
     grid-template-columns: 1fr;
     grid-auto-rows: 300px;
   }
-  .social-post.post-1,
-  .social-grid blockquote {
+  .social-post.post-1 {
     grid-column: auto;
     grid-row: auto;
   }
-  .social-grid blockquote {
-    min-height: 260px;
+  .social-quote {
     padding: 28px;
   }
   .series-section {
