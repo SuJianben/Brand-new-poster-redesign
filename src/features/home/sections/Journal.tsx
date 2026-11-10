@@ -12,7 +12,7 @@ export function Journal({ settings = {} }: { settings?: Settings }) {
           <div>
             <h2>{settings.heading ?? "Read something strange."}</h2>
           </div>
-          <a href="#journal">
+          <a className="primary-cta" href="#journal">
             View all stories <Icon name="arrow" />
           </a>
         </div>

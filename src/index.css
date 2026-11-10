@@ -1442,14 +1442,8 @@ main {
   letter-spacing: -5px;
 }
 .journal-heading > a {
-  padding-bottom: 8px;
-  border-bottom: 1.5px solid var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 35px;
-  font-weight: 800;
+  margin-top: 0;
 }
-.journal-heading svg,
 .journal-link svg {
   width: 20px;
 }
@@ -1709,15 +1703,6 @@ main {
 .about-copy a {
   width: max-content;
   margin-top: 45px;
-  padding-bottom: 9px;
-  border-bottom: 2px solid var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 45px;
-  font-weight: 800;
-}
-.about-copy svg {
-  width: 22px;
 }
 
 footer {
