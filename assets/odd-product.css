@@ -25,9 +25,12 @@ html body.template-product .ps-main-media { background-color: #f3f2ee !important
     aspect-ratio: auto !important;
     padding: clamp(24px, 3vw, 50px) !important;
   }
-  html body.template-product .ps-main-media[data-pf-room-scene="none"] .ps-print-preview {
-    scale: 1.1;
-  }
+  /* Keep each size's preview within the fixed gallery while filling its height. */
+  html body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s1"] .ps-print-preview { scale: 1.65; }
+  html body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s2"] .ps-print-preview { scale: 1.52; }
+  html body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s3"] .ps-print-preview { scale: 1.44; }
+  html body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s4"] .ps-print-preview { scale: 1.36; }
+  html body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s5"] .ps-print-preview { scale: 1.3; }
   html body.template-product .ps-main-media .ps-print-preview .print-preview__inner {
     width: auto !important;
     height: 100% !important;
