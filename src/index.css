@@ -1421,8 +1421,8 @@ main {
 .journal-section {
   padding: 110px 5vw 125px;
   border-top: 2px solid var(--ink);
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
 }
 .journal-heading {
   margin-bottom: 48px;
@@ -1432,7 +1432,7 @@ main {
   gap: 30px;
 }
 .journal-heading .section-number {
-  color: var(--lime);
+  color: var(--purple);
 }
 .journal-heading h2 {
   max-width: 850px;
@@ -1443,7 +1443,7 @@ main {
 }
 .journal-heading > a {
   padding-bottom: 8px;
-  border-bottom: 1.5px solid var(--paper);
+  border-bottom: 1.5px solid var(--ink);
   display: flex;
   align-items: center;
   gap: 35px;
@@ -1462,7 +1462,7 @@ main {
   min-width: 0;
   padding: 16px;
   border: 2px solid #4e4e4e;
-  background: var(--paper);
+  background: #fff;
   color: var(--ink);
   display: flex;
   flex-direction: column;
@@ -1527,7 +1527,7 @@ main {
   transition: color 0.25s;
 }
 .journal-card h3 a:hover {
-  color: var(--lime);
+  color: var(--purple);
 }
 .journal-card > p {
   color: #69655e;
