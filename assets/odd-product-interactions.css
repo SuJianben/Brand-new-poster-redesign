@@ -1,0 +1,50 @@
+/* Purchase controls and their selection drawer share the storefront's visual language. */
+.template-product .ps-purchase :is(.pf-postery-tab, .pf-postery-pill, .ps-add-button, .pf-material__switch button, .pf-material__add),
+.template-product .pf-split-modal :is(.pf-split-modal__tab, .pf-split-modal__done, .pf-split-card) {
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+}
+.template-product .ps-purchase :is(button, summary, a):focus-visible,
+.template-product .pf-split-modal button:focus-visible {
+  outline: 3px solid #6c5ce7;
+  outline-offset: 3px;
+}
+.template-product .ps-purchase .pf-postery-tab:not(.is-active):hover,
+.template-product .ps-purchase .pf-material__switch button:not([aria-pressed="true"]):hover {
+  background: #f2efe6;
+}
+.template-product .ps-purchase button.pf-postery-pill:hover {
+  background: #dfff00;
+  box-shadow: 4px 4px 0 #101115;
+  transform: translate(-2px, -2px);
+}
+.template-product .ps-purchase .pf-postery-pill__chev { transition: transform .2s ease; }
+.template-product .ps-purchase button.pf-postery-pill:hover .pf-postery-pill__chev { transform: translateX(3px); }
+html body.template-product .ps-purchase .ps-add-button:hover:not(:disabled),
+html body.template-product .ps-purchase .pf-material__add:hover:not(:disabled) {
+  background: #6c5ce7 !important;
+  color: #fff !important;
+  box-shadow: 6px 6px 0 #dfff00;
+  transform: translate(-2px, -2px);
+}
+.template-product .ps-purchase :is(button, summary):active:not(:disabled),
+.template-product .pf-split-modal button:active:not(:disabled) { transform: translate(1px, 1px); }
+.template-product .ps-purchase .ps-add-button:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; }
+.template-product .ps-purchase :is(summary, [data-ps-read-more]):hover { color: #6c5ce7; }
+
+.template-product .pf-split-modal__sheet { border: 2px solid #101115; border-radius: 0; background: #f2efe6; }
+.template-product .pf-split-modal__header { border-bottom: 2px solid #101115; background: #f2efe6; }
+.template-product .pf-split-modal__tab { color: #101115; border-bottom: 3px solid transparent; }
+.template-product .pf-split-modal__tab.is-active { color: #101115; border-bottom-color: #101115; background: #dfff00; }
+.template-product .pf-split-modal__done { border: 2px solid #101115; border-radius: 0; background: #101115; color: #fff; }
+.template-product .pf-split-card { border: 2px solid #101115; border-radius: 0; background: #fff; }
+.template-product .pf-split-card.is-selected { background: #dfff00; }
+@media (hover: hover) {
+  .template-product .pf-split-modal__tab:not(.is-active):hover { background: #fff; }
+  .template-product .pf-split-modal__done:hover { background: #6c5ce7; box-shadow: 3px 3px 0 #ff5c35; }
+  .template-product .pf-split-card:not(.is-selected):hover { background: #f2efe6; box-shadow: 3px 3px 0 #ff5c35; transform: translate(-1px, -1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .template-product .ps-purchase :is(button, summary),
+  .template-product .pf-split-modal button,
+  .template-product .ps-purchase .pf-postery-pill__chev { transition: none; }
+}
