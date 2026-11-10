@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "poster-home", "settings": {} }
+  },
+  "order": ["main"]
+}

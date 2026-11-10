@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title | escape }}</title>
+    {{ content_for_header }}
+    {% if request.page_type == 'index' %}
+      {{ 'poster-home.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+  </head>
+  <body>
+    {{ content_for_layout }}
+    {% if request.page_type == 'index' %}
+      <script type="module" src="{{ 'poster-home.js' | asset_url }}"></script>
+    {% endif %}
+  </body>
+</html>
