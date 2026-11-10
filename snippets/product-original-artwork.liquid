@@ -1,0 +1,21 @@
+{%- assign pf_artwork_alt = product.title | append: ' artwork preview' -%}
+{%- assign pf_frame_alt = product.title | append: ' shown in an optional black frame' -%}
+{%- assign pf_source_url = image_url | default: product.metafields.custom.hanger_original_artwork_url.value | replace: 'https://cdn.shopify.com/s/files/1/0901/1603/0498/files/', '//posterandform.com/cdn/shop/files/' -%}
+{%- assign pf_image_sizes = '(min-width: 1450px) 620px, (min-width: 901px) 48vw, (max-width: 767px) 300px, calc(100vw - 28px)' -%}
+{%- capture pf_display_src -%}{%- render 'pf-product-artwork-responsive', source_url: pf_source_url, source_width: width -%}{%- endcapture -%}
+{%- capture pf_display_srcset -%}{%- render 'pf-product-artwork-responsive', source_url: pf_source_url, source_width: width, slot: 'srcset' -%}{%- endcapture -%}
+{%- if slot == 'frame-thumbnail' or slot == 'thumbnail' -%}
+  {%- capture pf_thumbnail_src -%}{%- render 'pf-product-artwork-responsive', source_url: pf_source_url, source_width: width, mode: 'thumbnail' -%}{%- endcapture -%}
+  {%- capture pf_thumbnail_srcset -%}{%- render 'pf-product-artwork-responsive', source_url: pf_source_url, source_width: width, mode: 'thumbnail', slot: 'srcset' -%}{%- endcapture -%}
+{%- endif -%}
+{%- if slot == 'frame-thumbnail' -%}
+  <button class="ps-thumbnail ps-thumbnail--frame-preview is-active" type="button" data-ps-media data-media-id="black-frame-preview-{{ product.id }}" data-media-role="frame-preview" data-media-src="{{ pf_display_src }}" data-media-srcset="{{ pf_display_srcset }}" data-media-full-src="{{ pf_source_url | escape }}" data-media-alt="{{ pf_frame_alt | escape }}" aria-label="Show black frame preview">
+    <span class="pf-frame-thumb-art"><img src="{{ pf_thumbnail_src }}" srcset="{{ pf_thumbnail_srcset }}" sizes="60px" width="{{ width }}" height="{{ height }}" alt="{{ pf_frame_alt | escape }}" loading="lazy" decoding="async"></span>
+  </button>
+{%- elsif slot == 'thumbnail' -%}
+  <button class="ps-thumbnail" type="button" data-ps-media data-media-id="{{ media_id }}" data-media-role="artwork" data-media-src="{{ pf_display_src }}" data-media-srcset="{{ pf_display_srcset }}" data-media-full-src="{{ pf_source_url | escape }}" data-media-alt="{{ pf_artwork_alt | escape }}" aria-label="Show artwork without a frame">
+    <img src="{{ pf_thumbnail_src }}" srcset="{{ pf_thumbnail_srcset }}" sizes="60px" width="{{ width }}" height="{{ height }}" alt="{{ pf_artwork_alt | escape }}" loading="lazy" decoding="async" style="object-fit: contain;">
+  </button>
+{%- else -%}
+  <img class="ps-main-media__image print-preview__layer print-preview__layer--art" data-ps-main-image data-pdp-print-art data-media-full-src="{{ pf_source_url | escape }}" src="{{ pf_display_src }}" srcset="{{ pf_display_srcset }}" sizes="{{ pf_image_sizes }}" width="{{ width }}" height="{{ height }}" alt="{{ pf_frame_alt | escape }}" loading="eager" fetchpriority="high" decoding="async">
+{%- endif -%}

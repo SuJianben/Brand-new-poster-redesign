@@ -1,0 +1,16 @@
+{%- liquid
+  assign expected_version = 'round-rods-2026-09-28'
+  assign original_media_id = product.metafields.custom.hanger_original_media_id.value | split: '/' | last
+  assign featured_media_id = product.featured_media.id | append: ''
+  assign original_media_found = false
+  for candidate in product.media
+    assign candidate_id = candidate.id | append: ''
+    if candidate.media_type == 'image' and candidate_id == original_media_id
+      assign original_media_found = true
+      break
+    endif
+  endfor
+  if product.type == 'Print' and product.metafields.custom.hanger_rollout_version.value == expected_version and product.metafields.custom.hanger_original_artwork_url.value != blank and product.metafields.custom.hanger_display_options_url.value != blank and original_media_found and product.featured_media.media_type == 'image' and featured_media_id != original_media_id
+    echo 'enabled'
+  endif
+-%}

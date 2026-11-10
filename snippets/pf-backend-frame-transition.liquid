@@ -1,0 +1,76 @@
+{%- comment -%}Exact old, appended and promoted states only. READY is verified by Admin before association; Liquid verifies the attached image identity and geometry.{%- endcomment -%}
+{%- assign pf_transition_match = false -%}
+{%- assign pf_transition_fields = row | split: '|' -%}
+{%- if pf_transition_fields.size == 16 and product.type == 'Print' and product.template_suffix == blank and product.metafields.custom.hanger_rollout_version.value == 'round-rods-2026-09-28' -%}
+  {%- assign pf_original_id = pf_transition_fields[0] -%}
+  {%- assign pf_old_featured = pf_transition_fields[1] -%}
+  {%- assign pf_width = pf_transition_fields[2] | plus: 0 -%}
+  {%- assign pf_height = pf_transition_fields[3] | plus: 0 -%}
+  {%- assign pf_source_mode = pf_transition_fields[4] -%}
+  {%- assign pf_artwork_url = pf_transition_fields[5] -%}
+  {%- assign pf_hidden_ids = pf_transition_fields[6] -%}
+  {%- assign pf_attached_url = pf_transition_fields[7] -%}
+  {%- assign pf_attached_width = pf_transition_fields[8] | plus: 0 -%}
+  {%- assign pf_attached_height = pf_transition_fields[9] | plus: 0 -%}
+  {%- assign pf_old_count = pf_transition_fields[10] | plus: 0 -%}
+  {%- assign pf_new_id = pf_transition_fields[11] -%}
+  {%- assign pf_new_url = pf_transition_fields[12] -%}
+  {%- assign pf_new_width = pf_transition_fields[13] | plus: 0 -%}
+  {%- assign pf_new_height = pf_transition_fields[14] | plus: 0 -%}
+  {%- assign pf_old_specs = pf_transition_fields[15] | split: ',' -%}
+  {%- assign pf_actual_original = product.metafields.custom.hanger_original_media_id.value | split: '/' | last | append: '' -%}
+  {%- assign pf_actual_featured = product.featured_media.id | append: '' -%}
+  {%- assign pf_appended_count = pf_old_count | plus: 1 -%}
+  {%- assign pf_allowed_count = false -%}
+  {%- if product.media.size == pf_old_count or product.media.size == pf_appended_count -%}{%- assign pf_allowed_count = true -%}{%- endif -%}
+  {%- assign pf_allowed_featured = false -%}
+  {%- if pf_actual_featured == pf_old_featured or pf_actual_featured == pf_new_id -%}{%- assign pf_allowed_featured = true -%}{%- endif -%}
+  {%- if pf_allowed_count and pf_allowed_featured and pf_actual_original == pf_original_id and product.metafields.custom.hanger_original_artwork_url.value == pf_artwork_url and pf_old_specs.size == pf_old_count -%}
+    {%- assign pf_old_found = 0 -%}
+    {%- assign pf_new_found = 0 -%}
+    {%- assign pf_seen_ids = '' -%}
+    {%- assign pf_invalid_media = false -%}
+    {%- for pf_media in product.media -%}
+      {%- assign pf_media_id = pf_media.id | append: '' -%}
+      {%- assign pf_id_token = '[' | append: pf_media_id | append: ']' -%}
+      {%- if pf_seen_ids contains pf_id_token -%}{%- assign pf_invalid_media = true -%}{%- endif -%}
+      {%- assign pf_seen_ids = pf_seen_ids | append: pf_id_token -%}
+      {%- assign pf_media_match = false -%}
+      {%- if pf_media_id == pf_new_id -%}
+        {%- capture pf_check -%}{%- render 'pf-backend-frame-image-match', media: pf_media, expected_url: pf_new_url, expected_width: pf_new_width, expected_height: pf_new_height -%}{%- endcapture -%}
+        {%- if pf_check == 'yes' -%}{%- assign pf_new_found = pf_new_found | plus: 1 -%}{%- assign pf_media_match = true -%}{%- endif -%}
+      {%- else -%}
+        {%- for pf_spec in pf_old_specs -%}
+          {%- assign pf_spec_fields = pf_spec | split: '^' -%}
+          {%- if pf_spec_fields.size == 4 and pf_spec_fields[0] == pf_media_id -%}
+            {%- assign pf_spec_width = pf_spec_fields[2] | plus: 0 -%}
+            {%- assign pf_spec_height = pf_spec_fields[3] | plus: 0 -%}
+            {%- capture pf_check -%}{%- render 'pf-backend-frame-image-match', media: pf_media, expected_url: pf_spec_fields[1], expected_width: pf_spec_width, expected_height: pf_spec_height -%}{%- endcapture -%}
+            {%- if pf_check == 'yes' -%}{%- assign pf_old_found = pf_old_found | plus: 1 -%}{%- assign pf_media_match = true -%}{%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- unless pf_media_match -%}{%- assign pf_invalid_media = true -%}{%- endunless -%}
+    {%- endfor -%}
+    {%- unless pf_invalid_media -%}
+      {%- if pf_old_found == pf_old_count -%}
+        {%- if pf_new_found == 0 and product.media.size == pf_old_count and pf_actual_featured == pf_old_featured -%}{%- assign pf_transition_match = true -%}
+        {%- elsif pf_new_found == 1 and product.media.size == pf_appended_count -%}
+          {%- assign pf_transition_match = true -%}
+          {%- assign pf_hidden_ids = pf_hidden_ids | append: ',' | append: pf_new_id -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endunless -%}
+    {%- assign pf_source_kind_valid = false -%}
+    {%- if pf_source_mode == 'D' and pf_artwork_url == pf_attached_url and pf_width == pf_attached_width and pf_height == pf_attached_height -%}{%- assign pf_source_kind_valid = true -%}
+    {%- elsif pf_source_mode == 'F' and pf_artwork_url != pf_attached_url -%}{%- assign pf_source_kind_valid = true -%}{%- endif -%}
+    {%- unless pf_source_kind_valid -%}{%- assign pf_transition_match = false -%}{%- endunless -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if slot == 'json' -%}
+  {%- if pf_transition_match -%}{"kind":"black-frame-preview","artworkUrl":{{ pf_artwork_url | json }},"width":{{ pf_width }},"height":{{ pf_height }}}{%- else -%}null{%- endif -%}
+{%- elsif slot == 'fields' and pf_transition_match -%}
+  {{- pf_width -}}|{{- pf_height -}}|{{- pf_original_id -}}|{{- pf_old_featured -}}|{{- pf_hidden_ids -}}
+{%- elsif slot == 'url' and pf_transition_match -%}
+  {{- pf_artwork_url -}}
+{%- endif -%}

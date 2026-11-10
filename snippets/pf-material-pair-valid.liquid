@@ -1,0 +1,52 @@
+{%- liquid
+  assign pf_pair_paper = product
+  if product.metafields.custom.paper_product.value != blank
+    assign pf_pair_paper = product.metafields.custom.paper_product.value
+  endif
+  assign pf_pair_canvas = pf_pair_paper.metafields.custom.canvas_product.value
+  assign pf_pair_back = pf_pair_canvas.metafields.custom.paper_product.value
+  assign pf_pair_sha = pf_pair_paper.metafields.pf_artwork.source_sha256.value | downcase
+  assign pf_canvas_sha = pf_pair_canvas.metafields.pf_artwork.source_sha256.value | downcase
+  assign pf_pair_source_gid = 'gid://shopify/Product/' | append: pf_pair_paper.id
+  assign pf_pair_crop_sha = pf_pair_canvas.metafields.pf_pairing.crop_contract_sha256.value
+  assign pf_pair_matrix_ok = false
+  if pf_pair_canvas.options_with_values.size == 2
+    assign pf_pair_size_option = pf_pair_canvas.options_with_values[0]
+    assign pf_pair_finish_option = pf_pair_canvas.options_with_values[1]
+    if pf_pair_size_option.name == 'Size' and pf_pair_size_option.values.size == 3 and pf_pair_finish_option.name == 'Finish' and pf_pair_finish_option.values.size == 3
+      assign pf_pair_matrix_ok = true
+      assign pf_pair_finishes = 'Canvas only|Stretched|Black' | split: '|'
+      for pf_pair_size in pf_pair_size_option.values
+        assign pf_pair_size_name = pf_pair_size.name | default: pf_pair_size
+        for pf_pair_finish in pf_pair_finishes
+          assign pf_pair_matches = pf_pair_canvas.variants | where: 'option1', pf_pair_size_name | where: 'option2', pf_pair_finish
+          if pf_pair_matches.size != 1
+            assign pf_pair_matrix_ok = false
+          else
+            assign pf_pair_match = pf_pair_matches[0]
+            if pf_pair_match.price <= 0 or pf_pair_match.featured_media.id == blank
+              assign pf_pair_matrix_ok = false
+            endif
+          endif
+        endfor
+      endfor
+    endif
+  endif
+  assign pf_pair_ok = false
+  if pf_pair_paper.id != blank and pf_pair_canvas.id != blank and pf_pair_paper.id != pf_pair_canvas.id and pf_pair_back.id == pf_pair_paper.id
+    if pf_pair_sha.size == 64 and pf_pair_sha == pf_canvas_sha and pf_pair_crop_sha.size == 64
+      if pf_pair_canvas.metafields.pf_pairing.source_paper_id.value == pf_pair_source_gid and pf_pair_canvas.metafields.pf_pairing.operation_key.value != blank
+        if pf_pair_canvas.type == 'Canvas art print' and pf_pair_canvas.template_suffix == 'pf-paired-canvas' and pf_pair_canvas.tags contains 'canvas-print' and pf_pair_canvas.tags contains 'paper-canvas-pairing-plan-20261020-v1'
+          if pf_pair_paper.published_at != blank and pf_pair_canvas.published_at != blank and pf_pair_canvas.available and pf_pair_canvas.variants.size == 9 and pf_pair_matrix_ok
+            if product.id == pf_pair_paper.id or product.id == pf_pair_canvas.id
+              assign pf_pair_ok = true
+            endif
+          endif
+        endif
+      endif
+    endif
+  endif
+  if pf_pair_ok
+    echo 'true'
+  endif
+-%}

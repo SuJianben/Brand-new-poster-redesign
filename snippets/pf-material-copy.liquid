@@ -1,0 +1,42 @@
+{%- capture pf_copy_gate -%}{% render 'pf-material-pair-valid', product: product %}{%- endcapture -%}
+{%- assign pf_copy_gate = pf_copy_gate | strip -%}
+{%- assign pf_copy_kind = '' -%}
+{%- if pf_copy_gate == 'true' -%}
+  {%- assign pf_copy_paper = product -%}
+  {%- if product.metafields.custom.paper_product.value != blank -%}{%- assign pf_copy_paper = product.metafields.custom.paper_product.value -%}{%- endif -%}
+  {%- assign pf_copy_canvas = pf_copy_paper.metafields.custom.canvas_product.value -%}
+  {%- assign pf_copy_route = route_product | default: product -%}
+  {%- assign pf_copy_label = block.settings.label | downcase -%}
+  {%- if slot == 'benefit' and block.settings.icon == 'quality' -%}
+    {%- assign pf_copy_kind = 'quality' -%}
+  {%- elsif slot == 'delivery' or pf_copy_label == 'delivery & returns' -%}
+    {%- assign pf_copy_kind = 'delivery' -%}
+  {%- elsif slot == 'information' and block.settings.content_source == 'product_description' -%}
+    {%- assign pf_copy_kind = 'description' -%}
+  {%- elsif slot == 'information' and pf_copy_label == 'why this price' -%}
+    {%- assign pf_copy_kind = 'pricing' -%}
+  {%- elsif slot == 'information' and pf_copy_label == 'material & workmanship' -%}
+    {%- assign pf_copy_kind = 'material' -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if pf_copy_kind == '' -%}
+  {{- source -}}
+{%- else -%}
+  <div class="pf-material-copy" data-pf-material-copy data-pf-material-paper-id="{{ pf_copy_paper.id }}" data-pf-copy-kind="{{ pf_copy_kind }}">
+    <div data-pf-copy-paper{% if pf_copy_route.id == pf_copy_canvas.id %} hidden{% endif %}>{% if pf_copy_kind == 'description' and product.id == pf_copy_canvas.id %}{% render 'pf-framing-copy', source: pf_copy_paper.description, product: pf_copy_paper %}{% else %}{{ source }}{% endif %}</div>
+    <div data-pf-copy-canvas{% unless pf_copy_route.id == pf_copy_canvas.id %} hidden{% endunless %}>
+      {%- case pf_copy_kind -%}
+        {%- when 'quality' -%}<strong>Canvas art print</strong><span>Choose canvas only, stretched canvas or a black floater frame.</span>
+        {%- when 'description' -%}{{ pf_copy_canvas.description }}
+        {%- when 'pricing' -%}<h2>Your canvas options</h2><p>Choose a size and finish above. The price shown includes your selected canvas option.</p><p>Canvas only is supplied rolled. Stretched canvas and black-framed canvas arrive assembled.</p>
+        {%- when 'material' -%}<h2>Canvas &amp; finishes</h2><p>Your artwork is printed on canvas. Choose the finish that suits your space:</p><ul><li><strong>Canvas only:</strong> unstretched canvas, supplied rolled. No inner or outer frame.</li><li><strong>Stretched canvas:</strong> mounted over an inner wooden frame, without an outer frame. Arrives assembled.</li><li><strong>Black floater frame:</strong> stretched canvas fitted in a black outer frame. Arrives assembled.</li></ul><p>Sizes refer to the front artwork area. The outer frame adds to the finished dimensions.</p>
+        {%- when 'delivery' -%}
+          {{- source
+            | replace: 'Unframed prints are rolled in a rigid tube.', 'Canvas only is supplied rolled. Stretched canvas and black-framed canvas arrive assembled.'
+            | replace: 'Unframed prints are rolled in a rigid protective tube, never folded.', 'Canvas only is supplied rolled. Stretched canvas and black-framed canvas arrive assembled.'
+            | replace: 'Black-framed prints arrive fitted in their frames.', ''
+          -}}
+      {%- endcase -%}
+    </div>
+  </div>
+{%- endif -%}

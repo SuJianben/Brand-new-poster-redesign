@@ -1,0 +1,42 @@
+{%- comment -%}Audited identity registry plus live source verification. No collection or featured-image fallback.{%- endcomment -%}
+{%- assign story_shard = product.id | modulo: 7 -%}
+{%- capture story_row -%}
+  {%- case story_shard -%}
+    {%- when 0 -%}{%- render 'pf-product-story-data-0', product_id: product.id -%}
+    {%- when 1 -%}{%- render 'pf-product-story-data-1', product_id: product.id -%}
+    {%- when 2 -%}{%- render 'pf-product-story-data-2', product_id: product.id -%}
+    {%- when 3 -%}{%- render 'pf-product-story-data-3', product_id: product.id -%}
+    {%- when 4 -%}{%- render 'pf-product-story-data-4', product_id: product.id -%}
+    {%- when 5 -%}{%- render 'pf-product-story-data-5', product_id: product.id -%}
+    {%- when 6 -%}{%- render 'pf-product-story-data-6', product_id: product.id -%}
+  {%- endcase -%}
+{%- endcapture -%}
+{%- assign story_fields = story_row | split: '|' -%}
+{%- assign story_source_verified = false -%}
+{%- if story_fields.size == 8 and story_fields[0] == product.handle -%}
+  {%- assign artwork_width = story_fields[2] | plus: 0 -%}
+  {%- assign artwork_height = story_fields[3] | plus: 0 -%}
+  {%- if story_fields[4] == 'ordinary' -%}
+    {%- capture story_source_url -%}{%- render 'pf-black-frame-source', product: product, slot: 'url' -%}{%- endcapture -%}
+    {%- capture story_source_dimensions -%}{%- render 'pf-black-frame-source', product: product, slot: 'fields' -%}{%- endcapture -%}
+    {%- assign story_dimensions = story_source_dimensions | split: '|' -%}
+    {%- if story_source_url == story_fields[1] and story_dimensions[0] == story_fields[2] and story_dimensions[1] == story_fields[3] and story_dimensions[2] == story_fields[5] -%}
+      {%- assign story_source_verified = true -%}
+    {%- endif -%}
+  {%- elsif story_fields[4] == 'canvas' and product.template_suffix == 'pf-fixed-canvas' and product.metafields.pf_fixed_canvas.source_sha256.value == story_fields[6] -%}
+    {%- assign story_matched_media = 0 -%}
+    {%- for story_media in product.media -%}
+      {%- assign story_media_id = story_media.id | append: '' -%}
+      {%- if story_media_id == story_fields[5] -%}
+        {%- capture story_media_matches -%}{%- render 'pf-backend-frame-image-match', media: story_media, expected_url: story_fields[1], expected_width: artwork_width, expected_height: artwork_height -%}{%- endcapture -%}
+        {%- if story_media_matches == 'yes' -%}{%- assign story_matched_media = story_matched_media | plus: 1 -%}{%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if story_matched_media == 1 -%}{%- assign story_source_verified = true -%}{%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if story_source_verified -%}
+  {%- render 'pf-product-story', product: product, section: section, artwork_url: story_fields[1], artwork_width: artwork_width, artwork_height: artwork_height, room_keys: story_fields[7] -%}
+{%- else -%}
+  {%- render 'pf-paired-product-story', product: product, section: section -%}
+{%- endif -%}

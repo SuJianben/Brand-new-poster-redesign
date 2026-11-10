@@ -1,0 +1,42 @@
+{% if artwork_url != blank and artwork_width > 0 and artwork_height > 0 %}
+{{ 'pf-product-story-20261020.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'pf-product-story-20261020.js' | asset_url }}" defer></script>
+{% assign story_key = section.id | append: '-' | append: product.id %}
+{% assign story_rooms = room_keys | split: ',' %}
+{% assign story_has_rooms = false %}
+{% if room_keys != blank and room_keys != '-' %}{% assign story_has_rooms = true %}{% endif %}
+{% capture artwork_alt %}{{ product.title }} - complete original artwork{% endcapture %}
+<section class="pf-product-story{% unless story_has_rooms %} pf-product-story--artwork-only{% endunless %}" data-pf-product-story data-product-id="{{ product.id }}" aria-labelledby="pf-story-title-{{ story_key }}">
+  {% if story_has_rooms %}
+    <header class="pf-product-story__heading"><h2 id="pf-story-title-{{ story_key }}">Make room for colour.</h2><p>Room styling inspiration for {{ product.title | escape }}.</p></header>
+    <div class="pf-product-story__rooms{% if story_rooms.size == 1 %} pf-product-story__rooms--single{% endif %}">
+      {% assign room_sizes = '(min-width: 1440px) 636px, (min-width: 750px) calc((100vw - 126px) / 2), calc(100vw - 40px)' %}
+      {% if story_rooms.size == 1 %}{% assign room_sizes = '(min-width: 1440px) 1040px, (min-width: 750px) calc(100vw - 96px), calc(100vw - 40px)' %}{% endif %}
+      {% for room_key in story_rooms %}{% render 'pf-product-story-room', room_key: room_key, image_sizes: room_sizes %}{% endfor %}
+    </div>
+    <p class="pf-product-story__note">AI-generated styling inspiration. Furnishings are not included. See the original artwork below for its full composition.</p>
+  {% endif %}
+  <div class="pf-product-story__detail">
+    <div class="pf-product-story__artwork-view">
+      <button type="button" class="pf-product-story__image-button pf-product-story__crop" data-story-zoom="artwork" data-story-full-src="{{ artwork_url | escape }}" data-story-full-width="{{ artwork_width }}" data-story-full-height="{{ artwork_height }}" data-story-full-alt="{{ artwork_alt | escape }}" data-story-caption="{{ artwork_alt | escape }}" aria-label="View the complete {{ product.title | escape }} artwork">
+        {% capture detail_alt %}Enlarged artwork detail from {{ product.title }}{% endcapture %}
+        {% render 'pf-product-story-image', image_url: artwork_url, image_width: artwork_width, image_height: artwork_height, image_alt: detail_alt %}
+      </button>
+      <p class="pf-product-story__view-hint">Select the detail to see the complete artwork</p>
+    </div>
+    <div class="pf-product-story__detail-copy">
+      <h2{% unless story_has_rooms %} id="pf-story-title-{{ story_key }}"{% endunless %}>A closer look.</h2>
+      <p>Explore the colours, lines and small details of {{ product.title | escape }}.</p>
+      <p class="pf-product-story__note">Artwork detail, not a photograph of the printed surface. Screen colours may vary from the finished print.</p>
+      <button type="button" class="pf-product-story__return" data-story-return>Back to your options <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-5 5 5-5 5 5"/></svg></button>
+    </div>
+  </div>
+  <dialog class="pf-product-story__dialog" data-story-dialog aria-labelledby="pf-story-dialog-title-{{ story_key }}">
+    <div class="pf-product-story__dialog-body">
+      <header><h2 id="pf-story-dialog-title-{{ story_key }}">{{ product.title | escape }}</h2><button type="button" data-story-close autofocus aria-label="Close enlarged image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header>
+      <img data-story-dialog-image width="{{ artwork_width }}" height="{{ artwork_height }}" alt="">
+      <p data-story-dialog-caption></p>
+    </div>
+  </dialog>
+</section>
+{% endif %}

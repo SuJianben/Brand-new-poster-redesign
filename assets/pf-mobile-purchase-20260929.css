@@ -1,0 +1,48 @@
+/* Existing description style moved out of the inline purchase block, unchanged. */
+.ps-short-description { margin: 2px 0 10px; font-size: 14px; line-height: 1.5; color: #444; }
+.ps-sticky-atc, .ps-sticky-atc[hidden] { display: none; }
+
+@media (max-width: 767px) {
+  /* Layer 60 remains below cart (80), navigation (90) and size guide (1000). */
+  .ps-sticky-atc:not([hidden]) {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(140px, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--ps-line, #e2e3e1);
+    background: #fff;
+    box-shadow: 0 -4px 16px rgb(34 38 40 / 6%);
+    font-family: var(--sans, Arial, sans-serif);
+  }
+  .ps-sticky-atc__meta { display: grid; min-width: 0; gap: 2px; }
+  .ps-sticky-atc__meta strong { color: var(--ps-ink, #222628); font-size: 18px; line-height: 1.2; }
+  .ps-sticky-atc__size {
+    min-height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #51575a;
+    font: 400 12px/1.35 var(--sans, Arial, sans-serif);
+    text-align: left;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .ps-sticky-atc__size:disabled { text-decoration: none; cursor: default; }
+  .ps-sticky-atc__button { min-height: 48px; white-space: nowrap; }
+  .ps-sticky-atc__button:focus-visible, .ps-sticky-atc__size:focus-visible {
+    outline: 2px solid var(--ps-ink, #222628);
+    outline-offset: 3px;
+  }
+  [data-ps-option-group] input:focus-visible + label { outline: 2px solid var(--ps-ink, #222628); outline-offset: 2px; }
+  body.ps-mobile-purchase-ready { padding-bottom: var(--ps-mobile-purchase-height, 86px); }
+  [data-ps-option-group], [data-ps-add-button] { scroll-margin-block: 130px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ps-sticky-atc__button, .ps-sticky-atc__button::before { transition: none; }
+}

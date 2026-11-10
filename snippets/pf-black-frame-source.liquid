@@ -1,0 +1,19 @@
+{%- comment -%}Approved backend-frame migration registry: f0d0821f04941b268e0ff14e6f95999f9eeffda3c4eac3c27deed7e3290f8e89. Preserve the baseline source unchanged.{%- endcomment -%}
+{%- assign pf_backend_row = '' -%}
+{%- assign pf_backend_shard = product.id | modulo: 7 -%}
+{%- capture pf_backend_row -%}
+  {%- case pf_backend_shard -%}
+{%- when 0 -%}{%- render 'pf-backend-frame-transition-data-0', product_id: product.id -%}
+{%- when 1 -%}{%- render 'pf-backend-frame-transition-data-1', product_id: product.id -%}
+{%- when 2 -%}{%- render 'pf-backend-frame-transition-data-2', product_id: product.id -%}
+{%- when 3 -%}{%- render 'pf-backend-frame-transition-data-3', product_id: product.id -%}
+{%- when 4 -%}{%- render 'pf-backend-frame-transition-data-4', product_id: product.id -%}
+{%- when 5 -%}{%- render 'pf-backend-frame-transition-data-5', product_id: product.id -%}
+{%- when 6 -%}{%- render 'pf-backend-frame-transition-data-6', product_id: product.id -%}
+  {%- endcase -%}
+{%- endcapture -%}
+{%- if pf_backend_row == blank -%}
+  {%- render 'pf-black-frame-source-before-backend', product: product, slot: slot -%}
+{%- else -%}
+  {%- render 'pf-backend-frame-transition', product: product, slot: slot, row: pf_backend_row -%}
+{%- endif -%}

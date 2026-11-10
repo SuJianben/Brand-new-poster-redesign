@@ -1,0 +1,365 @@
+(async () => {
+  const root = document.querySelector('[data-ps-product]');
+  const catalogNode = document.querySelector('[data-ps-framing-catalog]');
+  if (!root || !catalogNode) return;
+
+  globalThis.PosterFramingFulfilment?.connect(root);
+
+  const catalog = globalThis.PosterFramingCatalog
+    ? await globalThis.PosterFramingCatalog.load(catalogNode)
+    : JSON.parse(catalogNode.textContent);
+
+  const variantNode = document.querySelector('[data-ps-variants]');
+  const posterVariants = variantNode ? JSON.parse(variantNode.textContent) : [];
+  const variantInput = root.querySelector('[data-ps-variant-input]');
+  const preview = root.querySelector('[data-ps-art-preview]');
+  const layers = {
+    passepartout: root.querySelector('[data-ps-framing-layer="passepartout"]'),
+    frame: root.querySelector('[data-ps-framing-layer="frame"]'),
+  };
+  const selected = { passepartout: null, frame: null };
+  let currentMode = 'poster';
+  const renderMode = root.dataset.psFramingRenderMode || 'image';
+  const usesCssPreview = renderMode === 'css';
+  let isCustomPreviewActive = false;
+
+  const labels = {
+    passepartout: { empty: 'Add printed passepartout', none: 'No passepartout', from: '+' },
+    frame: { empty: 'Add frame', none: 'No frame', from: 'From' },
+  };
+  const swatches = {
+    beige: '#e6dfca', black: '#111111', blue: '#38558d', brass: '#c3ad73',
+    'dark-oak': '#654634', green: '#278e53', grey: '#c9c7bf', lavender: '#d9cbe8',
+    'light-blue': '#9fc8db', mint: '#74c79d', oak: '#a77b49', orange: '#ff8038',
+    petrol: '#577486', pink: '#ead0c2', plum: '#6e3e4c', red: '#c9584f',
+    white: '#ffffff', yellow: '#f4cf65',
+  };
+  const swatchFor = (styleSlug = '') => swatches[styleSlug]
+    || swatches[styleSlug.replace(/-(wood|alu)$/, '')]
+    || '#b8bbba';
+
+  const normalizeSize = globalThis.PosterFramingCatalog?.normalizeSize || ((value = '') => value
+    .toLowerCase()
+    .replaceAll(',', '.')
+    .replace(/[×✕✖]/g, 'x')
+    .replace(/\s*x\s*/g, 'x')
+    .replace(/\s+/g, ' ')
+    .trim());
+  const isFramingOptionVisible = globalThis.PosterFramingVisibility?.isVisible || (() => true);
+  const currentPosterVariant = () => posterVariants.find((variant) => String(variant.id) === String(variantInput?.value));
+  const currentPosterSize = () => {
+    const variant = currentPosterVariant();
+    const sizeIndex = variant?.options?.findIndex((_value, index) => {
+      const group = root.querySelector(`[data-ps-option-group][data-option-position="${index + 1}"]`);
+      return group?.textContent.toLowerCase().includes('size');
+    });
+    return variant?.options?.[sizeIndex >= 0 ? sizeIndex : 0] || '';
+  };
+  const rowsForSize = (kind) => {
+    const targetSize = currentPosterSize();
+    const size = normalizeSize(targetSize);
+    const raw = (catalog[kind]?.variants || []).filter((variant) => (
+      variant.available
+      && isFramingOptionVisible(kind, variant)
+      && (normalizeSize(variant.size) === size || (kind === 'passepartout' && normalizeSize(variant.fitsSize) === size))
+    ));
+    if (kind !== 'passepartout') return raw;
+    // Prefer the passepartout variant whose own size equals the print size; "fits" fallbacks only when no direct size exists.
+    const ranked = raw.slice().sort((a, b) => Number(normalizeSize(b.size) === size) - Number(normalizeSize(a.size) === size));
+    const seen = new Set();
+    const order = ['white', 'red', 'blue', 'yellow', 'green', 'pink', 'light-blue', 'lavender', 'grey', 'black'];
+    return ranked.filter((v) => {
+      if (seen.has(v.styleSlug)) return false;
+      seen.add(v.styleSlug);
+      return true;
+    }).sort((a, b) => {
+      const ia = order.indexOf(a.styleSlug);
+      const ib = order.indexOf(b.styleSlug);
+      return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+    });
+  };
+    const canvasRowForLabel = (label) => {
+    const size = normalizeSize(label || '');
+    return (catalog.frame?.variants || []).find((variant) => (
+      variant.available
+      && (variant.styleSlug === 'frameless-canvas' || variant.styleSlug === 'dark-oak' || String(variant.style || '').toLowerCase().includes('canvas'))
+      && normalizeSize(variant.size) === size
+    )) || null;
+  };
+  const canvasRowForSize = () => canvasRowForLabel(currentPosterSize());
+  const lowestPrice = (rows) => rows.length ? rows.reduce((lowest, row) => row.price < lowest.price ? row : lowest) : null;
+  const optionLabel = (kind, variant) => kind === 'passepartout' ? `${variant.style} printed passepartout` : `${variant.style} frame`;
+  const publishPricing = () => {
+    if (currentMode === 'canvas') {
+      const cRow = canvasRowForSize();
+      const canvasPrice = Number(cRow?.price || 0);
+      root.dispatchEvent(new CustomEvent('product:framing-price-change', {
+        detail: {
+          mode: 'canvas',
+          addonPrice: canvasPrice,
+          passepartoutPrice: 0,
+          framePrice: canvasPrice,
+          frame: null,
+          canvas: cRow || null,
+          hasSelection: true,
+        },
+      }));
+      return;
+    }
+    const passepartoutPrice = Number(selected.passepartout?.price || 0);
+    const framePrice = Number(selected.frame?.price || 0);
+    root.dispatchEvent(new CustomEvent('product:framing-price-change', {
+      detail: {
+        mode: 'poster',
+        addonPrice: passepartoutPrice + framePrice,
+        passepartoutPrice,
+        framePrice,
+        frame: selected.frame ? {
+          id: selected.frame.id,
+          styleSlug: selected.frame.styleSlug,
+          available: selected.frame.available,
+        } : null,
+        canvas: null,
+        hasSelection: Boolean(selected.passepartout || selected.frame),
+      },
+    }));
+  };
+
+  const updateTrigger = (kind) => {
+    const select = root.querySelector(`[data-ps-framing-select="${kind}"]`);
+    if (!select) return;
+    const value = select.querySelector('[data-ps-choice-select-value]');
+    const price = select.querySelector('[data-ps-choice-select-price]');
+    const plus = select.querySelector('[data-ps-choice-select-plus]');
+    const output = select.closest('.ps-config-group')?.querySelector('[data-ps-choice-output]');
+    const chosen = selected[kind];
+    const lowest = lowestPrice(rowsForSize(kind));
+    if (value) value.textContent = chosen ? optionLabel(kind, chosen) : labels[kind].empty;
+    if (price) price.textContent = chosen ? chosen.formattedPrice : (lowest ? `${labels[kind].from} ${lowest.formattedPrice}` : 'Unavailable');
+    if (plus) plus.hidden = Boolean(chosen);
+    if (output) output.textContent = chosen ? optionLabel(kind, chosen) : labels[kind].none;
+  };
+
+  const applyPreview = () => {
+    const orientation = preview?.dataset.psPreviewOrientation || 'portrait';
+    if (usesCssPreview) {
+      for (const layer of Object.values(layers)) {
+        if (!layer) continue;
+        layer.hidden = true;
+        layer.removeAttribute('src');
+      }
+      root.productFramePreview?.update({
+        passepartout: currentMode === 'poster' ? selected.passepartout : null,
+        frame: currentMode === 'poster' ? selected.frame : null,
+        active: isCustomPreviewActive && currentMode === 'poster',
+      });
+      return;
+    }
+    for (const kind of ['passepartout', 'frame']) {
+      const layer = layers[kind];
+      const chosen = selected[kind];
+      if (!layer) continue;
+      if (!chosen || !isCustomPreviewActive) {
+        layer.hidden = true;
+        layer.removeAttribute('src');
+        continue;
+      }
+      layer.src = chosen.preview[orientation] || chosen.preview.portrait;
+      layer.hidden = false;
+      const updateLayerScale = () => {
+        const squareCanvasCompensation = orientation === 'square' && layer.naturalWidth > 0
+          ? layer.naturalHeight / layer.naturalWidth
+          : 1;
+        layer.style.setProperty('--ps-framing-layer-scale', String(squareCanvasCompensation));
+      };
+      layer.onload = updateLayerScale;
+      if (layer.complete) updateLayerScale();
+    }
+    const canvas = preview?.querySelector('[data-pdp-print-preview]');
+    if (canvas) {
+      canvas.dataset.hasPassepartout = selected.passepartout && isCustomPreviewActive ? 'true' : 'false';
+      canvas.dataset.hasFrame = selected.frame && isCustomPreviewActive ? 'true' : 'false';
+    }
+  };
+
+  const selectVariant = (kind, variant) => {
+    selected[kind] = variant;
+    render(kind);
+    updateTrigger(kind);
+    if (kind === 'passepartout') {
+      render('frame');
+      updateTrigger('frame');
+    }
+    isCustomPreviewActive = true;
+    root.dispatchEvent(new CustomEvent('product:show-custom-preview'));
+    applyPreview();
+    publishPricing();
+    window.dataLayer?.push({
+      event: 'framing_option_changed',
+      component: kind,
+      action: variant ? 'selected' : 'removed',
+      variant_id: variant?.id || null,
+      price: Number(variant?.price || 0),
+    });
+  };
+
+  const optionButton = (kind, variant) => {
+    const button = document.createElement('button');
+    const isSelected = String(selected[kind]?.id) === String(variant.id);
+    button.type = 'button';
+    button.className = `ps-frame-option${isSelected ? ' is-selected' : ''}`;
+    button.setAttribute('role', 'option');
+    button.setAttribute('aria-selected', String(isSelected));
+    button.setAttribute('aria-pressed', String(isSelected));
+    button.dataset.psFramingVariant = String(variant.id);
+    button.innerHTML = `<span class="ps-frame-option__swatch" style="--ps-framing-swatch:${swatchFor(variant.styleSlug)}"></span><span class="ps-frame-option__details"><span class="ps-frame-option__name"></span><span class="ps-frame-option__size"></span></span><span class="ps-frame-option__price"></span>`;
+    button.querySelector('.ps-frame-option__name').textContent = optionLabel(kind, variant);
+    button.querySelector('.ps-frame-option__size').textContent = kind === 'passepartout' ? `${variant.size} | fits: ${variant.fitsSize}` : variant.size;
+    button.querySelector('.ps-frame-option__price').textContent = variant.formattedPrice;
+    button.addEventListener('click', () => selectVariant(kind, variant));
+    return button;
+  };
+
+  const render = (kind) => {
+    const select = root.querySelector(`[data-ps-framing-select="${kind}"]`);
+    const list = select?.querySelector('[data-ps-framing-options]');
+    if (!list) return;
+    const rows = rowsForSize(kind);
+    if (selected[kind] && !rows.some((row) => String(row.id) === String(selected[kind].id))) { selected[kind] = rows.find((row) => row.styleSlug === selected[kind].styleSlug) || null; }
+    list.replaceChildren();
+
+    const none = document.createElement('button');
+    none.type = 'button';
+    none.className = `ps-frame-option ps-frame-option--natural${selected[kind] ? '' : ' is-selected'}`;
+    none.setAttribute('role', 'option');
+    none.setAttribute('aria-selected', String(!selected[kind]));
+    none.setAttribute('aria-pressed', String(!selected[kind]));
+    none.innerHTML = '<span class="ps-frame-option__swatch"></span><span class="ps-frame-option__details"><span class="ps-frame-option__name"></span></span>';
+    none.querySelector('.ps-frame-option__name').textContent = labels[kind].none;
+    none.addEventListener('click', () => selectVariant(kind, null));
+    list.append(none);
+    rows.forEach((variant) => list.append(optionButton(kind, variant)));
+    if (!rows.length) {
+      const message = document.createElement('p');
+      message.className = 'ps-frame-options__empty';
+      message.textContent = 'No option is available for this size.';
+      list.append(message);
+    }
+    updateTrigger(kind);
+  };
+
+  root.querySelectorAll('[data-ps-framing-select]').forEach((select) => {
+    const trigger = select.querySelector('[data-ps-frame-trigger]');
+    trigger?.addEventListener('click', () => {
+      const willOpen = !select.classList.contains('is-open');
+      root.querySelectorAll('[data-ps-framing-select].is-open').forEach((item) => {
+        item.classList.remove('is-open');
+        item.querySelector('[data-ps-frame-trigger]')?.setAttribute('aria-expanded', 'false');
+      });
+      select.classList.toggle('is-open', willOpen);
+      trigger.setAttribute('aria-expanded', String(willOpen));
+    });
+  });
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-ps-framing-select]')) return;
+    root.querySelectorAll('[data-ps-framing-select].is-open').forEach((select) => {
+      select.classList.remove('is-open');
+      select.querySelector('[data-ps-frame-trigger]')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  root.addEventListener('product:variant-change', () => {
+    render('passepartout');
+    render('frame');
+    applyPreview();
+    publishPricing();
+  });
+  root.addEventListener('product:media-change', (event) => {
+    isCustomPreviewActive = Boolean(event.detail?.isCustomPreview || selected.passepartout || selected.frame || currentMode === 'canvas');
+    applyPreview();
+  });
+  root.addEventListener('product:preview-orientation', applyPreview);
+
+  root.productFraming = {
+    getState() {
+      return {
+        mode: currentMode,
+        selected: { ...selected },
+        passepartoutRows: rowsForSize('passepartout'),
+        frameRows: rowsForSize('frame'),
+        canvasRow: canvasRowForSize(),
+        canvasPriceForSize: (label) => Number(canvasRowForLabel(label)?.price || 0),
+        currentSize: currentPosterSize(),
+        swatchFor,
+        optionLabel,
+      };
+    },
+    setMode(nextMode) {
+      currentMode = nextMode === 'canvas' ? 'canvas' : 'poster';
+      isCustomPreviewActive = true;
+      root.dispatchEvent(new CustomEvent('product:show-custom-preview'));
+      applyPreview();
+      publishPricing();
+    },
+    selectOption(kind, variantId) {
+      if (!variantId) {
+        selectVariant(kind, null);
+        return;
+      }
+      const rows = rowsForSize(kind);
+      const found = rows.find((r) => String(r.id) === String(variantId));
+      if (found) selectVariant(kind, found);
+    },
+    getCartItems(parentVariantId, quantity) {
+      const configurationId = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      const parentProperties = { _framing_config: configurationId };
+      const items = [{ id: Number(parentVariantId), quantity, properties: parentProperties }];
+      if (currentMode === 'canvas') {
+        const cVar = canvasRowForSize();
+        if (cVar) {
+          parentProperties['Format'] = 'Frameless stretched canvas';
+          items.push({
+            id: Number(cVar.id),
+            quantity,
+            parent_id: Number(parentVariantId),
+            properties: {
+              _framing_config: configurationId,
+              _framing_component: 'canvas',
+              _framing_style: 'Frameless',
+              _framing_size: cVar.size,
+            },
+          });
+        }
+        return { items, configurationId, selected: { canvas: cVar } };
+      }
+      for (const kind of ['passepartout', 'frame']) {
+        const variant = selected[kind];
+        if (!variant) continue;
+        parentProperties[kind === 'passepartout' ? 'Passepartout' : 'Frame'] = optionLabel(kind, variant);
+        items.push({
+          id: Number(variant.id), quantity, parent_id: Number(parentVariantId),
+          properties: {
+            _framing_config: configurationId, _framing_component: kind,
+            _framing_style: variant.style, _framing_size: variant.size,
+          },
+        });
+      }
+      return { items, configurationId, selected: { ...selected } };
+    },
+  };
+
+  window.dataLayer?.push({
+    event: 'framing_catalog_loaded',
+    source: catalog.source || 'liquid',
+    passepartout_variant_count: catalog.passepartout?.variants?.length || 0,
+    frame_variant_count: catalog.frame?.variants?.length || 0,
+    visible_passepartout_variant_count: (catalog.passepartout?.variants || []).filter((variant) => isFramingOptionVisible('passepartout', variant)).length,
+    visible_frame_variant_count: (catalog.frame?.variants || []).filter((variant) => isFramingOptionVisible('frame', variant)).length,
+    render_mode: renderMode,
+  });
+
+  render('passepartout');
+  render('frame');
+  applyPreview();
+  publishPricing();
+})();

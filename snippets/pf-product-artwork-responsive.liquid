@@ -1,0 +1,38 @@
+{%- comment -%}Display derivatives only. Source identity and full-resolution URL remain unchanged upstream.{%- endcomment -%}
+{%- assign pf_image_prefix = 'https://cdn.shopify.com/s/files/1/0901/1603/0498/files/' -%}
+{%- assign pf_image_start = source_url | slice: 0, pf_image_prefix.size -%}
+{%- assign pf_image_width = source_width | plus: 0 -%}
+{%- assign pf_image_transform = false -%}
+{%- comment -%}PAF-MOBILE-PDP-001: also accept the store-domain CDN path (same Shopify image CDN, supports ?width=).{%- endcomment -%}
+{%- assign pf_image_prefix2 = '//posterandform.com/cdn/shop/files/' -%}
+{%- assign pf_image_start2 = source_url | slice: 0, pf_image_prefix2.size -%}
+{%- if pf_image_start2 == pf_image_prefix2 -%}{%- assign pf_image_start = pf_image_prefix -%}{%- endif -%}
+{%- if pf_image_start == pf_image_prefix and pf_image_width > 0 -%}
+  {%- unless source_url contains '#' or source_url contains 'width=' or source_url contains 'height=' or source_url contains 'crop=' -%}
+    {%- assign pf_image_transform = true -%}
+  {%- endunless -%}
+{%- endif -%}
+{%- assign pf_image_separator = '?' -%}
+{%- if source_url contains '?' -%}{%- assign pf_image_separator = '&' -%}{%- endif -%}
+{%- assign pf_image_default = 800 -%}
+{%- assign pf_image_limit = 1800 -%}
+{%- assign pf_image_steps = '360,600,900,1200,1600' | split: ',' -%}
+{%- if mode == 'thumbnail' -%}
+  {%- assign pf_image_default = 120 -%}
+  {%- assign pf_image_limit = 180 -%}
+  {%- assign pf_image_steps = '60,120' | split: ',' -%}
+{%- endif -%}
+{%- if slot == 'srcset' -%}
+  {%- if pf_image_transform -%}
+    {%- assign pf_image_maximum = pf_image_width | at_most: pf_image_limit -%}
+    {%- for pf_image_step in pf_image_steps -%}
+      {%- assign pf_image_candidate = pf_image_step | plus: 0 -%}
+      {%- if pf_image_candidate < pf_image_maximum -%}{{- source_url | escape -}}{{- pf_image_separator -}}width={{- pf_image_candidate }} {{ pf_image_candidate }}w, {% endif -%}
+    {%- endfor -%}
+    {{- source_url | escape -}}{{- pf_image_separator -}}width={{- pf_image_maximum }} {{ pf_image_maximum }}w
+  {%- elsif pf_image_width > 0 -%}
+    {{- source_url | escape }} {{ pf_image_width }}w
+  {%- endif -%}
+{%- else -%}
+  {{- source_url | escape -}}{%- if pf_image_transform -%}{{- pf_image_separator -}}width={{- pf_image_width | at_most: pf_image_default -}}{%- endif -%}
+{%- endif -%}

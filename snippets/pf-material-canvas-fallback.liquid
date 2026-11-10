@@ -1,0 +1,17 @@
+<div class="pf-material pf-material__fallback" data-pf-canvas-fallback>
+  <h1>{{ canvas.title | escape }}</h1>
+  <p>Canvas art print</p>
+  <form action="{{ routes.cart_add_url }}" method="post" accept-charset="UTF-8" data-pf-canvas-native-form>
+    <label class="pf-material__label" for="PFCanvasNative-{{ section.id }}">Size, finish and price</label>
+    <select id="PFCanvasNative-{{ section.id }}" name="id" required>
+      {% for variant in canvas.variants %}
+        <option value="{{ variant.id }}"{% if variant.id == canvas.selected_or_first_available_variant.id %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>{{ variant.option1 | escape }} · {% case variant.option2 %}{% when 'Stretched' %}Stretched canvas{% when 'Black' %}Black floater frame{% else %}Canvas only{% endcase %} · {{ variant.price | money_with_currency | escape }}{% unless variant.available %} — Sold out{% endunless %}</option>
+      {% endfor %}
+    </select>
+    <p class="pf-material__note">Canvas only arrives rolled. Stretched canvas and black-framed canvas arrive assembled. Sizes refer to the front artwork area; the outer frame adds to the overall dimensions.</p>
+    <label class="pf-material__label" for="PFCanvasNativeQuantity-{{ section.id }}">Quantity</label>
+    <input class="pf-material__quantity" id="PFCanvasNativeQuantity-{{ section.id }}" type="number" name="quantity" min="1" max="99" step="1" value="1" required>
+    <button class="ps-add-button pf-material__add" type="submit">Add to bag</button>
+    <p class="pf-material__note">Canvas options are excluded from paper-print offers.</p>
+  </form>
+</div>

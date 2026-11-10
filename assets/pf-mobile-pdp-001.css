@@ -1,0 +1,54 @@
+/* PAF-MOBILE-PDP-001 — mobile-only PDP tightening (≤767px). Desktop untouched. */
+@media (max-width: 767px) {
+  html body.template-product .ps-product.ps-product { padding-top: 6px !important; }
+  html body.template-product .ps-layout.ps-layout { gap: 8px !important; }
+  /* 4) symmetric gallery: full content width */
+  html body.template-product .ps-left.ps-left,
+  html body.template-product .ps-media-stage.ps-media-stage,
+  html body.template-product .ps-thumbnail-rail.ps-thumbnail-rail { width: 100% !important; max-width: 100% !important; }
+  html body.template-product .ps-media-stage.ps-media-stage { gap: 4px !important; }
+  /* 2+3) fixed-height frame, smaller padding => bigger artwork, no layout shift */
+  html body.template-product .ps-main-media.ps-main-media {
+    aspect-ratio: auto !important;
+    height: 310px !important;
+    min-height: 310px !important;
+    max-height: 310px !important;
+    padding: 7px 10px !important;
+  }
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="none"] { padding: 7px 10px !important; align-items: center !important; }
+  html body.template-product .ps-main-media.ps-main-media .ps-print-preview { max-height: 100% !important; }
+  html body.template-product .ps-main-media.ps-main-media .print-preview__layer--art { object-fit: contain !important; }
+  /* thumbnails: shorter row, centred, symmetric */
+  html body.template-product [data-ps-thumbnail-rail][data-ps-thumbnail-rail] { justify-content: center !important; gap: 8px !important; padding: 0 !important; }
+  html body.template-product [data-ps-thumbnail-rail][data-ps-thumbnail-rail] .ps-thumbnail,
+  html body.template-product [data-ps-thumbnail-rail][data-ps-thumbnail-rail] .pf-room-thumb {
+    width: 46px !important; min-width: 46px !important; flex: 0 0 46px !important; height: 56px !important; padding: 4px !important;
+  }
+  html body.template-product [data-ps-thumbnail-rail][data-ps-thumbnail-rail] .pf-room-thumb { padding: 0 !important; }
+  /* purchase column: tighter vertical rhythm, no content removed */
+  html body.template-product .ps-purchase.ps-purchase { gap: 8px !important; }
+  html body.template-product .ps-form.ps-form .ps-price { margin: 0 0 2px !important; }
+  html body.template-product .pf-postery-pills.pf-postery-pills { margin: 2px 0 4px !important; gap: 6px !important; }
+  html body.template-product .pf-postery-pill.pf-postery-pill { min-height: 44px !important; height: 44px !important; }
+  html body.template-product .pf-postery-tabs.pf-postery-tabs { margin-bottom: 0 !important; }
+  html body.template-product .ps-form.ps-form { gap: 8px !important; }
+  html body.template-product .ps-main-media.ps-main-media .ps-print-preview { width: 100% !important; height: 100% !important; max-width: 100% !important; aspect-ratio: auto !important; }
+  html body.template-product .ps-main-media.ps-main-media .print-preview__inner { width: auto !important; height: 100% !important; max-width: 100% !important; aspect-ratio: 1 / 1 !important; }
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s1"] .ps-print-preview { transform: scale(0.90) !important; }
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s2"] .ps-print-preview { transform: scale(0.925) !important; }
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s3"] .ps-print-preview { transform: scale(0.95) !important; }
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s4"] .ps-print-preview { transform: scale(0.975) !important; }
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s5"] .ps-print-preview { transform: scale(1) !important; }
+  /* 1) sticky ATC: real size, above footer content, clear of chat bubbles */
+  .ps-sticky-atc:not([hidden]) { min-height: 64px; }
+  .ps-sticky-atc:not([hidden]) .ps-sticky-atc__button { display: inline-flex !important; align-items: center; justify-content: center; width: 100%; min-width: 140px; min-height: 48px; }
+  body.ps-sticky-atc-on .ps-site-footer, body.ps-sticky-atc-on footer { padding-bottom: calc(var(--ps-mobile-purchase-height, 72px) + 8px); }
+  body.ps-sticky-atc-on #shopify-chat, body.ps-sticky-atc-on .shopify-chat,
+  body.ps-sticky-atc-on #ShopifyChat, body.ps-sticky-atc-on [id^="dummy-chat"],
+  body.ps-sticky-atc-on inbox-online-store-chat { bottom: calc(var(--ps-mobile-purchase-height, 72px) + 8px) !important; }
+}
+
+/* PAF v3: title + 200g badge on one row (vendor line removed), all viewports */
+html body.template-product .pf-postery-head__top.pf-postery-head__top { display: flex !important; align-items: flex-start !important; justify-content: space-between !important; gap: 12px !important; }
+html body.template-product .pf-postery-head__top.pf-postery-head__top > h1 { flex: 1 1 auto; min-width: 0; }
+html body.template-product .pf-postery-head__fsc.pf-postery-head__fsc { flex: 0 0 auto; margin-top: 3px; }

@@ -1,0 +1,82 @@
+{%- comment -%}Exact audited artwork source. Preview only; purchase choices are unchanged.{%- endcomment -%}
+{%- assign pf_source_match = false -%}
+{%- assign pf_source_found = false -%}
+{%- assign pf_featured_found = false -%}
+{%- assign pf_skip_found = 0 -%}
+{%- assign pf_source_row = '' -%}
+{%- assign pf_source_url_match = false -%}
+{%- assign pf_actual_original = product.metafields.custom.hanger_original_media_id.value | split: '/' | last | append: '' -%}
+{%- assign pf_actual_featured = product.featured_media.id | append: '' -%}
+{%- assign pf_actual_artwork = product.metafields.custom.hanger_original_artwork_url.value -%}
+{%- if product.type == 'Print' and product.template_suffix == blank and product.metafields.custom.hanger_rollout_version.value == 'round-rods-2026-09-28' -%}
+  {%- assign pf_source_shard = product.id | modulo: 7 -%}
+  {%- capture pf_source_row -%}
+    {%- case pf_source_shard -%}
+{%- when 0 -%}{%- render 'pf-black-frame-source-data-0', product_id: product.id -%}
+{%- when 1 -%}{%- render 'pf-black-frame-source-data-1', product_id: product.id -%}
+{%- when 2 -%}{%- render 'pf-black-frame-source-data-2', product_id: product.id -%}
+{%- when 3 -%}{%- render 'pf-black-frame-source-data-3', product_id: product.id -%}
+{%- when 4 -%}{%- render 'pf-black-frame-source-data-4', product_id: product.id -%}
+{%- when 5 -%}{%- render 'pf-black-frame-source-data-5', product_id: product.id -%}
+{%- when 6 -%}{%- render 'pf-black-frame-source-data-6', product_id: product.id -%}
+    {%- endcase -%}
+  {%- endcapture -%}
+{%- endif -%}
+{%- if pf_source_row != blank -%}
+  {%- assign pf_source_fields = pf_source_row | split: '|' -%}
+  {%- if pf_source_fields.size == 11 -%}
+    {%- assign pf_expected_original = pf_source_fields[0] -%}
+    {%- assign pf_expected_featured = pf_source_fields[1] -%}
+    {%- assign pf_source_width = pf_source_fields[2] | plus: 0 -%}
+    {%- assign pf_source_height = pf_source_fields[3] | plus: 0 -%}
+    {%- assign pf_source_mode = pf_source_fields[4] -%}
+    {%- assign pf_expected_artwork = pf_source_fields[5] -%}
+    {%- assign pf_source_skip_ids = pf_source_fields[6] | split: ',' -%}
+    {%- assign pf_expected_attached = pf_source_fields[7] -%}
+    {%- assign pf_attached_width = pf_source_fields[8] | plus: 0 -%}
+    {%- assign pf_attached_height = pf_source_fields[9] | plus: 0 -%}
+    {%- assign pf_expected_media_count = pf_source_fields[10] | plus: 0 -%}
+    {%- if pf_actual_original == pf_expected_original and pf_actual_featured == pf_expected_featured and pf_actual_artwork == pf_expected_artwork and product.media.size == pf_expected_media_count -%}
+      {%- assign pf_expected_tail = pf_expected_attached | split: '/files/' | last -%}
+      {%- assign pf_expected_cdn_relative = pf_expected_attached | remove_first: 'https:' -%}
+      {%- assign pf_expected_store = 'https://posterandform.com/cdn/shop/files/' | append: pf_expected_tail -%}
+      {%- assign pf_expected_store_relative = '//posterandform.com/cdn/shop/files/' | append: pf_expected_tail -%}
+      {%- assign pf_expected_path = '/cdn/shop/files/' | append: pf_expected_tail -%}
+      {%- for pf_source_media in product.media -%}
+        {%- assign pf_source_media_id = pf_source_media.id | append: '' -%}
+        {%- if pf_source_media.media_type == 'image' -%}
+          {%- if pf_source_media_id == pf_expected_featured -%}{%- assign pf_featured_found = true -%}{%- endif -%}
+          {%- if pf_source_skip_ids contains pf_source_media_id -%}{%- assign pf_skip_found = pf_skip_found | plus: 1 -%}{%- endif -%}
+          {%- if pf_source_media_id == pf_expected_original -%}
+            {%- assign pf_attached_platform_url = pf_source_media.preview_image | image_url: width: pf_attached_width -%}
+            {%- assign pf_attached_parts = pf_attached_platform_url | split: '&width=' -%}
+            {%- assign pf_actual_attached = pf_attached_parts[0] -%}
+            {%- assign pf_attached_query_safe = false -%}
+            {%- if pf_attached_parts.size == 1 and pf_attached_platform_url == pf_actual_attached -%}{%- assign pf_attached_query_safe = true -%}
+            {%- elsif pf_attached_parts.size == 2 -%}
+              {%- assign pf_requested_width = pf_attached_parts[1] | plus: 0 -%}
+              {%- assign pf_requested_width_text = pf_requested_width | append: '' -%}
+              {%- assign pf_width_only_url = pf_actual_attached | append: '&width=' | append: pf_requested_width_text -%}
+              {%- if pf_requested_width > 0 and pf_requested_width_text == pf_attached_parts[1] and pf_attached_platform_url == pf_width_only_url -%}{%- assign pf_attached_query_safe = true -%}{%- endif -%}
+            {%- endif -%}
+            {%- if pf_attached_query_safe -%}
+              {%- if pf_actual_attached == pf_expected_attached or pf_actual_attached == pf_expected_cdn_relative or pf_actual_attached == pf_expected_store or pf_actual_attached == pf_expected_store_relative or pf_actual_attached == pf_expected_path -%}{%- assign pf_source_url_match = true -%}{%- endif -%}
+            {%- endif -%}
+            {%- if pf_source_url_match and pf_source_media.preview_image.width == pf_attached_width and pf_source_media.preview_image.height == pf_attached_height -%}{%- assign pf_source_found = true -%}{%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if pf_source_found and pf_featured_found and pf_skip_found == pf_source_skip_ids.size -%}
+        {%- if pf_source_mode == 'D' and pf_expected_attached == pf_expected_artwork and pf_source_width == pf_attached_width and pf_source_height == pf_attached_height -%}{%- assign pf_source_match = true -%}
+        {%- elsif pf_source_mode == 'F' and pf_expected_attached != pf_expected_artwork -%}{%- assign pf_source_match = true -%}{%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if slot == 'json' -%}
+  {%- if pf_source_match -%}{"kind":"black-frame-preview","artworkUrl":{{ pf_expected_artwork | json }},"width":{{ pf_source_width }},"height":{{ pf_source_height }}}{%- else -%}null{%- endif -%}
+{%- elsif slot == 'fields' and pf_source_match -%}
+  {{- pf_source_width -}}|{{- pf_source_height -}}|{{- pf_expected_original -}}|{{- pf_expected_featured -}}|{{- pf_source_fields[6] -}}
+{%- elsif slot == 'url' and pf_source_match -%}
+  {{- pf_expected_artwork -}}
+{%- endif -%}

@@ -1,0 +1,29 @@
+{%- unless role == 'comparison' -%}
+{%- liquid
+  assign image_alt = product.title | append: ' — artwork detail without frame'
+  assign button_label = 'Show artwork without frame'
+  comment
+    Metafield URLs point at the original uploaded file. Ask the Shopify CDN for a
+    sized progressive JPEG instead of shipping the full PNG/JPEG to every visitor.
+  endcomment
+  if image_url contains '?'
+    assign thumb_url = image_url | append: '&width=180&format=pjpg'
+    assign stage_url = image_url | append: '&width=1800&format=pjpg'
+  else
+    assign thumb_url = image_url | append: '?width=180&format=pjpg'
+    assign stage_url = image_url | append: '?width=1800&format=pjpg'
+  endif
+-%}
+<button
+  class="ps-thumbnail"
+  type="button"
+  data-ps-media
+  data-media-id="{{ media_id | escape }}"
+  data-media-role="{{ role | escape }}"
+  data-media-src="{{ stage_url | escape }}"
+  data-media-alt="{{ image_alt | escape }}"
+  aria-label="{{ button_label | escape }}"
+>
+  <img src="{{ thumb_url | escape }}" width="180" height="180" loading="lazy" alt="{{ image_alt | escape }}">
+</button>
+{%- endunless -%}

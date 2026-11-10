@@ -1,0 +1,42 @@
+/* Visual skin for the existing product and framing components. */
+html[data-poster-page-type="product"] { --sans: "Space Grotesk", sans-serif; background: #f2efe6; }
+html[data-poster-page-type="product"] .ps-section { --ps-ink: #101115; --ps-muted: #595856; --ps-line: #101115; }
+html body.template-product,
+html body.template-product .ps-section,
+html body.template-product .ps-product,
+html body.template-product .ps-shell,
+html body.template-product .ps-purchase { background: #f2efe6 !important; }
+html body.template-product .ps-purchase h1,
+html body.template-product .pf-material__canvas-form h1 { font-family: "Archivo Black", sans-serif !important; font-weight: 400 !important; }
+.ps-product .ps-price__current, .ps-product .pf-material__price { font-weight: 800; }
+html body.template-product .ps-main-media { background: #6759d0 !important; }
+.ps-product .ps-thumbnail { border: 2px solid #101115; border-radius: 0; }
+.ps-product .ps-thumbnail.is-active { outline: 4px solid #dfff00; outline-offset: -5px; }
+.ps-product .ps-config-options button, .ps-product .ps-config-options input + label,
+.ps-product .ps-option-values label, .ps-product .pf-material__switch button,
+.ps-product .pf-material__finishes label, .ps-product .ps-frame-select__trigger { border: 2px solid #101115; border-radius: 0; color: #101115; }
+.ps-product .ps-config-options button.is-selected, .ps-product .ps-config-options input:checked + label,
+.ps-product .ps-option-values input:checked + label, .ps-product .pf-material__switch button[aria-pressed="true"],
+.ps-product .pf-material__finishes input:checked + label { background: #dfff00; border-color: #101115; box-shadow: 4px 4px 0 #101115; }
+.ps-product .ps-frame-options { border: 2px solid #101115; }
+.ps-product .ps-frame-option:hover, .ps-product .ps-frame-option:focus-visible, .ps-product .ps-frame-option.is-selected { background: #dfff00; }
+html body.template-product .ps-add-button, .ps-product .pf-material__add { background: #101115 !important; border: 2px solid #101115 !important; border-radius: 0 !important; color: #fff; box-shadow: 6px 6px 0 #ef5b3f; font-weight: 800; }
+.ps-product .ps-add-button:hover:not(:disabled), .ps-product .ps-add-button:focus-visible:not(:disabled) { color: #101115; }
+.ps-product .ps-config-label, .ps-product .ps-option-group legend { font-weight: 800; }
+.ps-product .ps-size-guide { background: transparent; }
+.ps-product .dw-postery-series { margin: 0 0 20px; }
+.ps-product .dw-postery-series__title { margin: 0 0 10px; font-size: 13px; font-weight: 700; }
+.ps-product .dw-postery-series__list { display: flex; flex-wrap: wrap; gap: 10px; }
+.ps-product .dw-postery-series__item { display: flex; align-items: center; justify-content: center; width: 68px; height: 86px; padding: 7px; border: 2px solid #101115; background: #fff; }
+.ps-product .dw-postery-series__item:hover, .ps-product .dw-postery-series__item:focus-visible { background: #dfff00; }
+.ps-product .dw-postery-series__img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+/* The original purchase pills control these underlying fields. Keep the fields
+   available to the existing scripts while showing one set of controls. */
+.ps-product .ps-option-group,
+.ps-product .ps-config-group,
+.ps-product .ps-form__quantity,
+.ps-product .ps-default-config { display: none !important; }
+.ps-product .pf-postery-tabs { border: 2px solid #101115; border-radius: 0; background: #fff; }
+.ps-product .pf-postery-tab { border-radius: 0; font-family: var(--sans); font-weight: 700; }
+.ps-product .pf-postery-tab.is-active { background: #dfff00; box-shadow: none; }
+.ps-product .pf-postery-pill { border: 2px solid #101115; border-radius: 0; background: #fff; }

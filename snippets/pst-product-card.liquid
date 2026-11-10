@@ -1,0 +1,65 @@
+{%- liquid
+  assign p = product_obj
+  if p == blank and handle != blank
+    assign p = all_products[handle]
+  endif
+  if p != blank and p.id != blank
+    assign price_min = p.price_min | money
+    assign img_primary = p.featured_image
+    assign r = img_primary.aspect_ratio | default: 0.75
+    assign is_sq_white = false
+    if r > 0.95 and r < 1.05 and p.metafields.custom.hanger_original_artwork_url.value == blank
+      assign is_sq_white = true
+    endif
+    assign mod = p.id | modulo: 3
+    if mod == 0
+      assign room_bg = 'dw-room-bg-sofa.jpg' | asset_img_url: '540x'
+      assign room_pos = 'sofa'
+    elsif mod == 1
+      assign room_bg = 'dw-room-bg-dining.jpg' | asset_img_url: '540x'
+      assign room_pos = 'dining'
+    else
+      assign room_bg = 'dw-room-bg-sideboard.jpg' | asset_img_url: '540x'
+      assign room_pos = 'sideboard'
+    endif
+  endif
+-%}
+{%- if p != blank and p.id != blank -%}
+<div class="pst-pcard" data-product-handle="{{ p.handle }}">
+  <a class="pst-pcard__stage has-hover" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+    <span class="pst-pcard__wish" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </span>
+    <div class="pst-pcard__art-wrap">
+      {%- if is_sq_white -%}
+        {% render 'dw-d-flat', p: p, w: 380, cls: 'pst-pcard__img pst-pcard__img--primary pst-pcard__img--sqcrop', alt: p.title, eager: eager %}
+      {%- else -%}
+        {% render 'dw-d-flat', p: p, w: 380, cls: 'pst-pcard__img pst-pcard__img--primary', alt: p.title, eager: eager %}
+      {%- endif -%}
+    </div>
+    <div class="pst-pcard__room pst-pcard__room--{{ room_pos }}" data-room-bg="{{ room_bg }}" aria-hidden="true">
+      <div class="pst-pcard__room-frame">
+        <div class="pst-pcard__room-art{% if is_sq_white %} pst-pcard__room-art--sqcrop{% endif %}">
+          {% render 'dw-d-flat', p: p, w: 380, cls: 'pst-pcard__room-img', alt: p.title, lazy_room: true %}
+        </div>
+      </div>
+    </div>
+    <span class="pst-pcard__dots" aria-hidden="true"><i class="is-active"></i><i></i></span>
+  </a>
+  <div class="pst-pcard__meta">
+    <div class="pst-pcard__meta-left">
+      {%- comment -%}PAF v3: vendor/author line hidden on all cards. Set pf_show_vendor_line = true before render to restore.{%- endcomment -%}
+      {%- if pf_show_vendor_line -%}<p class="pst-pcard__artist">PosterAndForm Studio</p>{%- endif -%}
+      <p class="pst-pcard__title"><a href="{{ p.url }}">{{ p.title }}</a></p>
+    </div>
+    <div class="pst-pcard__meta-right">
+      {%- if badge != blank -%}
+        <p class="pst-pcard__badge">{{ badge }}</p>
+      {%- elsif pf_show_vendor_line -%}
+        <p class="pst-pcard__badge pst-pcard__badge--empty">&nbsp;</p>
+      {%- endif -%}
+      <p class="pst-pcard__price">From {{ price_min }}</p>
+    </div>
+  </div>
+</div>
+{%- endif -%}

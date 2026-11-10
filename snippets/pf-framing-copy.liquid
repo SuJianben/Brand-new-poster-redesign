@@ -1,0 +1,32 @@
+{%- comment -%}Rule-generated paper framing copy; commerce and source media unchanged.{%- endcomment -%}
+{%- assign pf_catalogue_framing_copy_v1 = false -%}
+{%- if product != blank -%}
+  {%- if product.type == 'Print' and product.template_suffix == blank -%}
+    {%- assign pf_catalogue_framing_copy_v1 = true -%}
+  {%- elsif product.type == 'Custom Poster' and product.template_suffix == 'custom-css' -%}
+    {%- assign pf_catalogue_framing_copy_v1 = true -%}
+  {%- elsif product.type == 'Personalised Art' and product.template_suffix == 'custom-pet' -%}
+    {%- assign pf_catalogue_framing_copy_v1 = true -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if pf_catalogue_framing_copy_v1 -%}
+  {%- assign pf_fulfilment_copy = source
+    | replace: ', rolled in a rigid tube so it arrives flat and unmarked.', '. Unframed prints are rolled in a rigid tube. Black-framed prints arrive fitted in their frames.'
+    | replace: ', rolled in a rigid tube.', '. Unframed prints are rolled in a rigid tube. Black-framed prints arrive fitted in their frames.'
+    | replace: 'A Scroll Rod is included as the standard hanging configuration at no extra charge.', 'A Scroll Rod is included at no extra charge with unframed prints. Black-framed prints arrive fitted in their frames.'
+    | replace: 'Scroll Rod included as standard', 'Scroll Rod included with unframed prints'
+    | replace: 'every sheet is inspected before it’s rolled and packed', 'every sheet is inspected before packing'
+    | replace: 'every sheet inspected before it’s rolled and packed', 'every sheet inspected before packing'
+    | replace: 'Every print is inspected by hand, then rolled in a rigid protective tube — never folded.', 'Every print is inspected by hand. Unframed prints are rolled in a rigid protective tube, never folded. Black-framed prints arrive fitted in their frames.'
+    | replace: 'Every print is inspected by hand, then rolled in a rigid protective tube.', 'Every print is inspected by hand. Unframed prints are rolled in a rigid protective tube. Black-framed prints arrive fitted in their frames.'
+    | replace: 'Hand-inspected, tube-packed', 'Hand-inspected; packed for your chosen finish'
+    | replace: 'A Scroll Rod is included as the standard hanging configuration at no extra charge; frames are optional and are not included in the poster price.', 'Unframed prints are rolled in a rigid protective tube. Black-framed prints arrive fitted in their frames. Frames are optional and are not included in the poster price.'
+    | replace: 'A Scroll Rod is included at no extra charge with unframed prints. Black-framed prints arrive fitted in their frames.', 'Unframed prints are rolled in a rigid protective tube. Black-framed prints arrive fitted in their frames. Frames are optional and are not included in the poster price.'
+    | replace: 'Scroll Rod included with unframed prints', 'Unframed prints supplied rolled; black frames optional'
+    | replace: 'Hanging scroll rod included at no extra cost', 'Unframed prints are rolled in a rigid protective tube.'
+    | replace: 'White cylindrical hanging rods included at no extra cost. A picture frame is an optional paid upgrade.', 'Unframed prints are supplied rolled. Choose a black frame for your print to arrive fitted and ready to hang. Frames are an optional paid upgrade.'
+  -%}
+  {{- pf_fulfilment_copy -}}
+{%- else -%}
+  {{- source -}}
+{%- endif -%}

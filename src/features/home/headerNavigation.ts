@@ -31,3 +31,12 @@ export function readHeaderNavigation(settings: Settings): NavItem[] {
     ] },
   ];
 }
+
+// Homepage anchors need the locale-aware home URL on product and cart pages.
+export function headerHref(url: string): string {
+  const page = document.documentElement.dataset.posterPageType;
+  if ((page === "product" || page === "cart") && url.startsWith("#")) {
+    return `${document.documentElement.dataset.posterHomeUrl || "/"}${url}`;
+  }
+  return url;
+}

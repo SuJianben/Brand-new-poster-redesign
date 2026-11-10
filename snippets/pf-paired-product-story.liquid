@@ -1,0 +1,7 @@
+{%- capture paired_story_source -%}{%- render 'pf-paired-product-story-source', product: product -%}{%- endcapture -%}
+{%- assign paired_story_fields = paired_story_source | split: '|' -%}
+{%- if paired_story_fields.size == 8 -%}
+  {%- assign paired_story_width = paired_story_fields[2] | plus: 0 -%}
+  {%- assign paired_story_height = paired_story_fields[3] | plus: 0 -%}
+  {%- render 'pf-product-story', product: product, section: section, artwork_url: paired_story_fields[1], artwork_width: paired_story_width, artwork_height: paired_story_height, room_keys: paired_story_fields[7] -%}
+{%- endif -%}

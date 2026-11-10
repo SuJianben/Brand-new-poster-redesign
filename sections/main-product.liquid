@@ -1,0 +1,432 @@
+{% assign pf_material_route_product = product %}
+{% capture pf_material_pair_status %}{% render 'pf-material-pair-valid', product: product %}{% endcapture %}
+{% assign pf_material_pair_status = pf_material_pair_status | strip %}
+{% if pf_material_pair_status == 'true' and product.metafields.custom.paper_product.value != blank %}
+  {% assign product = product.metafields.custom.paper_product.value %}
+{% endif %}
+{% if pf_material_route_product.template_suffix == 'pf-paired-canvas' and pf_material_pair_status != 'true' %}
+  {% render 'pf-material-pair-unavailable', product: pf_material_route_product %}
+{% else %}
+{% capture hanger_rollout_status %}{% render 'product-hanger-rollout-status', product: product %}{% endcapture %}
+{% assign hanger_rollout_status = hanger_rollout_status | strip %}
+{% assign hanger_rollout_enabled = false %}
+{% if hanger_rollout_status == 'enabled' %}
+  {% assign hanger_rollout_enabled = true %}
+  {% assign hanger_original_media_id = product.metafields.custom.hanger_original_media_id.value | split: '/' | last %}
+{% endif %}
+{% capture pf_original_artwork_fields %}{% render 'pf-black-frame-artwork', product: product, slot: 'fields' %}{% endcapture %}
+{% assign pf_original_artwork_fields = pf_original_artwork_fields | strip %}
+{% assign pf_original_artwork_enabled = false %}
+{% if pf_original_artwork_fields != blank %}
+  {% assign pf_original_artwork_enabled = true %}
+  {% assign pf_original_artwork_fields = pf_original_artwork_fields | split: '|' %}
+  {% assign pf_original_width = pf_original_artwork_fields[0] | plus: 0 %}
+  {% assign pf_original_height = pf_original_artwork_fields[1] | plus: 0 %}
+  {% assign pf_original_media_id = pf_original_artwork_fields[2] %}
+  {% assign pf_old_hanger_media_id = pf_original_artwork_fields[3] %}
+  {% assign pf_hidden_media_ids = pf_original_artwork_fields[4] | default: pf_old_hanger_media_id | split: ',' %}
+  {% capture pf_original_artwork_url %}{% render 'pf-black-frame-artwork', product: product, slot: 'url' %}{% endcapture %}
+  {% assign pf_original_artwork_url = pf_original_artwork_url | strip %}
+  {% if pf_original_artwork_url == blank %}{% assign pf_original_artwork_url = product.metafields.custom.hanger_original_artwork_url.value %}{% endif %}
+  {% assign pf_original_ratio = pf_original_width | times: 1.0 | divided_by: pf_original_height %}
+  {% assign pf_original_orientation = 'square' %}
+  {% if pf_original_ratio > 1.08 %}{% assign pf_original_orientation = 'landscape' %}{% elsif pf_original_ratio < 0.92 %}{% assign pf_original_orientation = 'portrait' %}{% endif %}
+{% endif %}
+{% assign framing_render_mode = 'image' %}
+{% if section.settings.enable_css_framing_preview %}
+  {% assign framing_render_mode = 'css' %}
+{% endif %}
+<link rel="stylesheet" href="{{ 'product-showcase.css' | asset_url }}&psv=default-css-mat-scale-v1-20260819">
+{{ 'product-size-guide.css' | asset_url | stylesheet_tag }}
+{{ 'pf-mobile-purchase-20260929.css' | asset_url | stylesheet_tag }}
+
+{% if framing_render_mode == 'css' %}
+  <link rel="stylesheet" href="{{ 'custom-css-framing.css' | asset_url }}&psv=default-product-toggle-v1-20260819">
+{% endif %}
+{% if hanger_rollout_enabled %}
+  {{ 'product-hanger-media.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-media-roles.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+{% if pf_original_artwork_enabled %}
+  <link rel="stylesheet" href="{{ 'black-frame-media.css' | asset_url }}&psv=92b7bf77f27a47d4">
+  <script src="{{ 'product-original-artwork.js' | asset_url }}&psv=50a0d4084fe63bf0" defer="defer"></script>
+{% endif %}
+<script src="{{ 'framing-option-visibility.js' | asset_url }}&psv=20261024-final1" defer="defer"></script>
+<script src="{{ 'product-framing-catalog.js' | asset_url }}&psv=20261026-pill3" defer="defer"></script>
+{% if framing_render_mode == 'css' %}
+  <script src="{{ 'custom-css-framing.js' | asset_url }}&psv=20261026-mobile1" defer="defer"></script>
+{% endif %}
+<script src="{{ 'framing-fulfilment.js' | asset_url }}&psv=5434afa539fab4bc" defer="defer"></script>
+<script src="{{ 'product-framing.js' | asset_url }}&psv=20261026-canvas1" defer="defer"></script>
+<script src="{{ 'product-showcase.js' | asset_url }}&psv=be6d952d8d369712" defer="defer"></script>
+<script src="{{ 'product-sale-badge.js' | asset_url }}&psv=variant-discount-v1-20260825" defer="defer"></script>
+<script src="{{ 'product-size-guide.js' | asset_url }}&psv=size-guide-v1-20260821" defer="defer"></script>
+<link rel="stylesheet" href="{{ 'pf-mobile-atf-20261016.css' | asset_url }}&psv=20261024-final5">
+<script src="{{ 'pf-mobile-purchase-20260929.js' | asset_url }}&psv=20261031-pdp003" defer="defer"></script>
+<link rel="stylesheet" href="{{ 'pf-mobile-pdp-001.css' | asset_url }}">
+
+{% assign selected_variant = product.selected_or_first_available_variant %}
+{% assign image_media = product.media | where: 'media_type', 'image' %}
+{% assign preview_media = selected_variant.featured_media | default: product.featured_media | default: image_media.first %}
+{% unless preview_media.media_type == 'image' %}
+  {% assign preview_media = image_media.first %}
+{% endunless %}
+{% if hanger_rollout_enabled %}
+  {% assign preview_media = product.featured_media | default: image_media.first %}
+{% endif %}
+{% if pf_original_artwork_enabled %}
+  {% for pf_source_media in image_media %}
+    {% assign pf_source_media_id = pf_source_media.id | append: '' %}
+    {% if pf_source_media_id == pf_original_media_id %}{% assign preview_media = pf_source_media %}{% break %}{% endif %}
+  {% endfor %}
+{% endif %}
+{% assign selected_media = preview_media %}
+
+<section class="ps-product ps-section" data-ps-product data-ps-product-id="{{ product.id }}" data-ps-product-context="default"{% if pf_original_artwork_enabled %} data-ps-original-artwork="editorial-black-frame-2026-10-15-v1" data-ps-original-artwork-id="{{ pf_original_media_id }}" data-ps-active-media-role="frame-preview"{% elsif hanger_rollout_enabled %} data-ps-hanger-rollout="round-rods-2026-09-28" data-ps-active-media-role="hanger"{% endif %} data-ps-framing-render-mode="{{ framing_render_mode }}" data-section-id="{{ section.id }}">
+  <div class="ps-shell">
+    {% if section.settings.show_breadcrumb %}
+      <nav class="ps-breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a><span>/</span>
+        {% if collection %}<a href="{{ collection.url }}">{{ collection.title }}</a><span>/</span>{% endif %}
+        <span aria-current="page">{{ product.title }}</span>
+      </nav>
+    {% endif %}
+
+    <div class="ps-layout">
+      <div class="ps-left">
+        {% render 'pf-material-gallery', product: product, route_product: pf_material_route_product, pair_status: pf_material_pair_status %}
+        <div class="ps-media-stage"{% if pf_material_pair_status == 'true' and pf_material_route_product.id != product.id %} data-pf-paper-media-guard hidden style="display:none!important"{% endif %}>
+          <div class="ps-thumbnail-rail">
+            {% if section.settings.show_thumbnail_navigation %}
+              <button class="ps-thumbnail-rail__control ps-thumbnail-rail__control--up" type="button" data-ps-thumbnail-scroll="-1" aria-label="Show previous thumbnails"><svg class="ps-action-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6" /></svg></button>
+            {% endif %}
+            <div class="ps-thumbnails" data-ps-thumbnail-rail aria-label="Product media">
+              {% if pf_original_artwork_enabled %}{% render 'product-original-artwork', product: product, slot: 'frame-thumbnail', width: pf_original_width, height: pf_original_height, image_url: pf_original_artwork_url %}{% endif %}
+              {% for media in product.media %}
+                {% if media.media_type == 'image' %}
+                  {% assign current_media_id = media.id | append: '' %}
+                  {% if pf_original_artwork_enabled and pf_hidden_media_ids contains current_media_id %}{% continue %}{% endif %}
+                  {% if pf_original_artwork_enabled and current_media_id == pf_original_media_id %}
+                    {% render 'product-original-artwork', product: product, slot: 'thumbnail', media_id: current_media_id, width: pf_original_width, height: pf_original_height, image_url: pf_original_artwork_url %}
+                  {% elsif hanger_rollout_enabled and current_media_id == hanger_original_media_id %}
+                    {% render 'product-hanger-thumbnail', product: product, role: 'artwork', media_id: current_media_id, image_url: product.metafields.custom.hanger_original_artwork_url.value %}
+                  {% else %}
+                  <button class="ps-thumbnail {% if media.id == selected_media.id or forloop.first and selected_media == blank %}is-active{% endif %}" type="button" data-ps-media data-media-id="{{ media.id }}"{% if hanger_rollout_enabled %} data-media-role="{% if media.id == product.featured_media.id %}hanger{% else %}gallery{% endif %}"{% endif %} data-media-src="{{ media.preview_image | image_url: width: 1800 }}" data-media-srcset="{{ media.preview_image | image_url: width: 640 }} 640w, {{ media.preview_image | image_url: width: 900 }} 900w, {{ media.preview_image | image_url: width: 1200 }} 1200w, {{ media.preview_image | image_url: width: 1600 }} 1600w, {{ media.preview_image | image_url: width: 1800 }} 1800w" data-media-alt="{{ media.alt | default: product.title | escape }}" aria-label="Show image {{ forloop.index }}">
+                    {{ media.preview_image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90,140,180', alt: media.alt | default: product.title }}
+                  </button>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+              {% if hanger_rollout_enabled and pf_original_artwork_enabled == false %}
+                {% assign comparison_media_id = 'display-options-' | append: product.id %}
+                {% render 'product-hanger-thumbnail', product: product, role: 'comparison', media_id: comparison_media_id, image_url: product.metafields.custom.hanger_display_options_url.value %}
+              {% endif %}
+            </div>
+            {% if section.settings.show_thumbnail_navigation %}
+              <button class="ps-thumbnail-rail__control ps-thumbnail-rail__control--down" type="button" data-ps-thumbnail-scroll="1" aria-label="Show next thumbnails"><svg class="ps-action-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" /></svg></button>
+            {% endif %}
+          </div>
+          <div class="ps-main-media">
+            <print-preview class="ps-print-preview" data-ps-art-preview data-orientation="{% if pf_original_artwork_enabled %}{{ pf_original_orientation }}{% else %}portrait{% endif %}"{% if pf_original_artwork_enabled %} data-ps-preview-orientation="{{ pf_original_orientation }}"{% endif %} data-media-id="{{ preview_media.id | default: product.media.first.id }}" style="--pdp-aspect: {% if pf_original_artwork_enabled %}{{ pf_original_width }} / {{ pf_original_height }}{% elsif preview_media %}{{ preview_media.preview_image.width }} / {{ preview_media.preview_image.height }}{% else %}800 / 1100{% endif %};{% render 'pf-product-initial-frame-style', original_enabled: pf_original_artwork_enabled, original_width: pf_original_width, original_height: pf_original_height, preview_media: preview_media %}" data-pf-initial-artwork-size="true">
+              <div class="print-preview__inner" data-pdp-print-preview data-pdp-canvas data-ps-preview-canvas>
+                <div class="print-preview__bg" aria-hidden="true"></div>
+                {% if framing_render_mode == 'css' %}
+                  <div class="ps-css-frame" data-ps-css-frame data-has-frame="false">
+                    <div class="ps-css-mat" data-ps-css-mat data-has-mat="false">
+                      {% render 'css-frame-rails' %}
+                      <div class="ps-css-artwork" data-ps-css-artwork>
+                        {% if pf_original_artwork_enabled %}{% render 'product-original-artwork', product: product, width: pf_original_width, height: pf_original_height, image_url: pf_original_artwork_url %}{% else %}{% render 'product-preview-artwork', preview_media: preview_media, product: product %}{% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                  {% if pf_original_artwork_enabled %}{% render 'product-original-artwork', product: product, width: pf_original_width, height: pf_original_height, image_url: pf_original_artwork_url %}{% else %}{% render 'product-preview-artwork', preview_media: preview_media, product: product %}{% endif %}
+                {% endif %}
+                <img class="print-preview__layer print-preview__layer--passepartout" data-ps-framing-layer="passepartout" width="800" height="1100" alt="" hidden aria-hidden="true">
+                <img class="print-preview__layer print-preview__layer--frame" data-ps-framing-layer="frame" width="800" height="1100" alt="" hidden aria-hidden="true">
+              </div>
+            </print-preview>
+            <button class="ps-media-navigation ps-media-navigation--previous" type="button" data-ps-media-direction="-1" aria-label="Show previous image"><svg class="ps-action-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6" /></svg></button>
+            <button class="ps-media-navigation ps-media-navigation--next" type="button" data-ps-media-direction="1" aria-label="Show next image"><svg class="ps-action-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6" /></svg></button>
+          </div>
+        </div>
+        {% if pf_original_artwork_enabled %}<p class="pf-black-frame-caption"{% if pf_material_pair_status == 'true' and pf_material_route_product.id != product.id %} hidden style="display:none!important"{% endif %}>Black frame shown. Frame optional.</p>{% endif %}
+        <div class="ps-details-relocation-anchor" data-ps-details-desktop-anchor aria-hidden="true"></div>
+        <div class="ps-left-details" data-ps-accordions>
+          {% comment %} Product details accordion removed 2026-09-08: duplicated the Description tab below. {% endcomment %}
+          <section class="ps-accordion-panel is-open" data-ps-accordion>
+            <button class="ps-accordion-panel__trigger" type="button" data-ps-accordion-trigger aria-expanded="true" aria-controls="ps-shipping-returns-{{ section.id }}">
+              <span>{{ section.settings.shipping_returns_heading }}</span><span class="ps-accordion-panel__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="ps-accordion-panel__body" id="ps-shipping-returns-{{ section.id }}" data-ps-accordion-panel aria-hidden="false">
+              <div class="ps-accordion-panel__body-inner">
+                <div class="ps-detail-content">{% capture pf_fulfilment_source %}{% render 'pf-market-copy', slot: 'delivery', source: section.settings.shipping_returns_content, product: product %}{% endcapture %}{% capture pf_material_copy_content %}{% render 'pf-framing-copy', source: pf_fulfilment_source, product: product %}{% endcapture %}{% render 'pf-material-copy', product: product, route_product: pf_material_route_product, block: block, slot: 'delivery', source: pf_material_copy_content %}</div>
+              </div>
+            </div>
+          </section>
+          <script>(function(){ if(!window.matchMedia('(max-width:767px)').matches) return; var s=document.currentScript.previousElementSibling; if(!s||!s.hasAttribute('data-ps-accordion')) return; s.classList.remove('is-open'); var t=s.querySelector('[data-ps-accordion-trigger]'); var p=s.querySelector('[data-ps-accordion-panel]'); if(t)t.setAttribute('aria-expanded','false'); if(p)p.setAttribute('aria-hidden','true'); })();</script>
+        </div>
+      </div>
+
+      <aside class="ps-purchase" aria-label="Purchase {{ product.title | escape }}">
+        {% render 'pf-material-options', product: product, route_product: pf_material_route_product, section: section %}
+        {% form 'product', product, class: 'ps-form', data_ps_form: '' %}
+          {% if pf_material_pair_status == 'true' %}<fieldset data-pf-paper-purchase-guard{% if pf_material_route_product.id != product.id %} disabled hidden style="display:none!important"{% else %} style="display:contents"{% endif %}>{% endif %}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-ps-variant-input>
+          {% for block in section.blocks %}
+            {% render 'product-purchase-block', block: block, product: product, section: section, selected_variant: selected_variant, form: form %}
+          {% endfor %}
+          {% if pf_material_pair_status == 'true' %}</fieldset>{% endif %}
+        {% endform %}
+        <div class="ps-details-relocation-anchor" data-ps-details-mobile-anchor aria-hidden="true"></div>
+      </aside>
+    </div>
+
+  </div>
+
+  {% render 'product-size-guide', product: product, section: section %}
+</section>
+
+<script type="application/json" data-ps-variants>
+  {{ product.variants | json }}
+</script>
+{% render 'product-framing-catalog', section: section %}
+{% assign product = pf_material_route_product %}
+
+{% if product.template_suffix == 'pf-fixed-canvas' %}
+  {% render 'pf-product-story-content', product: product, section: section %}
+{% endif %}
+
+{% endif %}
+
+{{ 'odd-product.css' | asset_url | stylesheet_tag }}
+{% schema %}
+{
+  "name": "Main product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_css_framing_preview",
+      "label": "Use CSS frame preview rendering",
+      "info": "When disabled, frame and passepartout previews use image assets.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumbnail_navigation",
+      "label": "Show thumbnail navigation arrows",
+      "info": "Turn off when the product has only a few images.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_details_heading",
+      "label": "Product details heading",
+      "default": "Product details"
+    },
+    {
+      "type": "text",
+      "id": "shipping_returns_heading",
+      "label": "Shipping and returns heading",
+      "default": "Shipping and returns"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_returns_content",
+      "label": "Shipping and returns content",
+      "default": "<p>Each order is made for you. Delivery estimates are shown before checkout.</p>"
+    },
+    {
+      "type": "product",
+      "id": "passepartout_product",
+      "label": "Passepartout add-on product"
+    },
+    {
+      "type": "product",
+      "id": "frame_product",
+      "label": "Frame add-on product"
+    }
+  ],
+  "max_blocks": 30,
+  "blocks": [
+    {
+      "type": "sale_badge",
+      "name": "Sale badge",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Save" }
+      ]
+    },
+    {
+      "type": "reviews",
+      "name": "Review summary",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Verified reviews" }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Product title",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "vendor",
+      "name": "Artist or vendor",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Artist:" }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "shipping_note",
+      "name": "Shipping note",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping on qualifying orders." }
+      ]
+    },
+    {
+      "type": "short_description",
+      "name": "Short description",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "material",
+      "name": "Material",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Material:" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Poster" }
+      ]
+    },
+    {
+      "type": "size_selector",
+      "name": "Size selector",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Size:" },
+        { "type": "text", "id": "guide_label", "label": "Size guide label", "default": "Size guide" }
+      ]
+    },
+    {
+      "type": "variant_options",
+      "name": "Other variant options",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "passepartout",
+      "name": "Passepartout selector",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Passepartout:" },
+        { "type": "text", "id": "empty_value", "label": "Empty value", "default": "None" },
+        { "type": "text", "id": "add_label", "label": "Add label", "default": "Add passepartout" },
+        { "type": "text", "id": "loading_label", "label": "Loading label", "default": "Loading…" },
+        { "type": "text", "id": "options_label", "label": "Options accessibility label", "default": "Passepartout options" }
+      ]
+    },
+    {
+      "type": "frame",
+      "name": "Frame selector",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Frame:" },
+        { "type": "text", "id": "empty_value", "label": "Empty value", "default": "No frame" },
+        { "type": "text", "id": "add_label", "label": "Add label", "default": "Add frame" },
+        { "type": "text", "id": "loading_label", "label": "Loading label", "default": "Loading…" },
+        { "type": "text", "id": "options_label", "label": "Options accessibility label", "default": "Frame options" }
+      ]
+    },
+    {
+      "type": "hanging_kit",
+      "name": "Scroll rod",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Scroll Rod" }
+      ]
+    },
+    {
+      "type": "quantity",
+      "name": "Quantity selector",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Quantity" },
+        { "type": "text", "id": "decrease_label", "label": "Decrease accessibility label", "default": "Decrease quantity" },
+        { "type": "text", "id": "increase_label", "label": "Increase accessibility label", "default": "Increase quantity" }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy button",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "add_label", "label": "Available label", "default": "Add to cart" },
+        { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Sold out" },
+        { "type": "text", "id": "unavailable_label", "label": "Unavailable label", "default": "Unavailable" },
+        { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true }
+      ]
+    },
+    {
+      "type": "quantity_offer",
+      "name": "Quantity offer",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "SUMMER OFFER" },
+        { "type": "text", "id": "summary", "label": "Summary", "default": "BUY3+ Save 15%" },
+        { "type": "text", "id": "toggle_label", "label": "Toggle label", "default": "more" },
+        { "type": "checkbox", "id": "default_open", "label": "Open by default", "default": false },
+        { "type": "header", "content": "Table headings" },
+        { "type": "text", "id": "column_one_heading", "label": "First column", "default": "Buy quantity" },
+        { "type": "text", "id": "column_two_heading", "label": "Second column", "default": "Discount" },
+        { "type": "header", "content": "Table row 1" },
+        { "type": "text", "id": "row_1_label", "label": "First column", "default": "Buy 1" },
+        { "type": "text", "id": "row_1_value", "label": "Second column", "default": "Standard price" },
+        { "type": "header", "content": "Table row 2" },
+        { "type": "text", "id": "row_2_label", "label": "First column", "default": "Buy 2" },
+        { "type": "text", "id": "row_2_value", "label": "Second column", "default": "Save 10%" },
+        { "type": "header", "content": "Table row 3" },
+        { "type": "text", "id": "row_3_label", "label": "First column", "default": "Buy 3+" },
+        { "type": "text", "id": "row_3_value", "label": "Second column", "default": "Save 15%" }
+      ]
+    },
+    {
+      "type": "assurances",
+      "name": "Service assurances",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "item_1", "label": "Line 1", "default": "Immediately ready to hang" },
+        { "type": "text", "id": "item_2", "label": "Line 2", "default": "Free worldwide shipping over $49" },
+        { "type": "text", "id": "item_3", "label": "Line 3", "default": "Estimated delivery: Jul 29 - Jul 31" },
+        { "type": "text", "id": "item_4", "label": "Line 4" },
+        { "type": "text", "id": "item_5", "label": "Line 5" }
+      ]
+    },
+    {
+      "type": "payment_methods",
+      "name": "Payment methods",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Securely packaged & paid" },
+        { "type": "text", "id": "accessibility_label", "label": "Accessibility label", "default": "Accepted payment methods" },
+        { "type": "text", "id": "note", "label": "Bottom note", "default": "♢ Special packaging for art galleries" }
+      ]
+    }
+  ]
+}
+{% endschema %}

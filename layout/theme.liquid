@@ -1,19 +1,41 @@
+{% liquid
+  assign visible_cart_count = 0
+  for item in cart.items
+    if item.properties._framing_component == blank
+      assign visible_cart_count = visible_cart_count | plus: item.quantity
+    endif
+  endfor
+%}
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}" data-poster-shopify>
+<html lang="{{ request.locale.iso_code }}" data-poster-shopify data-poster-page-type="{{ request.page_type | escape }}" data-poster-home-url="{{ routes.root_url }}" data-poster-cart-count="{{ visible_cart_count }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page_title | escape }}</title>
     {{ content_for_header }}
     {{ 'poster-home.css' | asset_url | stylesheet_tag }}
+    {% if request.page_type == 'product' %}
+      {% liquid
+        assign pf_market_root = routes.root_url | append: '/' | replace: '//', '/'
+      %}
+      <script>window.PFMarket = Object.freeze({root: {{ pf_market_root | json }}, country: {{ localization.country.iso_code | json }}, currency: {{ cart.currency.iso_code | json }}});</script>
+      <script src="{{ 'pf-market-commerce-20260930.js' | asset_url }}" defer></script>
+      {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+      {{ 'shopify-payment-icons.css' | asset_url | stylesheet_tag }}
+      {{ 'pf-cart-media.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'pf-cart-media.js' | asset_url }}" defer></script>
+      <script src="{{ 'pf-cart-line-groups-20261002.js' | asset_url }}" defer></script>
+      <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+    {% endif %}
   </head>
-  <body>
+  <body{% if request.page_type == 'product' %} class="template-product"{% endif %}>
     <main>
       <div class="top-shell" data-poster-header-shell>{% sections 'header-group' %}</div>
       {{ content_for_layout }}
       {% sections 'footer-group' %}
       <div id="root"></div>
     </main>
+    {% if request.page_type == 'product' %}{% render 'cart-drawer' %}{% endif %}
     <script type="module" src="{{ 'poster-home.js' | asset_url }}"></script>
   </body>
 </html>

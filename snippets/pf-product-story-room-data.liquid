@@ -1,0 +1,13 @@
+{%- comment -%}Generated audited display data; edit source manifests, not these rows.{%- endcomment -%}
+{%- capture pf_story_registry -%}
+[living:pf-dopamine-20261020-scene-living-3a41817802d6.jpg|1672|941|Colour, collected together.|A playful mix of art, soft furnishings and favourite objects.|Colourful gallery wall above a sofa in a styled living room]
+[christmas:pf-dopamine-20261020-scene-christmas-530832ed9334.jpg|1122|1402|A little seasonal warmth.|Rich reds and pinks bring a festive corner together.|Red and pink artwork arranged in a festive interior]
+[bedroom-floral:pf-dopamine-20261020-scene-bedroom-floral-6c852c058869.jpg|1536|1024|Wake up to colour.|Floral accents and soft tones for a restful bedroom.|Floral gallery wall styled above a bed with soft colourful furnishings]
+[kitchen:pf-dopamine-20261020-scene-kitchen-9abfc563dfac.jpg|1122|1402|Something fresh for the kitchen.|Food-inspired prints and cheerful everyday details.|Food-inspired artwork styled in a colourful kitchen]
+[office:pf-dopamine-20261020-scene-office-9a5bec2ae418.jpg|1122|1402|Room for a fresh thought.|Blue accents and graphic shapes brighten a workspace.|Botanical and geometric artwork styled above a home workspace]
+[reading:pf-dopamine-20261020-scene-reading-e3814569d480.jpg|1672|941|A slower corner.|Coastal colours meet soft textures and a favourite chair.|Coastal artwork styled in a reading corner with soft furnishings]
+[scarlet-dining:pf-product-story-20261020-scarlet-dining.png|1122|1402|A brighter kind of gathering.|Warm yellow, cherry red and a little blush.|Red botanical artwork styled with a warm yellow sideboard and pink dining table accents]
+[scarlet-reading:pf-product-story-20261020-scarlet-reading.png|1122|1402|A corner to call your own.|Soft pink walls. Sage green. A slower afternoon.|Red botanical artwork styled in a reading corner with a pink wall and green chair]
+{%- endcapture -%}
+{%- assign pf_story_token = '[' | append: room_key | append: ':' -%}
+{%- if pf_story_registry contains pf_story_token -%}{{- pf_story_registry | split: pf_story_token | last | split: ']' | first -}}{%- endif -%}

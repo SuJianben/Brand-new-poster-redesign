@@ -1,0 +1,24 @@
+{%- comment -%}Exact ImageDrop URL/geometry check; only Shopify's equivalent store/CDN URL forms are accepted.{%- endcomment -%}
+{%- assign pf_image_match = false -%}
+{%- if media.media_type == 'image' and media.preview_image.width == expected_width and media.preview_image.height == expected_height -%}
+  {%- assign pf_platform_url = media.preview_image | image_url: width: expected_width -%}
+  {%- assign pf_parts = pf_platform_url | split: '&width=' -%}
+  {%- assign pf_actual_url = pf_parts[0] -%}
+  {%- assign pf_safe_query = false -%}
+  {%- if pf_parts.size == 1 and pf_platform_url == pf_actual_url -%}{%- assign pf_safe_query = true -%}
+  {%- elsif pf_parts.size == 2 -%}
+    {%- assign pf_requested_width = pf_parts[1] | plus: 0 -%}
+    {%- assign pf_requested_text = pf_requested_width | append: '' -%}
+    {%- assign pf_width_only_url = pf_actual_url | append: '&width=' | append: pf_requested_text -%}
+    {%- if pf_requested_width > 0 and pf_requested_text == pf_parts[1] and pf_platform_url == pf_width_only_url -%}{%- assign pf_safe_query = true -%}{%- endif -%}
+  {%- endif -%}
+  {%- if pf_safe_query -%}
+    {%- assign pf_tail = expected_url | split: '/files/' | last -%}
+    {%- assign pf_cdn_relative = expected_url | remove_first: 'https:' -%}
+    {%- assign pf_store = 'https://posterandform.com/cdn/shop/files/' | append: pf_tail -%}
+    {%- assign pf_store_relative = '//posterandform.com/cdn/shop/files/' | append: pf_tail -%}
+    {%- assign pf_path = '/cdn/shop/files/' | append: pf_tail -%}
+    {%- if pf_actual_url == expected_url or pf_actual_url == pf_cdn_relative or pf_actual_url == pf_store or pf_actual_url == pf_store_relative or pf_actual_url == pf_path -%}{%- assign pf_image_match = true -%}{%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if pf_image_match -%}yes{%- endif -%}

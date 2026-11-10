@@ -1,0 +1,68 @@
+{%- capture pf_pair_gate -%}{% render 'pf-material-pair-valid', product: product %}{%- endcapture -%}
+{%- assign pf_pair_gate = pf_pair_gate | strip -%}
+{%- if pf_pair_gate == 'true' -%}
+  {%- assign pf_paper = product -%}
+  {%- assign pf_canvas = pf_paper.metafields.custom.canvas_product.value -%}
+  {%- assign pf_canvas_variant = pf_canvas.selected_or_first_available_variant -%}
+  {%- assign pf_route_material = 'paper' -%}
+  {%- if route_product.id == pf_canvas.id -%}{%- assign pf_route_material = 'canvas' -%}{%- endif -%}
+  {%- assign pf_material_form_id = 'PFCanvasForm-' | append: section.id -%}
+  <link rel="stylesheet" href="{{ 'pf-product-material-20261021-e59ea4945b57.css' | asset_url }}">
+  <script type="module" src="{{ 'pf-product-material-20261021-entry-9e04dbeb37da.js' | asset_url }}"></script>
+  {%- if pf_route_material == 'canvas' -%}{% render 'pf-material-canvas-fallback', canvas: pf_canvas, section: section %}{%- endif -%}
+  <div class="pf-material" data-pf-material-options hidden>
+    <fieldset class="pf-material__switch">
+      <legend>Choose your material</legend>
+      <button type="button" data-pf-material-select="paper" aria-pressed="true">Art paper</button>
+      <button type="button" data-pf-material-select="canvas" aria-pressed="false">Canvas</button>
+    </fieldset>
+    <div data-pf-canvas-panel hidden>
+      {% form 'product', pf_canvas, id: pf_material_form_id, class: 'pf-material__canvas-form' %}
+        <h1>{{ pf_paper.title | escape }}</h1>
+        <p class="pf-material__intro">Canvas art print</p>
+        <p class="pf-material__price" data-pf-canvas-price>{{ pf_canvas_variant.price | money_with_currency }}</p>
+        <input type="hidden" name="id" data-pf-canvas-id value="{{ pf_canvas_variant.id }}">
+        <label class="pf-material__label" for="PFCanvasSize-{{ section.id }}">Size (width × height)</label>
+        <select id="PFCanvasSize-{{ section.id }}" data-pf-canvas-size>
+          {% for option in pf_canvas.options_with_values %}{% if option.name == 'Size' %}
+            {% for value in option.values %}{% assign pf_size_name = value.name | default: value %}<option value="{{ pf_size_name | escape }}"{% if pf_size_name == pf_canvas_variant.option1 %} selected{% endif %}>{{ pf_size_name | escape }}</option>{% endfor %}
+          {% endif %}{% endfor %}
+        </select>
+        <fieldset class="pf-material__finishes">
+          <legend>Finish</legend>
+          {% assign pf_finishes = 'Canvas only|Stretched|Black' | split: '|' %}
+          {% for finish in pf_finishes %}
+            <div>
+              <input type="radio" name="pf-canvas-finish-{{ section.id }}" id="PFCanvasFinish-{{ section.id }}-{{ forloop.index }}" value="{{ finish }}" data-pf-canvas-finish{% if finish == pf_canvas_variant.option2 %} checked{% endif %}>
+              <label for="PFCanvasFinish-{{ section.id }}-{{ forloop.index }}">{% case finish %}{% when 'Stretched' %}Stretched canvas{% when 'Black' %}Black floater frame{% else %}Canvas only{% endcase %}</label>
+            </div>
+          {% endfor %}
+        </fieldset>
+        <p class="pf-material__note" data-pf-canvas-note></p>
+        <p class="pf-material__note">Sizes refer to the front artwork area. The outer frame adds to the overall dimensions.</p>
+        <label class="pf-material__label" for="PFCanvasQuantity-{{ section.id }}">Quantity</label>
+        <input class="pf-material__quantity" id="PFCanvasQuantity-{{ section.id }}" type="number" name="quantity" min="1" max="99" step="1" value="1" required>
+        <button class="ps-add-button pf-material__add" type="submit" data-pf-canvas-add{% unless pf_canvas_variant.available %} disabled{% endunless %}>Add to bag</button>
+        <p role="status" aria-live="polite" data-pf-canvas-status></p>
+        <a class="pf-material__bag" href="{{ routes.cart_url }}">View bag</a>
+        <p class="pf-material__note">Canvas options are excluded from paper-print offers. For another frame colour, <a href="{{ routes.root_url | append: '/pages/contact' | replace: '//', '/' }}">contact us</a>.</p>
+      {% endform %}
+      <div class="pf-material__sticky" data-pf-canvas-sticky hidden role="region" aria-label="Canvas quick purchase">
+        <div><strong data-pf-canvas-sticky-price></strong><button type="button" data-pf-canvas-sticky-edit></button></div>
+        <button type="button" class="ps-add-button" data-pf-canvas-sticky-add>Add to bag</button>
+      </div>
+    </div>
+    {%- capture pf_material_json -%}
+    {"version":1,"paperId":{{ pf_paper.id | append: '' | json }},"canvasId":{{ pf_canvas.id | append: '' | json }},
+      "paperToCanvas":{{ pf_paper.metafields.custom.canvas_product.value.id | append: '' | json }},"canvasToPaper":{{ pf_canvas.metafields.custom.paper_product.value.id | append: '' | json }},
+      "sourcePaperId":{{ pf_canvas.metafields.pf_pairing.source_paper_id.value | json }},"operationKey":{{ pf_canvas.metafields.pf_pairing.operation_key.value | json }},"cropContractSha":{{ pf_canvas.metafields.pf_pairing.crop_contract_sha256.value | json }},
+      "paperSha":{{ pf_paper.metafields.pf_artwork.source_sha256.value | downcase | json }},"canvasSha":{{ pf_canvas.metafields.pf_artwork.source_sha256.value | downcase | json }},
+      "canvasType":{{ pf_canvas.type | json }},"canvasTemplate":{{ pf_canvas.template_suffix | json }},"published":{% if pf_canvas.published_at != blank %}true{% else %}false{% endif %},"available":{{ pf_canvas.available | json }},
+      "title":{{ pf_paper.title | json }},"country":{{ localization.country.iso_code | json }},"currency":{{ localization.country.currency.iso_code | json }},"root":{{ routes.root_url | append: '/' | replace: '//', '/' | json }},"routeMaterial":{{ pf_route_material | json }},
+      "variants":[{% for variant in pf_canvas.variants %}{"id":{{ variant.id | append: '' | json }},"size":{{ variant.option1 | json }},"finish":{{ variant.option2 | json }},"available":{{ variant.available | json }},"price":{{ variant.price | json }},"money":{{ variant.price | money_with_currency | strip_html | json }},"mediaId":{{ variant.featured_media.id | append: '' | json }}}{% unless forloop.last %},{% endunless %}{% endfor %}],
+      "media":[{% assign pf_media_separator = '' %}{% for media in pf_canvas.media %}{% if media.media_type == 'image' %}{{ pf_media_separator }}{"id":{{ media.id | append: '' | json }},"src":{{ media.preview_image | image_url: width: 1400 | json }},"alt":{{ media.alt | default: pf_canvas.title | json }},"width":{{ media.preview_image.width | json }},"height":{{ media.preview_image.height | json }}}{% assign pf_media_separator = ',' %}{% endif %}{% endfor %}]}
+    {%- endcapture -%}
+    {%- capture pf_material_json_lt -%}\u003c{%- endcapture -%}
+    <script type="application/json" data-pf-material-config>{{ pf_material_json | replace: '<', pf_material_json_lt }}</script>
+  </div>
+{%- endif -%}

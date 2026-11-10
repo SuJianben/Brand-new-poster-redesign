@@ -1,0 +1,26 @@
+/* Pre-composed product images already include their own presentation margin. */
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="hanger"] .ps-css-frame,
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="comparison"] .ps-css-frame {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  box-shadow: none;
+}
+
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="hanger"] .print-preview__layer--art,
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="comparison"] .print-preview__layer--art {
+  transform: none;
+}
+
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="hanger"] .ps-css-mat,
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="hanger"] .ps-css-artwork,
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="comparison"] .ps-css-mat,
+.ps-product[data-ps-hanger-rollout][data-ps-active-media-role="comparison"] .ps-css-artwork {
+  min-width: 0;
+  min-height: 0;
+}
+
+.ps-product[data-ps-hanger-rollout] .ps-thumbnail[data-media-role="comparison"] img {
+  object-fit: contain;
+  background: #fff;
+}

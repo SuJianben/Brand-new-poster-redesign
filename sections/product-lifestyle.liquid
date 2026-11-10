@@ -1,0 +1,41 @@
+{{ 'product-showcase.css' | asset_url | stylesheet_tag }}
+
+{% capture pf_product_story_content %}{% render 'pf-product-story-content', product: product, section: section %}{% endcapture %}
+{% assign pf_product_story_content = pf_product_story_content | strip %}
+{% if pf_product_story_content != blank %}
+  {{ pf_product_story_content }}
+{% else %}
+  {% render 'product-series-lifestyle', product: product, section: section %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product lifestyle image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Fallback lifestyle image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "series",
+      "name": "Product series",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Series collection"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Product lifestyle image"
+    }
+  ]
+}
+{% endschema %}

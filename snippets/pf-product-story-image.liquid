@@ -1,0 +1,11 @@
+{%- comment -%}Full URL is separate from responsive thumbnails; these images are below the purchase gallery.{%- endcomment -%}
+{%- assign story_image_separator = '?' -%}
+{%- if image_url contains '?' -%}{%- assign story_image_separator = '&' -%}{%- endif -%}
+{%- assign story_default_width = image_width | at_most: 800 -%}
+{%- assign story_asset_size = story_default_width | append: 'x' -%}
+{%- assign story_max_width = image_width | at_most: 1800 -%}
+{%- assign story_steps = '360,600,900,1200,1600' | split: ',' -%}
+<img src="{% if image_asset != blank %}{{ image_asset | asset_img_url: story_asset_size }}{% else %}{{ image_url | escape }}{{ story_image_separator }}width={{ story_default_width }}{% endif %}"
+  srcset="{% for story_step in story_steps %}{% assign story_step_width = story_step | plus: 0 %}{% if story_step_width < story_max_width %}{% assign story_step_size = story_step | append: 'x' %}{% if image_asset != blank %}{{ image_asset | asset_img_url: story_step_size }}{% else %}{{ image_url | escape }}{{ story_image_separator }}width={{ story_step_width }}{% endif %} {{ story_step_width }}w, {% endif %}{% endfor %}{% assign story_max_size = story_max_width | append: 'x' %}{% if image_asset != blank %}{{ image_asset | asset_img_url: story_max_size }}{% else %}{{ image_url | escape }}{{ story_image_separator }}width={{ story_max_width }}{% endif %} {{ story_max_width }}w"
+  sizes="{{ sizes | default: '(min-width: 1440px) 636px, (min-width: 750px) calc((100vw - 126px) / 2), calc(100vw - 40px)' }}"
+  width="{{ image_width }}" height="{{ image_height }}" loading="lazy" decoding="async" fetchpriority="low" alt="{{ image_alt | escape }}">

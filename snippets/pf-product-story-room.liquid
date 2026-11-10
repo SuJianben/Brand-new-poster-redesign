@@ -1,0 +1,13 @@
+{%- capture story_room_row -%}{%- render 'pf-product-story-room-data', room_key: room_key -%}{%- endcapture -%}
+{%- assign story_room = story_room_row | split: '|' -%}
+{%- if story_room.size == 6 -%}
+  {%- assign room_url = story_room[0] | asset_url -%}
+  {%- assign room_width = story_room[1] | plus: 0 -%}
+  {%- assign room_height = story_room[2] | plus: 0 -%}
+  <figure>
+    <button class="pf-product-story__image-button" type="button" data-story-zoom="{{ room_key | escape }}" data-story-full-src="{{ room_url }}" data-story-full-width="{{ room_width }}" data-story-full-height="{{ room_height }}" data-story-caption="{{ story_room[4] | escape }}" aria-label="Enlarge {{ story_room[3] | escape }}">
+      {% render 'pf-product-story-image', image_url: room_url, image_asset: story_room[0], image_width: room_width, image_height: room_height, image_alt: story_room[5], sizes: image_sizes %}
+    </button>
+    <figcaption><h3>{{ story_room[3] | escape }}</h3><p>{{ story_room[4] | escape }}</p><span class="pf-product-story__view-hint">Select image to view larger</span></figcaption>
+  </figure>
+{%- endif -%}

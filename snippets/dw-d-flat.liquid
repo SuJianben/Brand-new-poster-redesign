@@ -1,0 +1,52 @@
+{%- liquid
+  assign pf_orig_url = p.metafields.custom.hanger_original_artwork_url.value | strip
+  assign orig_w = p.metafields.custom.hanger_original_width.value | default: p.featured_image.width | default: 380
+  assign orig_h = p.metafields.custom.hanger_original_height.value | default: p.featured_image.height | default: 507
+  assign img = p.featured_image
+  assign first_src = p.images[0].src | append: ''
+  if p.images.size > 1 and first_src contains 'black-frame-'
+    assign img = p.images[1]
+    assign orig_w = img.width | default: orig_w
+    assign orig_h = img.height | default: orig_h
+  elsif p.images.size > 2
+    assign second_src = p.images[1].src | append: ''
+    if second_src contains 'gallery_02_'
+      assign img = p.images[2]
+      assign orig_w = img.width | default: orig_w
+      assign orig_h = img.height | default: orig_h
+    endif
+  endif
+  assign target_w = w | default: 380
+  if pf_orig_url != blank
+    assign pf_orig_url = pf_orig_url | replace: 'https://cdn.shopify.com/s/files/1/0901/1603/0498/files/', '//posterandform.com/cdn/shop/files/'
+    if pf_orig_url contains '?'
+      assign pf_card_url = pf_orig_url | append: '&width=' | append: target_w
+    else
+      assign pf_card_url = pf_orig_url | append: '?width=' | append: target_w
+    endif
+  elsif img != blank
+    assign pf_card_url = img | image_url: width: target_w
+  endif
+-%}
+{%- if pf_card_url != blank -%}
+  {%- if lazy_room -%}
+    <img
+      class="{{ cls }}"
+      data-room-src="{{ pf_card_url }}"
+      width="{{ orig_w }}"
+      height="{{ orig_h }}"
+      decoding="async"
+      alt=""
+    >
+  {%- else -%}
+    <img
+      class="{{ cls }}"
+      src="{{ pf_card_url }}"
+      width="{{ orig_w }}"
+      height="{{ orig_h }}"
+      {%- if eager -%}loading="eager" fetchpriority="high"{%- else -%}loading="lazy"{%- endif -%}
+      decoding="async"
+      alt="{{ alt | default: p.title | escape }}"
+    >
+  {%- endif -%}
+{%- endif -%}

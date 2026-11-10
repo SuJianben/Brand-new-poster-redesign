@@ -1,0 +1,24 @@
+/* A display-only frame is separate from the selected, priced framing state. */
+.ps-product[data-ps-original-artwork] .pf-black-frame-caption {
+  visibility:hidden; margin:8px 0 0 86px;
+  color:#555b5e; font:400 12px/1.4 var(--sans); text-align:center;
+}
+.ps-product[data-ps-original-artwork][data-ps-active-media-role="frame-preview"] .ps-css-frame[data-has-frame="false"] {
+  outline:clamp(6px,.8vw,12px) solid #18191a;
+  box-shadow:0 8px 18px rgb(20 22 21 / 20%);
+}
+.ps-product[data-ps-original-artwork][data-ps-active-media-role="frame-preview"] .pf-black-frame-caption {
+  visibility:visible;
+}
+.ps-product[data-ps-original-artwork] .ps-thumbnail--frame-preview { display:grid; place-items:center; }
+.ps-product[data-ps-original-artwork] .pf-frame-thumb-art {
+  display:block; border:3px solid #18191a; box-shadow:0 2px 4px rgb(20 22 21 / 15%);
+}
+.ps-product[data-ps-original-artwork] .pf-frame-thumb-art img {
+  display:block; width:auto; height:auto; max-width:44px; max-height:56px; object-fit:contain;
+}
+@media(max-width:767px) {
+  .ps-product[data-ps-original-artwork] .pf-black-frame-caption {
+    margin:6px 0 0; font-size:11px;
+  }
+}

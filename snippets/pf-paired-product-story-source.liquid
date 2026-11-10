@@ -1,0 +1,61 @@
+{%- comment -%}Only reciprocal, unchanged-composition canvas pairs may inherit a paper artwork story.{%- endcomment -%}
+{%- assign paired_story_valid = false -%}
+{%- assign paired_paper = product.metafields.custom.paper_product.value -%}
+{%- assign paired_story_template = false -%}
+{%- if product.template_suffix == 'pf-fixed-canvas' or product.template_suffix == 'pf-paired-canvas' -%}{%- assign paired_story_template = true -%}{%- endif -%}
+{%- if paired_story_template and product.type == 'Canvas art print' and paired_paper != blank -%}
+  {%- assign paired_expected_handle = paired_paper.handle | append: '-canvas' -%}
+  {%- assign paired_paper_gid = 'gid://shopify/Product/' | append: paired_paper.id -%}
+  {%- assign paired_reciprocal = paired_paper.metafields.custom.canvas_product.value -%}
+  {%- if product.handle == paired_expected_handle and paired_reciprocal.id == product.id and paired_paper.type == 'Print' and paired_paper.template_suffix == blank and product.metafields.pf_pairing.source_paper_id.value == paired_paper_gid -%}
+    {%- assign paired_story_shard = paired_paper.id | modulo: 7 -%}
+    {%- capture paired_story_row -%}
+      {%- case paired_story_shard -%}
+        {%- when 0 -%}{%- render 'pf-product-story-data-0', product_id: paired_paper.id -%}
+        {%- when 1 -%}{%- render 'pf-product-story-data-1', product_id: paired_paper.id -%}
+        {%- when 2 -%}{%- render 'pf-product-story-data-2', product_id: paired_paper.id -%}
+        {%- when 3 -%}{%- render 'pf-product-story-data-3', product_id: paired_paper.id -%}
+        {%- when 4 -%}{%- render 'pf-product-story-data-4', product_id: paired_paper.id -%}
+        {%- when 5 -%}{%- render 'pf-product-story-data-5', product_id: paired_paper.id -%}
+        {%- when 6 -%}{%- render 'pf-product-story-data-6', product_id: paired_paper.id -%}
+      {%- endcase -%}
+    {%- endcapture -%}
+    {%- assign paired_fields = paired_story_row | split: '|' -%}
+    {%- if paired_fields.size == 8 and paired_fields[0] == paired_paper.handle and paired_fields[4] == 'ordinary' -%}
+      {%- assign paired_width = paired_fields[2] | plus: 0 -%}
+      {%- assign paired_height = paired_fields[3] | plus: 0 -%}
+      {%- assign paired_family = '' -%}
+      {%- assign paired_width_four = paired_width | times: 4 -%}
+      {%- assign paired_height_three = paired_height | times: 3 -%}
+      {%- assign paired_width_three = paired_width | times: 3 -%}
+      {%- assign paired_height_five = paired_height | times: 5 -%}
+      {%- if paired_width == paired_height -%}{%- assign paired_family = '1:1' -%}
+      {%- elsif paired_width_four == paired_height_three -%}{%- assign paired_family = '3:4' -%}
+      {%- elsif paired_width_three == paired_height_five -%}{%- assign paired_family = '5:3' -%}{%- endif -%}
+      {%- assign paired_crop = product.metafields.pf_pairing.crop_contract.value -%}
+      {%- assign paired_crop_x = paired_crop.rectangle.x | append: '' -%}
+      {%- assign paired_crop_y = paired_crop.rectangle.y | append: '' -%}
+      {%- assign paired_crop_width = paired_crop.rectangle.width | append: '' -%}
+      {%- assign paired_crop_height = paired_crop.rectangle.height | append: '' -%}
+      {%- if paired_family != blank and paired_crop.family == paired_family and paired_crop.rotation == 0 and paired_crop.stretch == false and paired_crop_x == '0' and paired_crop_y == '0' and paired_crop_width == paired_fields[2] and paired_crop_height == paired_fields[3] and paired_crop.sourceSha256 == paired_fields[6] -%}
+        {%- if paired_paper.metafields.pf_artwork.source_sha256.value == paired_fields[6] and product.metafields.pf_artwork.source_sha256.value == paired_fields[6] and product.metafields.pf_fixed_canvas.source_sha256.value == paired_fields[6] and product.metafields.pf_artwork.source_url.value == paired_fields[1] -%}
+          {%- capture paired_original_url -%}{%- render 'pf-black-frame-source', product: paired_paper, slot: 'url' -%}{%- endcapture -%}
+          {%- capture paired_original_geometry -%}{%- render 'pf-black-frame-source', product: paired_paper, slot: 'fields' -%}{%- endcapture -%}
+          {%- assign paired_geometry = paired_original_geometry | split: '|' -%}
+          {%- if paired_original_url == paired_fields[1] and paired_geometry[0] == paired_fields[2] and paired_geometry[1] == paired_fields[3] and paired_geometry[2] == paired_fields[5] -%}
+            {%- assign paired_matches = 0 -%}
+            {%- for paired_media in product.media -%}
+              {%- assign paired_media_id = paired_media.id | append: '' -%}
+              {%- if paired_media_id == paired_fields[5] -%}
+                {%- capture paired_media_matches -%}{%- render 'pf-backend-frame-image-match', media: paired_media, expected_url: paired_fields[1], expected_width: paired_width, expected_height: paired_height -%}{%- endcapture -%}
+                {%- if paired_media_matches == 'yes' -%}{%- assign paired_matches = paired_matches | plus: 1 -%}{%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paired_matches == 1 -%}{%- assign paired_story_valid = true -%}{%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if paired_story_valid -%}{{- paired_story_row -}}{%- endif -%}

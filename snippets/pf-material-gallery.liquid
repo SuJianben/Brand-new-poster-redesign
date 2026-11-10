@@ -1,0 +1,18 @@
+{%- if pair_status == 'true' -%}
+  {%- assign pf_gallery_canvas = product.metafields.custom.canvas_product.value -%}
+  {%- assign pf_gallery_variant = pf_gallery_canvas.selected_or_first_available_variant -%}
+  {%- assign pf_gallery_media = pf_gallery_variant.featured_media | default: pf_gallery_canvas.featured_media -%}
+  {%- assign pf_gallery_direct = false -%}
+  {%- if route_product.id == pf_gallery_canvas.id -%}{%- assign pf_gallery_direct = true -%}{%- endif -%}
+  <div class="pf-material-gallery" data-pf-canvas-gallery data-pf-canvas-initial-media="{{ pf_gallery_media.id }}"{% unless pf_gallery_direct %} hidden style="display:none!important"{% endunless %} aria-label="Canvas product images">
+    <img data-pf-canvas-image src="{{ pf_gallery_media.preview_image | image_url: width: 1400 }}" width="{{ pf_gallery_media.preview_image.width }}" height="{{ pf_gallery_media.preview_image.height }}" alt="{{ pf_gallery_media.alt | default: pf_gallery_canvas.title | escape }}" style="max-width:100%;height:auto" decoding="async"{% if pf_gallery_direct %} loading="eager" fetchpriority="high"{% else %} loading="lazy"{% endif %}>
+    <div class="pf-material-gallery__thumbs">
+      {% for media in pf_gallery_canvas.media %}{% if media.media_type == 'image' %}
+        <button type="button" data-pf-canvas-thumbnail="{{ media.id }}" aria-pressed="{% if media.id == pf_gallery_media.id %}true{% else %}false{% endif %}" aria-label="Show canvas image {{ forloop.index }}">
+          {{ media.preview_image | image_url: width: 140 | image_tag: widths: '90,140', loading: 'lazy', alt: media.alt | default: pf_gallery_canvas.title }}
+        </button>
+      {% endif %}{% endfor %}
+    </div>
+    <p data-pf-canvas-media-caption>{{ pf_gallery_media.alt | default: pf_gallery_canvas.title | escape }}</p>
+  </div>
+{%- endif -%}

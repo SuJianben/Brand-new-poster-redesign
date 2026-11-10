@@ -1,0 +1,66 @@
+{%- comment -%}
+  US-only presentation at existing copy slots. UK source is passed through unchanged.
+  Rates must match the US shipping profile before the US market is activated.
+  US import duties/clearance fees confirmed included by the owner on 2026-09-30.
+  No tracking, sales-tax collection or promotion promise is inferred.
+{%- endcomment -%}
+{%- assign pf_fixed_canvas_delivery = false -%}
+{%- if product.type == 'Canvas art print' and product.template_suffix == 'pf-fixed-canvas' and slot == 'delivery' -%}
+  {%- assign pf_fixed_canvas_delivery = true -%}
+{%- endif -%}
+{%- if pf_fixed_canvas_delivery -%}
+  {%- assign pf_fixed_canvas_root = routes.root_url | append: '/' | replace: '//', '/' -%}
+  {%- capture pf_fixed_canvas_policy_href -%}href="{{ pf_fixed_canvas_root }}policies/{%- endcapture -%}
+  {{- source | replace: 'href="/policies/', pf_fixed_canvas_policy_href -}}
+{%- elsif localization.country.iso_code != 'US' -%}
+  {{- source -}}
+{%- else -%}
+  {%- assign pf_requires_approval = false -%}
+  {%- if product.template_suffix == 'custom-pet' -%}
+    {%- assign pf_requires_approval = true -%}
+  {%- endif -%}
+  {%- capture pf_us_shipping -%}Shipping to the contiguous US and Washington, DC is $5.95, or free when your merchandise subtotal after discounts is $49 or more, before tax.{%- endcapture -%}
+  {%- capture pf_us_coverage -%}Delivery is available to the contiguous 48 US states and Washington, DC. Alaska, Hawaii, US territories and military addresses are excluded.{%- endcapture -%}
+  {%- capture pf_us_timing -%}{% if pf_requires_approval %}After artwork approval, allow{% else %}Allow{% endif %} up to 2 business days for dispatch and 5–7 business days in transit.{%- endcapture -%}
+  {%- capture pf_us_imports -%}US import duties and customs-clearance fees are covered. No extra import charges on delivery.{%- endcapture -%}
+  {%- case slot -%}
+    {%- when 'hero-brand' -%}Curated art prints for your home, each one made when you order.
+    {%- when 'shipping-note' -%}
+      {%- if pf_requires_approval -%}Designer-checked. Artwork emailed within 2 business days. Shipping calculated at checkout.
+      {%- else -%}Made to order · Free shipping on $49+
+      {%- endif -%}
+    {%- when 'assurance' -%}
+      {%- if source contains 'UK delivery' -%}{{- pf_us_shipping -}}{%- else -%}{{- source -}}{%- endif -%}
+    {%- when 'benefit-title' -%}
+      {%- if qualifier == 'shipping' -%}Free shipping on $49+{%- else -%}{{- source -}}{%- endif -%}
+    {%- when 'benefit-text' -%}
+      {%- if qualifier == 'shipping' -%}Contiguous US and DC. $5.95 below $49 after discounts. {{ pf_us_timing }}{%- else -%}{{- source -}}{%- endif -%}
+    {%- when 'newsletter' -%}New art, colour inspiration and styling ideas, straight to your inbox.
+    {%- when 'footer-brand' -%}
+      {%- capture pf_us_footer_service -%}Made to order. Delivery to the contiguous US and Washington, DC. {{ pf_us_imports }}{%- endcapture -%}
+      {{- source | replace: 'Curated art prints for the modern UK home, each one made when you order.', 'Curated art prints for your home, each one made when you order.' | replace: 'Made to order · Printed after you order · Duties handled — nothing to pay on delivery.', pf_us_footer_service -}}
+    {%- when 'footer-bottom' -%}Art prints for your home, made when you order.
+    {%- when 'delivery', 'information' -%}
+      {%- if slot == 'delivery' or label == 'Delivery & returns' -%}
+        <p><strong>Printed for you, then sent to you.</strong></p>
+        {%- if pf_requires_approval -%}<p>Your artwork is emailed within 2 business days. We print only after you approve it.</p>{%- endif -%}
+        <p>{{ pf_us_timing }} Each print is made when you order.</p>
+        <p>{{ pf_us_coverage }}</p>
+        <p>{{ pf_us_shipping }} Any applicable tax is shown at checkout.</p>
+        <p>{{ pf_us_imports }}</p>
+        {%- assign pf_delivery_paragraphs = source | split: '</p>' -%}
+        {%- for pf_paragraph in pf_delivery_paragraphs -%}
+          {%- if pf_paragraph contains '<p><strong>Returns:' or pf_paragraph contains '<p><strong>Changed your mind?' or pf_paragraph contains '<p>Personalised prints are made to your specification' -%}
+            {{- pf_paragraph -}}</p>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif label == 'Why this price' -%}
+        {%- assign pf_us_price_copy = source | replace: '<p>A £4 poster is printed by the thousand on thin stock and sold from a warehouse. A £150 gallery print carries the gallery’s rent. We sit deliberately in between.</p>', '<p>Choose a size and finish to suit your space. Each print is made when you order.</p>' -%}
+        {%- assign pf_us_price_copy = pf_us_price_copy | replace: 'UK delivery is free on every order.', pf_us_shipping -%}
+        {%- capture pf_us_shipping_item -%}<strong>Shipping to the contiguous US and DC</strong> - $5.95, or free on merchandise subtotals of $49+ after discounts, before tax{%- endcapture -%}
+        {{- pf_us_price_copy | replace: '<strong>Free UK delivery</strong> — tracked, made to order', pf_us_shipping_item -}}
+      {%- else -%}{{- source -}}
+      {%- endif -%}
+    {%- else -%}{{- source -}}
+  {%- endcase -%}
+{%- endif -%}

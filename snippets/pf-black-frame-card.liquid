@@ -1,0 +1,26 @@
+{%- capture pf_card_fields -%}{%- render 'pf-black-frame-artwork', product: product, slot: 'fields' -%}{%- endcapture -%}
+{%- capture pf_card_url -%}{%- render 'pf-black-frame-artwork', product: product, slot: 'url' -%}{%- endcapture -%}
+{%- assign pf_card_fields = pf_card_fields | strip -%}
+{%- assign pf_card_url = pf_card_url | strip -%}
+{%- if pf_card_fields != blank and pf_card_url != blank -%}
+  {%- assign pf_card_dimensions = pf_card_fields | split: '|' -%}
+  {%- assign pf_card_width = pf_card_dimensions[0] | plus: 0 -%}
+  {%- assign pf_card_height = pf_card_dimensions[1] | plus: 0 -%}
+  {%- if pf_card_width > 0 and pf_card_height > 0 -%}
+    {%- assign pf_card_longest = pf_card_width | at_least: pf_card_height -%}
+    {%- assign pf_card_width_percent = pf_card_width | times: 100.0 | divided_by: pf_card_longest -%}
+    {%- assign pf_card_height_percent = pf_card_height | times: 100.0 | divided_by: pf_card_longest -%}
+    {%- assign pf_card_image_width = pf_card_width | at_most: 900 -%}
+    {%- assign pf_card_image_url = pf_card_url -%}
+    {%- if pf_card_url contains '?' -%}{%- assign pf_card_image_url = pf_card_image_url | append: '&width=' | append: pf_card_image_width -%}{%- else -%}{%- assign pf_card_image_url = pf_card_image_url | append: '?width=' | append: pf_card_image_width -%}{%- endif -%}
+    {%- assign pf_card_alt = product.title | append: ', shown with an optional black frame.' -%}
+    <span class="pf-black-frame-card" data-pf-black-frame-card data-pf-artwork-media-id="{{ pf_card_dimensions[2] | escape }}">
+      <span class="pf-black-frame-card__stage">
+        <span class="pf-black-frame-card__frame" style="width:{{ pf_card_width_percent }}%;height:{{ pf_card_height_percent }}%">
+          <img class="pf-black-frame-card__image" src="{{ pf_card_image_url | escape }}" width="{{ pf_card_width }}" height="{{ pf_card_height }}" alt="{{ pf_card_alt | escape }}" loading="lazy" decoding="async">
+        </span>
+      </span>
+      <span class="pf-black-frame-card__note">Frame optional</span>
+    </span>
+  {%- endif -%}
+{%- endif -%}

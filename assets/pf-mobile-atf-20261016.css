@@ -1,0 +1,911 @@
+/* ==========================================================================
+   1:1 POSTERY.COM EXACT PDP REPLICA FOR POSTERANDFORM (Aligned 1:1 with DaylightWalls)
+   ========================================================================== */
+
+body.template-product,
+body.template-product .ps-section,
+body.template-product .ps-product,
+body.template-product .ps-shell,
+body.template-product .ps-purchase {
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+}
+
+/* Remove old boxed border & shadow on right purchase panel */
+body.template-product .ps-purchase {
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  gap: 14px !important;
+}
+
+/* Hide old breadcrumbs & left-column duplicate accordion */
+body.template-product .ps-breadcrumb,
+body.template-product .ps-left-details,
+body.template-product .pf-black-frame-caption {
+  display: none !important;
+}
+
+/* Desktop 3-Zone Proportions: [196px Large Vertical Thumbs | 540px Stage | 390px Right Panel] */
+@media (min-width: 961px) {
+  body.template-product .ps-product {
+    padding-top: 28px !important;
+    padding-bottom: 24px !important;
+  }
+  body.template-product .ps-shell {
+    max-width: 1220px !important;
+    margin: 0 auto !important;
+    padding: 0 32px !important;
+  }
+  body.template-product .ps-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 390px !important;
+    gap: 52px !important;
+    align-items: start !important;
+  }
+  body.template-product .ps-media-stage {
+    display: grid !important;
+    grid-template-columns: 186px minmax(0, 1fr) !important;
+    gap: 14px !important;
+    align-items: start !important;
+  }
+  body.template-product .ps-thumbnail-rail {
+    position: relative !important;
+    width: 186px !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  body.template-product .ps-thumbnail-rail__control {
+    display: none !important;
+  }
+  body.template-product [data-ps-thumbnail-rail] {
+    width: 186px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  body.template-product [data-ps-thumbnail-rail] .ps-thumbnail,
+  body.template-product [data-ps-thumbnail-rail] .pf-room-thumb {
+    width: 186px !important;
+    height: auto !important;
+    aspect-ratio: 3 / 3.85 !important;
+    border-radius: 8px !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    background: #F3F2EE !important;
+    padding: 14% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+  }
+  body.template-product [data-ps-thumbnail-rail] .ps-thumbnail:not(.pf-room-thumb) img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;
+  }
+  body.template-product .ps-main-media {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 3 / 3.85 !important;
+    padding: 10% !important;
+    border-radius: 8px !important;
+    background: #F3F2EE !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: sticky !important;
+    top: 24px !important;
+  }
+}
+
+/* Mobile (<= 960px) Gallery & Thumbnails */
+@media (max-width: 960px) {
+  body.template-product .ps-product {
+    padding: 12px 0 32px !important;
+  }
+  body.template-product .ps-shell {
+    padding: 0 16px !important;
+    width: 100% !important;
+  }
+  body.template-product .ps-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+  }
+  body.template-product .ps-media-stage {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  body.template-product .ps-main-media {
+    order: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 3 / 3.75 !important;
+    padding: 10% !important;
+    border-radius: 8px !important;
+    background: #F3F2EE !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+  }
+  body.template-product .ps-thumbnail-rail {
+    order: 2 !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-x: auto !important;
+  }
+  body.template-product .ps-thumbnail-rail__control {
+    display: none !important;
+  }
+  body.template-product [data-ps-thumbnail-rail] {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 2px 0 !important;
+    overflow-x: auto !important;
+  }
+  body.template-product [data-ps-thumbnail-rail] .ps-thumbnail,
+  body.template-product [data-ps-thumbnail-rail] .pf-room-thumb {
+    width: 72px !important;
+    min-width: 72px !important;
+    height: 92px !important;
+    flex: 0 0 72px !important;
+    border-radius: 6px !important;
+    background: #F3F2EE !important;
+    padding: 8px !important;
+    border: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.76 !important;
+  }
+  body.template-product [data-ps-thumbnail-rail] .ps-thumbnail.is-active,
+  body.template-product [data-ps-thumbnail-rail] .pf-room-thumb.is-active {
+    opacity: 1 !important;
+    box-shadow: inset 0 0 0 1.5px #111111 !important;
+  }
+}
+
+/* Room Scene Thumbnails */
+.pf-room-thumb {
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+.pf-room-thumb__bg {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding-top: 14% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+.pf-room-thumb__art {
+  width: 44% !important;
+  background: #FAF8F3 !important;
+  padding: 3px !important;
+  border: 2px solid #181818 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+  display: flex !important;
+}
+.pf-room-thumb__art img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+
+/* Interactive Room Scene on Main Stage (`data-pf-room-scene="sofa|dining|sideboard"`) */
+.ps-main-media[data-pf-room-scene="sofa"] {
+  background-image: var(--pf-bg-sofa) !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+.ps-main-media[data-pf-room-scene="dining"] {
+  background-image: var(--pf-bg-dining) !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+.ps-main-media[data-pf-room-scene="sideboard"] {
+  background-image: var(--pf-bg-sideboard) !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"]) {
+  align-items: flex-start !important;
+  padding-top: 8% !important;
+  padding-bottom: 34% !important;
+}
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"]) .ps-print-preview {
+  background: transparent !important;
+}
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"]) .print-preview__bg {
+  background: transparent !important;
+}
+
+/* Live Size Scaling (`data-pf-size-scale="s1|s2|s3|s4|s5"`) */
+.ps-main-media .ps-print-preview {
+  transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  background: transparent !important;
+}
+.ps-main-media .print-preview__bg {
+  background: transparent !important;
+}
+.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s1"] .ps-print-preview { transform: scale(0.76); }
+.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s2"] .ps-print-preview { transform: scale(0.84); }
+.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s3"] .ps-print-preview { transform: scale(0.92); }
+.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s4"] .ps-print-preview { transform: scale(0.97); }
+.ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s5"] .ps-print-preview { transform: scale(1.02); }
+
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"])[data-pf-size-scale="s1"] .ps-print-preview { transform: scale(0.46); transform-origin: top center; }
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"])[data-pf-size-scale="s2"] .ps-print-preview { transform: scale(0.54); transform-origin: top center; }
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"])[data-pf-size-scale="s3"] .ps-print-preview { transform: scale(0.63); transform-origin: top center; }
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"])[data-pf-size-scale="s4"] .ps-print-preview { transform: scale(0.72); transform-origin: top center; }
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"])[data-pf-size-scale="s5"] .ps-print-preview { transform: scale(0.80); transform-origin: top center; }
+
+/* Size badge in bottom-left when in Room Scene view */
+.ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"])[data-pf-size-label]::after {
+  content: attr(data-pf-size-label);
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 5;
+  padding: 5px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #111111;
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+/* Right Purchase Column: Postery 1:1 Header, Title, Price & 3 Rounded Selector Pills */
+.pf-postery-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+.pf-postery-head__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pf-postery-head__studio {
+  font-size: 12.5px;
+  color: #717171;
+  font-weight: 400;
+}
+.pf-postery-head__fsc {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #2d6a4f;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+body.template-product .ps-purchase h1 {
+  font-family: Georgia, "Times New Roman", Times, serif !important;
+  font-size: 19.5px !important;
+  font-weight: 400 !important;
+  line-height: 1.28 !important;
+  letter-spacing: -0.005em !important;
+  color: #111111 !important;
+  margin: 0 !important;
+}
+body.template-product .ps-vendor,
+body.template-product .pf-offer-note,
+body.template-product .pf-dispatch-line,
+body.template-product .ps-shipping-note,
+body.template-product .ps-default-config,
+body.template-product .ps-form__quantity,
+body.template-product .ps-assurances,
+body.template-product .ps-payment-block,
+body.template-product .ps-short-description {
+  display: none !important;
+}
+body.template-product .ps-price {
+  margin: 2px 0 6px !important;
+}
+body.template-product .ps-price__current {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #111111 !important;
+}
+
+/* Hide native radio grid & dropdowns visually (controlled by our 3 Postery Rounded Capsules) */
+body.template-product .ps-option-group,
+body.template-product [data-ps-framing-select="passepartout"],
+body.template-product [data-ps-framing-select="frame"],
+body.template-product .ps-config-group {
+  display: none !important;
+}
+
+/* 3 Postery Rounded Selector Pills (Size, Passepartout, Frame) */
+.pf-postery-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 4px 0 6px;
+}
+.pf-postery-pill {
+  appearance: none;
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) auto;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid #C4C2BC;
+  background: #FFFFFF;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  cursor: pointer;
+  transition: border-color 0.18s ease;
+  text-align: left;
+}
+.pf-postery-pill:hover {
+  border-color: #111111;
+}
+.pf-postery-pill__label {
+  font-size: 13px;
+  font-weight: 400;
+  color: #111111;
+}
+.pf-postery-pill__val {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.pf-postery-pill__val strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pf-postery-pill__swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.18);
+  background: var(--pf-pill-swatch, #fff);
+}
+.pf-postery-pill__swatch--none {
+  background: linear-gradient(135deg, #fff 45%, #c9584f 46%, #c9584f 54%, #fff 55%);
+}
+.pf-postery-pill__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #111111;
+}
+.pf-postery-pill__chev {
+  width: 14px;
+  height: 14px;
+  color: #333333;
+}
+
+/* Postery Add to Cart Pill Button */
+body.template-product .ps-add-button {
+  height: 46px !important;
+  min-height: 46px !important;
+  border-radius: 999px !important;
+  background: #262624 !important;
+  border: 0 !important;
+  color: #FFFFFF !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+}
+body.template-product .ps-add-button::before {
+  display: none !important;
+}
+body.template-product .ps-add-button:hover:not(:disabled) {
+  background: #111111 !important;
+  color: #FFFFFF !important;
+}
+
+/* Postery Lower Right Blocks: 2x2 USPs, Warm Sand Promo Box, In the same series, Inline Desc, Meta Links */
+.pf-postery-extra {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+}
+
+/* Desktop Right-Side Drawer vs Mobile Split-Screen Bottom Sheet for `.pf-split-modal` */
+@media (min-width: 961px) {
+  .pf-split-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background: rgba(20, 18, 15, 0.36);
+    backdrop-filter: blur(1px);
+  }
+  .pf-split-modal__stage {
+    display: none !important;
+  }
+  .pf-split-modal__sheet {
+    width: 420px !important;
+    max-width: 92vw !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.15) !important;
+  }
+}
+
+
+/* Split-Screen Mobile Sheet + Desktop Side Drawer Base Styles */
+.pf-split-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  background: rgba(20, 18, 15, 0.55);
+  backdrop-filter: blur(2px);
+}
+.pf-split-modal[hidden] { display: none !important; }
+.pf-split-modal__stage {
+  height: 45vh;
+  min-height: 240px;
+  background: #f4f1ea;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px 8px;
+  position: relative;
+  border-bottom: 1px solid #e2dcd2;
+}
+.pf-split-modal__preview-slot {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.pf-split-modal__stage .ps-print-preview {
+  height: calc(45vh - 46px) !important;
+  width: calc((45vh - 46px) * 0.75) !important;
+  max-width: 78vw !important;
+  aspect-ratio: 3 / 4 !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  transform: none !important;
+}
+.pf-split-modal__stage .ps-print-preview .print-preview__inner {
+  width: 100% !important;
+  height: 100% !important;
+}
+.pf-split-modal__stage .ps-print-preview .print-preview__bg {
+  background: transparent !important;
+}
+.pf-split-modal__caption {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: #5c5750;
+  text-align: center;
+  font-weight: 500;
+}
+.pf-split-modal__sheet {
+  height: 55vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 -8px 28px rgba(0,0,0,0.16);
+  overflow: hidden;
+}
+.pf-split-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px 0;
+  border-bottom: 1px solid #ebe6dc;
+  background: #fff;
+}
+.pf-split-modal__tabs {
+  display: flex;
+  gap: 4px;
+}
+.pf-split-modal__tab {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 10px 11px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6e6961;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.pf-split-modal__tab.is-active {
+  color: #181614;
+  font-weight: 600;
+  border-bottom-color: #181614;
+}
+.pf-split-modal__done {
+  appearance: none;
+  border: 1px solid #d8d2c7;
+  background: #181614;
+  color: #fff;
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+.pf-split-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  align-content: start;
+}
+.pf-split-card {
+  appearance: none;
+  border: 1px solid #ded8ce;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 10px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.pf-split-card.is-selected {
+  border: 2px solid #181614;
+  background: #faf8f4;
+}
+.pf-split-card__swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex: 0 0 24px;
+  border: 1px solid rgba(0,0,0,0.16);
+  background: var(--pf-swatch, #fff);
+}
+.pf-split-card__swatch--none {
+  background: linear-gradient(135deg, #fff 46%, #c9584f 47%, #c9584f 53%, #fff 54%);
+}
+.pf-split-card__meta {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.pf-split-card__title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #181614;
+  line-height: 1.25;
+}
+.pf-split-card__sub {
+  font-size: 11px;
+  color: #6e6961;
+  margin-top: 2px;
+}
+.pf-split-card__price {
+  font-size: 12px;
+  font-weight: 600;
+  color: #181614;
+  margin-top: 2px;
+}
+@media (min-width: 961px) {
+  .pf-split-modal {
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    background: rgba(20, 18, 15, 0.36) !important;
+  }
+  .pf-split-modal__stage {
+    display: none !important;
+  }
+  .pf-split-modal__sheet {
+    width: 420px !important;
+    max-width: 92vw !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.15) !important;
+  }
+}
+
+
+/* Fix 1: Hide duplicate frame-preview thumbnail so left column has exactly 4 thumbnails (1 Studio + 3 Room Scenes) flush with main stage */
+body.template-product .ps-thumbnail--frame-preview {
+  display: none !important;
+}
+@media (min-width: 961px) {
+  body.template-product .ps-media-stage {
+    grid-template-columns: 132px minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+  body.template-product .ps-thumbnail-rail,
+  body.template-product [data-ps-thumbnail-rail],
+  body.template-product [data-ps-thumbnail-rail] .ps-thumbnail,
+  body.template-product [data-ps-thumbnail-rail] .pf-room-thumb {
+    width: 132px !important;
+  }
+}
+
+/* Fix 2: High-specificity Room Scene background on .ps-main-media & transparent inner stage */
+body.template-product .ps-main-media {
+  background-color: #F3F2EE !important;
+}
+body.template-product .ps-main-media .ps-print-preview,
+body.template-product .ps-main-media .print-preview__inner,
+body.template-product .ps-main-media .print-preview__bg {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+body.template-product .ps-main-media[data-pf-room-scene="sofa"] {
+  background-image: var(--pf-bg-sofa) !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+body.template-product .ps-main-media[data-pf-room-scene="dining"] {
+  background-image: var(--pf-bg-dining) !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+body.template-product .ps-main-media[data-pf-room-scene="sideboard"] {
+  background-image: var(--pf-bg-sideboard) !important;
+  background-size: cover !important;
+  background-position: center bottom !important;
+}
+/* Default subtle black frame + mat when viewing a Room Scene before selecting frame/mat */
+/* PAF-ROOM-SCENE-002: "No frame" must render no frame in room scenes (was a forced #181818 8px frame). Keep a subtle wall shadow. */
+body.template-product .ps-main-media[data-pf-room-scene]:not([data-pf-room-scene="none"]) .ps-css-frame[data-has-frame="false"] {
+  background-color: transparent !important;
+  padding: 0 !important;
+  box-shadow: 0 10px 24px rgba(18, 14, 10, 0.22) !important;
+}
+/* Hide sticky bar when Split-Screen Modal is open */
+body:has(.pf-split-modal:not([hidden])) .ps-sticky-atc {
+  display: none !important;
+}
+/* Hide purple Shop Pay button so Right Purchase Panel matches Postery 1:1 clean hierarchy */
+body.template-product .pf-dynamic-checkout {
+  display: none !important;
+}
+
+
+/* ==========================================================================
+   POSTER | CANVAS SEGMENTED TOGGLE & 3D FRAMELESS CANVAS PREVIEW (1:1 DaylightWalls)
+   ========================================================================== */
+.pf-postery-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #F3F2EE;
+  padding: 4px;
+  border-radius: 999px;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.pf-postery-tab {
+  appearance: none;
+  height: 38px;
+  min-height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #555555;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+.pf-postery-tab.is-active {
+  background: #FFFFFF;
+  color: #111111;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+.pf-postery-pill--static {
+  cursor: default !important;
+  background: #FAF9F5 !important;
+}
+.pf-postery-pill--static:hover {
+  border-color: #C4C2BC !important;
+}
+.pf-postery-pill[hidden] {
+  display: none !important;
+}
+
+/* 3D Gallery-Wrapped Stretched Canvas Preview in Studio & Room Scenes */
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-frame,
+body.template-product [data-pf-split-slot][data-pf-mode="canvas"] .ps-css-frame {
+  background-color: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-frame::before,
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-frame::after,
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-frame__rail {
+  display: none !important;
+}
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-mat,
+body.template-product [data-pf-split-slot][data-pf-mode="canvas"] .ps-css-mat {
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-artwork,
+body.template-product [data-pf-split-slot][data-pf-mode="canvas"] .ps-css-artwork {
+  position: relative !important;
+  overflow: visible !important;
+  background: transparent !important;
+  transform-style: preserve-3d;
+  transform: perspective(1200px) rotateY(-22deg);
+  --pf-canvas-depth: 26px;
+  box-shadow: none !important;
+}
+@media (max-width: 960px) {
+  body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-artwork,
+  body.template-product [data-pf-split-slot][data-pf-mode="canvas"] .ps-css-artwork { --pf-canvas-depth: 22px; }
+}
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-artwork img,
+body.template-product [data-pf-split-slot][data-pf-mode="canvas"] .ps-css-artwork img {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(0);
+  box-shadow: 18px 22px 36px -10px rgba(0, 0, 0, 0.35) !important;
+}
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-artwork::before,
+body.template-product [data-pf-split-slot][data-pf-mode="canvas"] .ps-css-artwork::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: var(--pf-canvas-depth);
+  height: 100%;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.36)), var(--pf-art-url);
+  background-size: 100% 100%, auto 100%;
+  background-position: center, right center;
+  background-repeat: no-repeat;
+  background-color: #cfc9bd;
+  transform-origin: left center;
+  transform: rotateY(90deg);
+  backface-visibility: hidden;
+  z-index: 1;
+}
+body.template-product .ps-main-media[data-pf-mode="canvas"] .ps-css-artwork::after,
+body.template-product [data-pf-split-slot][data-pf-mode="canvas"] .ps-css-artwork::after {
+  content: none;
+}
+.pf-split-note {
+  margin: 10px 2px 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #5d5a55;
+}
+
+.pf-postery-pill--static .pf-postery-pill__val strong {
+  max-width: none !important;
+}
+
+/* Ensure exactly 4 thumbnails (1 flat artwork + 3 room scenes) so Desktop rail is flush & Mobile row fits 4 cleanly */
+body.template-product .ps-thumbnail--frame-preview,
+body.template-product .ps-thumbnail[data-media-role="hanger"],
+body.template-product .ps-thumbnail[data-media-role="gallery"],
+body.template-product .ps-thumbnail[data-media-role="comparison"] {
+  display: none !important;
+}
+.dw-postery-inline-desc__more {
+  appearance: none;
+  margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #111111;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+body.template-product .ps-product[data-ps-original-artwork] .ps-thumbnail--frame-preview,
+body.template-product .ps-product .ps-thumbnail--frame-preview {
+  display: none !important;
+}
+
+/* Make room scene thumbnail frame hug Square (1:1), Landscape (4:3), and Portrait (3:4) artworks without white bars */
+body.template-product .pf-room-thumb__art {
+  width: 40% !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+}
+body.template-product .pf-room-thumb__art img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+
+/* 2026-10-26 mobile stage fix: let the artwork fill the stage, gentler size steps, softer canvas depth */
+@media (max-width: 960px) {
+  body.template-product .ps-main-media {
+    padding: 6% !important;
+    aspect-ratio: 3 / 3.6 !important;
+  }
+  body.template-product .ps-main-media .ps-print-preview {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+  }
+  body.template-product .ps-main-media .ps-print-preview .print-preview__inner {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+  }
+  body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s1"] .ps-print-preview { transform: scale(0.80) !important; }
+  body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s2"] .ps-print-preview { transform: scale(0.86) !important; }
+  body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s3"] .ps-print-preview { transform: scale(0.92) !important; }
+  body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s4"] .ps-print-preview { transform: scale(0.97) !important; }
+  body.template-product .ps-main-media[data-pf-room-scene="none"][data-pf-size-scale="s5"] .ps-print-preview { transform: scale(1) !important; }
+  body.template-product .ps-main-media .ps-media-navigation {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
+
+
+/* PAF-ROOM-SCENE-002: mobile stage is landscape (~358x310) so "cover + center bottom" crops away the wall and the print lands on the furniture.
+   Shift each scene photo so the wall shows above the furniture. Desktop (taller stage) is unchanged. */
+@media (max-width: 767px) {
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="dining"] { background-position: center 58% !important; }
+  html body.template-product .ps-main-media.ps-main-media[data-pf-room-scene="sideboard"] { background-position: center 45% !important; }
+}
+
+
+/* PAF-THUMB-003: room-scene thumbnails follow the selected Frame / Passepartout (state mirrored by JS onto .pf-room-thumb__art). Default = no frame, no mat. */
+body.template-product .pf-room-thumb .pf-room-thumb__art { border: 0 !important; padding: 0 !important; background: transparent !important; }
+body.template-product .pf-room-thumb .pf-room-thumb__art[data-pf-thumb-mat="true"] { padding: 3px !important; background: var(--pf-thumb-mat, #fff) !important; }
+/* PAF-FRAME-004: thinner thumbnail moulding */
+body.template-product .pf-room-thumb .pf-room-thumb__art[data-pf-thumb-frame="true"] { border: 1px solid var(--pf-thumb-frame, #181818) !important; }

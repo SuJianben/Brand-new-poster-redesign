@@ -1,0 +1,25 @@
+{%- assign pf_initial_width = preview_media.preview_image.width | plus: 0 -%}
+{%- assign pf_initial_height = preview_media.preview_image.height | plus: 0 -%}
+{%- if original_enabled -%}
+  {%- assign pf_initial_width = original_width | plus: 0 -%}
+  {%- assign pf_initial_height = original_height | plus: 0 -%}
+{%- endif -%}
+{%- if pf_initial_width > 0 and pf_initial_height > 0 -%}
+  {%- assign pf_initial_ratio = pf_initial_width | times: 1.0 | divided_by: pf_initial_height -%}
+  {%- assign pf_initial_box_width = 88.0 -%}
+  {%- assign pf_initial_box_height = 88.0 -%}
+  {%- if pf_initial_ratio > 1 -%}
+    {%- assign pf_initial_box_height = 88.0 | divided_by: pf_initial_ratio -%}
+  {%- else -%}
+    {%- assign pf_initial_box_width = 88.0 | times: pf_initial_ratio -%}
+  {%- endif -%}
+  {%- assign pf_mobile_ratio = pf_initial_ratio | divided_by: 0.75 -%}
+  {%- assign pf_mobile_box_width = 88.0 -%}
+  {%- assign pf_mobile_box_height = 88.0 -%}
+  {%- if pf_mobile_ratio > 1 -%}
+    {%- assign pf_mobile_box_height = 88.0 | divided_by: pf_mobile_ratio -%}
+  {%- else -%}
+    {%- assign pf_mobile_box_width = 88.0 | times: pf_mobile_ratio -%}
+  {%- endif -%}
+  --pf-initial-desktop-width:{{ pf_initial_box_width | round: 6 }}%;--pf-initial-desktop-height:{{ pf_initial_box_height | round: 6 }}%;--pf-initial-mobile-width:{{ pf_mobile_box_width | round: 6 }}%;--pf-initial-mobile-height:{{ pf_mobile_box_height | round: 6 }}%;
+{%- endif -%}

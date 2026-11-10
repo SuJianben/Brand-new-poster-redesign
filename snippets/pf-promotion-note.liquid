@@ -1,0 +1,5 @@
+{% if localization.country.iso_code == 'GB' or localization.country.iso_code == 'US' %}
+{% assign pf_offer_collection = product.collections | where: 'handle', 'buy-2-get-1-eligible-prints' %}
+{% if pf_offer_collection != empty or product.type == 'Print' %}
+<p class="pf-offer-note" data-pf-b2g1>{% if localization.country.iso_code == 'US' %}Buy 2 prints, get 1 free — add any 3 prints to your cart.{% else %}Buy 2 prints, get 1 free — add any 3 prints to your basket.{% endif %} <a href="{% if localization.country.iso_code == 'US' %}/en-us{% endif %}/collections/buy-2-get-1-eligible-prints#offer-details" data-pf-promo-click="product-details">Offer details</a></p>
+{% endif %}{% endif %}

@@ -1,0 +1,42 @@
+/* Scoped purchase UI. Existing paper form and add-ons keep their owners. */
+.pf-material[hidden], .pf-material [hidden], .pf-material-gallery[hidden], .pf-material-copy [hidden], [data-pf-material-active="canvas"] .ps-purchase > .ps-form, [data-pf-material-active="canvas"] .ps-media-stage, [data-pf-material-active="canvas"] [data-ps-sticky-atc] { display: none !important; }
+.pf-material { color: var(--ps-ink, #242723); font: 400 14px/1.55 Arial, sans-serif; margin-bottom: 20px; }
+.pf-material *, .pf-material-gallery * { box-sizing: border-box; }
+.pf-material fieldset { padding: 0; border: 0; margin: 0 0 20px; }
+.pf-material legend, .pf-material__label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.pf-material__switch { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pf-material__switch legend { float: left; grid-column: 1 / -1; width: 100%; }
+.pf-material__switch button, .pf-material__finishes label { min-height: 46px; padding: 12px 14px; border: 1px solid #8b908b; background: #fff; color: inherit; text-align: center; font: inherit; cursor: pointer; }
+.pf-material__switch button[aria-pressed="true"], .pf-material__finishes input:checked + label { border-color: #242723; background: #f0f2ed; box-shadow: inset 0 0 0 1px #242723; }
+.pf-material__canvas-form h1, .pf-material__fallback h1 { margin: 0 0 8px; color: inherit; font: 400 clamp(28px, 3vw, 40px)/1.15 Georgia, serif; }
+.pf-material__intro { color: #555d54; margin: 0 0 10px; }
+.pf-material__price { margin: 0 0 24px; font-size: 25px; line-height: 1.25; }
+.pf-material select, .pf-material__quantity { min-height: 46px; border: 1px solid #8b908b; border-radius: 0; background: #fff; color: inherit; font: inherit; padding: 10px 12px; }
+.pf-material select { display: block; width: 100%; margin-bottom: 22px; }
+.pf-material__finishes { display: grid; gap: 8px; }
+.pf-material__finishes div { position: relative; }
+.pf-material__finishes input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.pf-material__finishes label { display: block; text-align: left; }
+.pf-material__note { color: #525a50; margin: 10px 0 18px; font-size: 13px; line-height: 1.55; }
+.pf-material__quantity { width: 86px; display: block; margin-bottom: 18px; }
+.pf-material__add { width: 100%; min-height: 50px; }
+.pf-material :disabled { cursor: not-allowed; opacity: .6; }
+.pf-material a { color: inherit; text-underline-offset: 3px; }
+.pf-material__bag { display: inline-flex; align-items: center; min-height: 44px; }
+.pf-material :focus-visible, .pf-material__finishes input:focus-visible + label, .pf-material-gallery button:focus-visible { outline: 2px solid #28563d; outline-offset: 3px; }
+.pf-material-gallery { width: 100%; padding: 0; }
+.pf-material-gallery > img { width: 100%; height: auto; max-height: min(80vh, 880px); object-fit: contain; background: #f7f7f5; display: block; }
+.pf-material-gallery__thumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; }
+.pf-material-gallery__thumbs button { flex: 0 0 72px; padding: 3px; border: 1px solid #d7dbd4; background: #fff; cursor: pointer; }
+.pf-material-gallery__thumbs button[aria-pressed="true"] { border: 2px solid #242723; padding: 2px; }
+.pf-material-gallery__thumbs img { display: block; width: 100%; height: 82px; object-fit: contain; }
+.pf-material-gallery > p { color: #525a50; font: 400 12px/1.5 Arial, sans-serif; }
+.pf-material__sticky { display: none; }
+@media (max-width: 767px) {
+  .pf-material__sticky:not([hidden]) { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 12px; position: fixed; inset: auto 0 0; z-index: 60; padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid #d7dbd4; background: #fff; }
+  .pf-material__sticky strong { display: block; font-size: 18px; }
+  .pf-material__sticky [data-pf-canvas-sticky-edit] { min-height: 28px; border: 0; padding: 0; background: transparent; color: inherit; font: 400 12px/1.3 Arial, sans-serif; text-decoration: underline; text-underline-offset: 3px; }
+  .pf-material__sticky .ps-add-button { min-height: 48px; }
+  .pf-material-gallery > img { max-height: 65vh; }
+  .pf-material select { scroll-margin-top: 130px; }
+}

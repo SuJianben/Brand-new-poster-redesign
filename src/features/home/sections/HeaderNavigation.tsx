@@ -1,3 +1,4 @@
+import { headerHref } from "../headerNavigation";
 import { useEffect, useRef, useState } from "react";
 import type { NavItem } from "../headerNavigation";
 import { HeaderMegaMenu } from "./HeaderMegaMenu";
@@ -6,9 +7,9 @@ type Props = { items: NavItem[]; mobile?: boolean };
 
 function Submenu({ items, onNavigate }: { items: NavItem[]; onNavigate: () => void }) {
   return <ul className="header-submenu-list">{items.map((item, index) => <li key={`${index}-${item.url}`}>
-    <a href={item.url} onClick={onNavigate}>{item.title}</a>
+    <a href={headerHref(item.url)} onClick={onNavigate}>{item.title}</a>
     {item.children?.length > 0 && <ul className="header-submenu-nested">{item.children.map((child, childIndex) =>
-      <li key={`${childIndex}-${child.url}`}><a href={child.url} onClick={onNavigate}>{child.title}</a></li>
+      <li key={`${childIndex}-${child.url}`}><a href={headerHref(child.url)} onClick={onNavigate}>{child.title}</a></li>
     )}</ul>}
   </li>)}</ul>;
 }
@@ -47,7 +48,7 @@ export function HeaderNavigation({ items, mobile = false }: Props) {
         const id = `${mobile ? "mobile" : "desktop"}-submenu-${index}`;
         return <div className="header-nav-item" key={`${index}-${item.url}`}
           onMouseEnter={mobile ? undefined : () => setOpenIndex(item.children?.length ? index : null)}>
-          <a href={item.url} onClick={close}>{item.title}</a>
+          <a href={headerHref(item.url)} onClick={close}>{item.title}</a>
           {item.children?.length > 0 && <button type="button" className="header-nav-toggle" aria-expanded={expanded} aria-controls={id}
             aria-label={`${expanded ? "Close" : "Open"} ${item.title} menu`} onClick={() => setOpenIndex(expanded ? null : index)}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
