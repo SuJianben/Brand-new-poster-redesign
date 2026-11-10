@@ -1,4 +1,5 @@
 {%- comment -%} You may also like — Shopify product recommendations, loaded client-side. {%- endcomment -%}
+{{ 'product-recommendations.css' | asset_url | stylesheet_tag }}
 <section class="ps-section ps-recs" data-ps-recs data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.limit }}&intent=related">
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
     <h2 class="ps-recs__heading">{{ section.settings.heading }}</h2>
@@ -13,10 +14,6 @@
   .ps-recs__heading{font-size:22px;margin:0 0 18px}
   .ps-recs__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
   @media (min-width:768px){.ps-recs__grid{grid-template-columns:repeat(4,1fr);gap:24px}.ps-recs{padding:48px 24px 64px}}
-  .ps-recs__card{display:block;text-decoration:none;color:inherit}
-  .ps-recs__card img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;background:#f3f3f3;display:block;margin-bottom:8px}
-  .ps-recs__title{display:block;font-size:14px;line-height:1.35}
-  .ps-recs__price{display:block;font-size:13px;color:#666;margin-top:2px}
 </style>
 <script>(function(){
   var el=document.currentScript.previousElementSibling.previousElementSibling; if(!el||!el.hasAttribute('data-ps-recs')) el=document.querySelector('[data-ps-recs]:not([data-loaded])'); if(!el||el.dataset.loaded) return; el.dataset.loaded='1';
