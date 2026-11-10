@@ -1,0 +1,39 @@
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{"settings":{{ block.settings | json }},"image":null}{% endfor %}]{% endcapture %}
+<div data-poster-section="Faq" data-poster-id="{{ section.id }}" data-poster-blocks="{{ poster_blocks | escape }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
+{% schema %}
+{
+  "name": "常见问题",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "标题",
+      "default": "Questions, answered."
+    }
+  ],
+  "presets": [
+    {
+      "name": "常见问题"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "条目",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "问题"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "回答"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30
+}
+{% endschema %}

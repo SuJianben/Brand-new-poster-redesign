@@ -1,0 +1,25 @@
+<div data-poster-section="Marquee" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
+{% schema %}
+{
+  "name": "滚动标语",
+  "settings": [
+    {
+      "type": "text",
+      "id": "line_one",
+      "label": "第一条标语",
+      "default": "PHILOSOPHY LEFT THE LIBRARY"
+    },
+    {
+      "type": "text",
+      "id": "line_two",
+      "label": "第二条标语",
+      "default": "MAKE YOUR WALL TALK"
+    }
+  ],
+  "presets": [
+    {
+      "name": "滚动标语"
+    }
+  ]
+}
+{% endschema %}

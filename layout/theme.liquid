@@ -1,18 +1,19 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+<html lang="{{ request.locale.iso_code }}" data-poster-shopify>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page_title | escape }}</title>
     {{ content_for_header }}
-    {% if request.page_type == 'index' %}
-      {{ 'poster-home.css' | asset_url | stylesheet_tag }}
-    {% endif %}
+    {{ 'poster-home.css' | asset_url | stylesheet_tag }}
   </head>
   <body>
-    {{ content_for_layout }}
-    {% if request.page_type == 'index' %}
-      <script type="module" src="{{ 'poster-home.js' | asset_url }}"></script>
-    {% endif %}
+    <main>
+      {% sections 'header-group' %}
+      {{ content_for_layout }}
+      {% sections 'footer-group' %}
+      <div id="root"></div>
+    </main>
+    <script type="module" src="{{ 'poster-home.js' | asset_url }}"></script>
   </body>
 </html>

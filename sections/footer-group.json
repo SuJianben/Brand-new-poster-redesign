@@ -1,0 +1,13 @@
+{
+  "type": "footer",
+  "name": "页脚",
+  "sections": {
+    "footer": {
+      "type": "poster-footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

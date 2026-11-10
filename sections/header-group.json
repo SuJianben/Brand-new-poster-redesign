@@ -1,0 +1,13 @@
+{
+  "type": "header",
+  "name": "页头",
+  "sections": {
+    "header": {
+      "type": "poster-header",
+      "settings": {}
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

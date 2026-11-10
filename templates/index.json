@@ -1,6 +1,240 @@
 {
   "sections": {
-    "main": { "type": "poster-home", "settings": {} }
+    "hero": {
+      "type": "poster-hero",
+      "settings": {}
+    },
+    "marquee": {
+      "type": "poster-marquee",
+      "settings": {}
+    },
+    "shop": {
+      "type": "poster-shop",
+      "settings": {}
+    },
+    "event": {
+      "type": "poster-event",
+      "settings": {}
+    },
+    "series": {
+      "type": "poster-series",
+      "settings": {},
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "number": "01",
+            "name": "The Thinkers",
+            "category": "Philosophy",
+            "count": "12 PRINTS",
+            "line": "Big questions. Better walls.",
+            "color": "#6c5ce7",
+            "image": "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?auto=format&fit=crop&w=1200&q=85"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "number": "02",
+            "name": "Comic Relief",
+            "category": "Satire",
+            "count": "08 PRINTS",
+            "line": "For rooms that take nothing seriously.",
+            "color": "#ff5c35",
+            "image": "https://images.unsplash.com/photo-1578831914933-6339766eb29b?auto=format&fit=crop&w=1200&q=85"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "number": "03",
+            "name": "The Icon File",
+            "category": "Icons",
+            "count": "10 PRINTS",
+            "line": "Cult energy, permanently on display.",
+            "color": "#ff48a5",
+            "image": "https://images.unsplash.com/photo-1617690032954-692168050cac?auto=format&fit=crop&w=1200&q=85"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3"
+      ]
+    },
+    "community": {
+      "type": "poster-community",
+      "settings": {},
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "image": "https://images.unsplash.com/photo-1659640219304-b5656eee3465?auto=format&fit=crop&w=1200&q=85",
+            "alt": "Colorful living room with art prints above a blue sofa",
+            "handle": "@ROOMFORODD",
+            "credit": "Steph Wilson"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "image": "https://images.unsplash.com/photo-1650137959510-d64eef290e86?auto=format&fit=crop&w=900&q=85",
+            "alt": "Eclectic gallery wall in a colorful apartment",
+            "handle": "@WALLTALKDAILY",
+            "credit": "Steph Wilson"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "image": "https://images.unsplash.com/photo-1758718036788-de50f9fd2192?auto=format&fit=crop&w=1000&q=85",
+            "alt": "Creative studio desk with framed wall art",
+            "handle": "@STUDIOAFTERDARK",
+            "credit": "Annie Spratt"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "image": "https://images.unsplash.com/photo-1650138318699-a7916aced967?auto=format&fit=crop&w=900&q=85",
+            "alt": "Bright living room full of framed artwork",
+            "handle": "@MAXIMALMOOD",
+            "credit": "Steph Wilson"
+          }
+        },
+        "item_5": {
+          "type": "item",
+          "settings": {
+            "image": "https://images.unsplash.com/photo-1650137269022-cbeaf3274bf7?auto=format&fit=crop&w=900&q=85",
+            "alt": "Vertical view of an eclectic art-filled home",
+            "handle": "@NOEMPTYWALLS",
+            "credit": "Steph Wilson"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5"
+      ]
+    },
+    "journal": {
+      "type": "poster-journal",
+      "settings": {},
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "tag": "BEHIND THE PRINT",
+            "date": "08 MIN READ",
+            "title": "Why the best posters still start with ink and a mess",
+            "excerpt": "Inside the hands-on process behind our loudest limited editions.",
+            "image": "https://images.unsplash.com/photo-1663433567177-9f94be0bff4c?auto=format&fit=crop&w=1400&q=85",
+            "alt": "Artist working at a printing machine",
+            "credit": "Anthony Roberts"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "tag": "WALL THEORY",
+            "date": "05 MIN READ",
+            "title": "How to build a gallery wall without overthinking it",
+            "excerpt": "A practical guide to scale, spacing, color, and breaking the rules.",
+            "image": "https://images.unsplash.com/photo-1578855019520-af8101c056e2?auto=format&fit=crop&w=1100&q=85",
+            "alt": "Colorful paintings inside a contemporary gallery",
+            "credit": "Mike Von"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "tag": "STREET NOTES",
+            "date": "04 MIN READ",
+            "title": "What the street taught us about typography",
+            "excerpt": "Layers, accidents, and letters that refuse to whisper.",
+            "image": "https://images.unsplash.com/photo-1770274484406-09405c9c01df?auto=format&fit=crop&w=1100&q=85",
+            "alt": "Urban wall covered with layered posters and flyers",
+            "credit": "moniek van rosse"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3"
+      ]
+    },
+    "faq": {
+      "type": "poster-faq",
+      "settings": {},
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "question": "What sizes are the posters?",
+            "answer": "Most designs are available in A3, A2, and 50 × 70 cm. The exact options are listed on each product page."
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "question": "Do the prints arrive framed?",
+            "answer": "Prints are sold unframed so you can choose what works for your space. Every poster ships safely rolled in a protective tube."
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "question": "How long does worldwide shipping take?",
+            "answer": "Orders usually leave our studio within 2–3 business days. Tracked international delivery typically takes 5–12 business days."
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "question": "What makes the paper museum-grade?",
+            "answer": "We print on heavyweight FSC-certified archival stock using pigment inks designed to keep their depth and color for decades."
+          }
+        },
+        "item_5": {
+          "type": "item",
+          "settings": {
+            "question": "Can I return a print?",
+            "answer": "Yes. Unframed prints can be returned within 30 days in their original condition and packaging."
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5"
+      ]
+    },
+    "about": {
+      "type": "poster-about",
+      "settings": {}
+    },
+    "trust": {
+      "type": "poster-trust",
+      "settings": {}
+    }
   },
-  "order": ["main"]
+  "order": [
+    "hero",
+    "marquee",
+    "shop",
+    "event",
+    "series",
+    "community",
+    "journal",
+    "faq",
+    "about",
+    "trust"
+  ]
 }

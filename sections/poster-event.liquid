@@ -1,0 +1,25 @@
+<div data-poster-section="Event" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"
+  {% if section.settings.image_one != blank %}data-poster-image-one="{{ section.settings.image_one | image_url: width: 1600 | escape }}"{% endif %}
+  {% if section.settings.image_two != blank %}data-poster-image-two="{{ section.settings.image_two | image_url: width: 1600 | escape }}"{% endif %}></div>
+{% schema %}
+{
+  "name": "活动图片",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_one",
+      "label": "第一张图片"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_two",
+      "label": "第二张图片"
+    }
+  ],
+  "presets": [
+    {
+      "name": "活动图片"
+    }
+  ]
+}
+{% endschema %}

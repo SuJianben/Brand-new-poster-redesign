@@ -1,0 +1,19 @@
+<div data-poster-section="Trust" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
+{% schema %}
+{
+  "name": "信任信息",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "标题",
+      "default": "TRUST THE PROCESS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "信任信息"
+    }
+  ]
+}
+{% endschema %}

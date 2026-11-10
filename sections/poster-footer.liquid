@@ -1,0 +1,19 @@
+<div data-poster-section="Footer" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
+{% schema %}
+{
+  "name": "页脚",
+  "settings": [
+    {
+      "type": "text",
+      "id": "description",
+      "label": "品牌简介",
+      "default": "Independent art prints for loud minds, blank walls, and people who think a little sideways."
+    }
+  ],
+  "presets": [
+    {
+      "name": "页脚"
+    }
+  ]
+}
+{% endschema %}

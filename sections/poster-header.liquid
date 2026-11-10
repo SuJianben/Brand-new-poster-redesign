@@ -1,0 +1,25 @@
+<div data-poster-section="Header" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
+{% schema %}
+{
+  "name": "页头",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement",
+      "label": "公告文字",
+      "default": "FREE WORLDWIDE SHIPPING OVER $75"
+    },
+    {
+      "type": "text",
+      "id": "announcement_center",
+      "label": "中间公告",
+      "default": "NEW DROP: THINKING IS A STREET SPORT"
+    }
+  ],
+  "presets": [
+    {
+      "name": "页头"
+    }
+  ]
+}
+{% endschema %}

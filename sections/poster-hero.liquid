@@ -1,0 +1,85 @@
+<div data-poster-section="Hero" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"
+  {% if section.settings.image_1 != blank %}data-poster-image-1="{{ section.settings.image_1 | image_url: width: 1600 | escape }}"{% endif %}
+  {% if section.settings.image_2 != blank %}data-poster-image-2="{{ section.settings.image_2 | image_url: width: 1600 | escape }}"{% endif %}
+  {% if section.settings.image_3 != blank %}data-poster-image-3="{{ section.settings.image_3 | image_url: width: 1600 | escape }}"{% endif %}></div>
+{% schema %}
+{
+  "name": "首页轮播",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "第 1 张主标题",
+      "default": "YOUR WALLS"
+    },
+    {
+      "type": "text",
+      "id": "outline_1",
+      "label": "第 1 张副标题",
+      "default": "HATE BORING"
+    },
+    {
+      "type": "textarea",
+      "id": "description_1",
+      "label": "第 1 张描述",
+      "default": "Pull philosophy off the shelf and put it on the wall. Original art prints that speak before you do."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "第 1 张图片"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "第 2 张主标题",
+      "default": "BAD IDEAS"
+    },
+    {
+      "type": "text",
+      "id": "outline_2",
+      "label": "第 2 张副标题",
+      "default": "LOOK GOOD"
+    },
+    {
+      "type": "textarea",
+      "id": "description_2",
+      "label": "第 2 张描述",
+      "default": "Satire for walls tired of inspirational quotes. Strange ideas, printed loud and made to keep."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "第 2 张图片"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "第 3 张主标题",
+      "default": "ICON MODE"
+    },
+    {
+      "type": "text",
+      "id": "outline_3",
+      "label": "第 3 张副标题",
+      "default": "STAYS LOUD"
+    },
+    {
+      "type": "textarea",
+      "id": "description_3",
+      "label": "第 3 张描述",
+      "default": "Cult color and main-character energy. Give the people you love a permanent place on your wall."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "第 3 张图片"
+    }
+  ],
+  "presets": [
+    {
+      "name": "首页轮播"
+    }
+  ]
+}
+{% endschema %}
