@@ -1,0 +1,15 @@
+{%- assign menu_collection = nil -%}
+{%- if menu_link.type == 'collection_link' -%}
+  {%- assign menu_collection = menu_link.object -%}
+{%- endif -%}
+"image":{% if menu_collection.image != blank %}{{ menu_collection.image | image_url: width: 180 | json }}{% else %}null{% endif %},"products":[
+{%- if menu_collection != blank -%}
+  {%- assign first_preview = true -%}
+  {%- for product in menu_collection.products limit: 4 -%}
+    {%- if product.featured_image != blank -%}
+      {%- unless first_preview -%},{%- endunless -%}
+      {"title":{{ product.title | json }},"url":{{ product.url | json }},"image":{{ product.featured_image | image_url: width: 500 | json }}}
+      {%- assign first_preview = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}]

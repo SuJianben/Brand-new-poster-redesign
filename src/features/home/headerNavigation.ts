@@ -1,4 +1,10 @@
-export type NavItem = { title: string; url: string; children: NavItem[] };
+import { products } from "./data";
+export type MenuPreview = { title: string; url: string; image: string; color?: string };
+export type NavItem = { title: string; url: string; children: NavItem[]; image?: string | null; products?: MenuPreview[] };
+
+const demoPreviews: MenuPreview[] = products.map((product) => ({
+  title: product.name, url: "#shop", image: product.image, color: product.color,
+}));
 type Settings = Record<string, string | undefined>;
 
 export function readHeaderNavigation(settings: Settings): NavItem[] {
@@ -10,12 +16,12 @@ export function readHeaderNavigation(settings: Settings): NavItem[] {
   }
   return [
     { title: settings.shop_link_label ?? "Shop all", url: settings.shop_link_url ?? "#shop", children: [
-      { title: "All posters", url: "#shop", children: [] },
-      { title: "Browse collections", url: "#series", children: [] },
+      { title: "All posters", url: "#shop", children: [], products: demoPreviews.slice(0, 4) },
+      { title: "Browse collections", url: "#series", children: [], products: demoPreviews.slice(2, 6) },
     ] },
     { title: settings.events_link_label ?? "Events", url: settings.events_link_url ?? "#manifesto", children: [] },
     { title: settings.collections_link_label ?? "Collections", url: settings.collections_link_url ?? "#series", children: [
-      { title: "Our collections", url: "#series", children: [] },
+      { title: "Our collections", url: "#series", children: [], products: demoPreviews.slice(1, 5) },
       { title: "Community", url: "#community", children: [] },
     ] },
     { title: "Journal", url: "#journal", children: [] },

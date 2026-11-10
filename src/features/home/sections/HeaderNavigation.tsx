@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { NavItem } from "../headerNavigation";
+import { HeaderMegaMenu } from "./HeaderMegaMenu";
 
 type Props = { items: NavItem[]; mobile?: boolean };
 
@@ -16,6 +17,10 @@ export function HeaderNavigation({ items, mobile = false }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<number | undefined>(undefined);
+  const cancelClose = () => window.clearTimeout(closeTimer.current);
+  const scheduleClose = () => { cancelClose(); closeTimer.current = window.setTimeout(() => setOpenIndex(null), 350); };
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
   useEffect(() => {
     if (openIndex === null) return;
     const onPointerDown = (event: PointerEvent) => {
@@ -36,7 +41,7 @@ export function HeaderNavigation({ items, mobile = false }: Props) {
   const close = () => setOpenIndex(null);
   return <>
     <nav ref={navRef} className={mobile ? "mobile-link-bar" : "desktop-nav"} aria-label={mobile ? "Mobile navigation" : "Main navigation"}
-      onMouseLeave={mobile ? undefined : close} onKeyDown={(event) => { if (event.key === "Escape") { close(); (event.target as HTMLElement).blur(); } }}>
+      onMouseLeave={mobile ? undefined : scheduleClose} onMouseEnter={mobile ? undefined : cancelClose} onKeyDown={(event) => { if (event.key === "Escape") { close(); (event.target as HTMLElement).blur(); } }}>
       {items.map((item, index) => {
         const expanded = openIndex === index && item.children?.length > 0;
         const id = `${mobile ? "mobile" : "desktop"}-submenu-${index}`;
@@ -47,10 +52,11 @@ export function HeaderNavigation({ items, mobile = false }: Props) {
             aria-label={`${expanded ? "Close" : "Open"} ${item.title} menu`} onClick={() => setOpenIndex(expanded ? null : index)}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
           </button>}
-          {!mobile && expanded && <div className="header-submenu" id={id}><Submenu items={item.children} onNavigate={close} /></div>}
         </div>;
       })}
     </nav>
+    {!mobile && active && <HeaderMegaMenu panelRef={panelRef} item={active} id={`desktop-submenu-${openIndex}`}
+      onEnter={cancelClose} onLeave={scheduleClose} onNavigate={close} />}
     {mobile && active && <div ref={panelRef} className="header-mobile-submenu" id={`mobile-submenu-${openIndex}`}>
       <Submenu items={active.children} onNavigate={close} />
     </div>}
