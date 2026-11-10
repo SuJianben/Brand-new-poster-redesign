@@ -14,7 +14,7 @@ html body.template-product .ps-shell { width: 90% !important; max-width: none !i
 html body.template-product .ps-purchase h1,
 html body.template-product .pf-material__canvas-form h1 { font-family: "Archivo Black", sans-serif !important; font-weight: 400 !important; }
 .ps-product .ps-price__current, .ps-product .pf-material__price { font-weight: 800; }
-html body.template-product .ps-main-media { background: #6759d0 !important; }
+html body.template-product .ps-main-media { background-color: #f3f2ee !important; }
 /* Limit the gallery height on wide screens without changing the page margins. */
 @media (min-width: 961px) {
   html body.template-product .ps-layout {
@@ -24,6 +24,9 @@ html body.template-product .ps-main-media { background: #6759d0 !important; }
     height: min(68vh, 680px) !important;
     aspect-ratio: auto !important;
     padding: clamp(24px, 3vw, 50px) !important;
+  }
+  html body.template-product .ps-main-media[data-pf-room-scene="none"] .ps-print-preview {
+    scale: 1.1;
   }
   html body.template-product .ps-main-media .ps-print-preview .print-preview__inner {
     width: auto !important;
