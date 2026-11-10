@@ -6,6 +6,11 @@ html body.template-product .ps-section,
 html body.template-product .ps-product,
 html body.template-product .ps-shell,
 html body.template-product .ps-purchase { background: #f2efe6 !important; }
+/* Match the homepage's 5vw content margins while keeping the original columns. */
+html body.template-product .ps-shell { width: 90% !important; max-width: none !important; padding: 0 !important; }
+@media (max-width: 600px) {
+  html body.template-product .ps-shell { width: calc(100% - 40px) !important; }
+}
 html body.template-product .ps-purchase h1,
 html body.template-product .pf-material__canvas-form h1 { font-family: "Archivo Black", sans-serif !important; font-weight: 400 !important; }
 .ps-product .ps-price__current, .ps-product .pf-material__price { font-weight: 800; }

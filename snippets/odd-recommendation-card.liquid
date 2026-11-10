@@ -1,0 +1,30 @@
+{%- liquid
+  assign color_index = index | minus: 1 | modulo: 3
+  case color_index
+    when 0
+      assign card_color = '#ff5c35'
+    when 1
+      assign card_color = '#6c5ce7'
+    else
+      assign card_color = '#dfff00'
+  endcase
+  assign card_type = product.type | default: 'Art print'
+-%}
+<article class="product-card">
+  <div class="poster-wrap" style="background-color: {{ card_color }}">
+    <a class="poster-paper" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_image != blank -%}
+        {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+      {%- endif -%}
+      <span class="poster-index">{{ index | prepend: '0' | slice: -2, 2 }}</span>
+      <span class="poster-type">{{ card_type | escape }}</span>
+      <div class="poster-title"><strong>{{ product.title | escape }}</strong></div>
+    </a>
+    <span class="like-btn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+    <a class="quick-add" href="{{ product.url }}">Choose options <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+  </div>
+  <div class="product-info">
+    <div><p>{{ card_type | escape }}</p><h3><a href="{{ product.url }}">{{ product.title | escape }}</a></h3></div>
+    <strong>{% if product.price_varies %}From {% endif %}{{ product.price_min | money }}</strong>
+  </div>
+</article>
