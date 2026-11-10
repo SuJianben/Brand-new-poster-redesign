@@ -2,12 +2,17 @@
   "type": "header",
   "name": "页头",
   "sections": {
+    "announcement": {
+      "type": "poster-announcement",
+      "settings": {}
+    },
     "header": {
       "type": "poster-header",
       "settings": {}
     }
   },
   "order": [
+    "announcement",
     "header"
   ]
 }

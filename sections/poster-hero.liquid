@@ -1,84 +1,127 @@
-<div data-poster-section="Hero" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"
-  {% if section.settings.image_1 != blank %}data-poster-image-1="{{ section.settings.image_1 | image_url: width: 1600 | escape }}"{% endif %}
-  {% if section.settings.image_2 != blank %}data-poster-image-2="{{ section.settings.image_2 | image_url: width: 1600 | escape }}"{% endif %}
-  {% if section.settings.image_3 != blank %}data-poster-image-3="{{ section.settings.image_3 | image_url: width: 1600 | escape }}"{% endif %}></div>
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
+<div data-poster-section="Hero" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}" data-poster-blocks="{{ poster_blocks | escape }}"></div>
 {% schema %}
 {
   "name": "首页轮播",
-  "settings": [
+  "settings": [],
+  "blocks": [
     {
-      "type": "text",
-      "id": "title_1",
-      "label": "第 1 张主标题",
-      "default": "YOUR WALLS"
-    },
-    {
-      "type": "text",
-      "id": "outline_1",
-      "label": "第 1 张副标题",
-      "default": "HATE BORING"
-    },
-    {
-      "type": "textarea",
-      "id": "description_1",
-      "label": "第 1 张描述",
-      "default": "Pull philosophy off the shelf and put it on the wall. Original art prints that speak before you do."
-    },
-    {
-      "type": "image_picker",
-      "id": "image_1",
-      "label": "第 1 张图片"
-    },
-    {
-      "type": "text",
-      "id": "title_2",
-      "label": "第 2 张主标题",
-      "default": "BAD IDEAS"
-    },
-    {
-      "type": "text",
-      "id": "outline_2",
-      "label": "第 2 张副标题",
-      "default": "LOOK GOOD"
-    },
-    {
-      "type": "textarea",
-      "id": "description_2",
-      "label": "第 2 张描述",
-      "default": "Satire for walls tired of inspirational quotes. Strange ideas, printed loud and made to keep."
-    },
-    {
-      "type": "image_picker",
-      "id": "image_2",
-      "label": "第 2 张图片"
-    },
-    {
-      "type": "text",
-      "id": "title_3",
-      "label": "第 3 张主标题",
-      "default": "ICON MODE"
-    },
-    {
-      "type": "text",
-      "id": "outline_3",
-      "label": "第 3 张副标题",
-      "default": "STAYS LOUD"
-    },
-    {
-      "type": "textarea",
-      "id": "description_3",
-      "label": "第 3 张描述",
-      "default": "Cult color and main-character energy. Give the people you love a permanent place on your wall."
-    },
-    {
-      "type": "image_picker",
-      "id": "image_3",
-      "label": "第 3 张图片"
+      "type": "slide",
+      "name": "轮播图",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "上方短标题",
+          "default": "ART FOR LOUD MINDS"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "主标题",
+          "default": "YOUR WALLS"
+        },
+        {
+          "type": "text",
+          "id": "outline",
+          "label": "描边标题",
+          "default": "HATE BORING"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "描述",
+          "default": "Pull philosophy off the shelf and put it on the wall. Original art prints that speak before you do."
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "按钮文字",
+          "default": "Shop philosophy"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "按钮对应的演示分类",
+          "default": "Philosophy"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "背景颜色",
+          "default": "#6c5ce7"
+        },
+        {
+          "type": "text",
+          "id": "image",
+          "label": "图片链接",
+          "default": "https://images.unsplash.com/photo-1626803302532-b83560c4d946?auto=format&fit=crop&w=1200&q=90"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "图片说明",
+          "default": "Creative philosophy poster featuring a classical statue"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "海报上方文字",
+          "default": "THE ART OF"
+        },
+        {
+          "type": "text",
+          "id": "poster_title",
+          "label": "海报标题",
+          "default": "THINKING"
+        },
+        {
+          "type": "text",
+          "id": "poster_line",
+          "label": "海报底部文字",
+          "default": "THINKING IS A STREET SPORT."
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "海报编号",
+          "default": "001"
+        },
+        {
+          "type": "text",
+          "id": "mark",
+          "label": "装饰符号",
+          "default": "?"
+        },
+        {
+          "type": "text",
+          "id": "sticker",
+          "label": "圆形贴纸文字",
+          "default": "ONLY 100 MADE"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "上传图片（优先于图片链接）"
+        },
+        {
+          "type": "text",
+          "id": "cta_link",
+          "label": "按钮链接",
+          "default": "#shop"
+        }
+      ]
     }
   ],
+  "max_blocks": 20,
   "presets": [
     {
-      "name": "首页轮播"
+      "name": "首页轮播",
+      "blocks": [
+        {
+          "type": "slide"
+        }
+      ]
     }
   ]
 }

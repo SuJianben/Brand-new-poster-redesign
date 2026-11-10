@@ -242,7 +242,7 @@ main {
   opacity: 1;
   transform: translateY(0);
 }
-.top-shell.is-scrolled + .search-panel {
+.search-panel.is-scrolled {
   padding-top: 110px;
 }
 .search-inner {
@@ -2211,7 +2211,7 @@ footer {
   .search-panel {
     padding: 150px 20px 30px;
   }
-  .top-shell.is-scrolled + .search-panel {
+  .search-panel.is-scrolled {
     padding-top: 110px;
   }
   .search-inner {
@@ -2535,3 +2535,14 @@ footer {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* The header group can contain either section independently. */
+main:not(:has(.top-shell .announcement)) { padding-top: 86px; }
+main:not(:has(.top-shell .site-header)) { padding-top: 34px; }
+main:not(:has(.top-shell .announcement)):not(:has(.top-shell .site-header)) { padding-top: 0; }
+@media (max-width: 600px) {
+  main:not(:has(.top-shell .announcement)) { padding-top: 110px; }
+  main:not(:has(.top-shell .site-header)) { padding-top: 32px; }
+  main:not(:has(.top-shell .announcement)):not(:has(.top-shell .site-header)) { padding-top: 0; }
+}
+

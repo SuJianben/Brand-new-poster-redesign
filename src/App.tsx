@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { PosterContext, usePosterState } from "./features/home/state";
+import { Announcement } from "./features/home/sections/Announcement";
+import { SearchPanel } from "./features/home/sections/SearchPanel";
 import { Header } from "./features/home/sections/Header";
 import { Hero } from "./features/home/sections/Hero";
 import { Marquee } from "./features/home/sections/Marquee";
@@ -15,7 +17,7 @@ import { Trust } from "./features/home/sections/Trust";
 import { Footer } from "./features/home/sections/Footer";
 import { Overlays } from "./features/home/sections/Overlays";
 
-const sections = { Header, Hero, Marquee, Shop, Event, Series, Community, Journal, Faq, About, Trust, Footer };
+const sections = { Announcement, Header, Hero, Marquee, Shop, Event, Series, Community, Journal, Faq, About, Trust, Footer };
 type SectionName = keyof typeof sections;
 
 function PosterApp() {
@@ -34,6 +36,10 @@ function PosterApp() {
       document.removeEventListener("shopify:section:reorder", update);
     };
   }, [shopify]);
+  useEffect(() => {
+    if (!shopify) return;
+    document.querySelector("[data-poster-header-shell]")?.classList.toggle("is-scrolled", state.scrolled);
+  }, [shopify, state.scrolled]);
   // Read each section's own settings after Shopify refreshes its editor markup.
   void revision;
   const content = shopify
@@ -52,8 +58,11 @@ function PosterApp() {
         }
         return createPortal(<Component settings={settings} />, node, node.dataset.posterId);
       })
-    : Object.entries(sections).map(([name, Component]) => <Component key={name} />);
-  return <PosterContext.Provider value={state}>{content}<Overlays /></PosterContext.Provider>;
+    : <>
+        <div className={`top-shell ${state.scrolled ? "is-scrolled" : ""}`}><Announcement /><Header /></div>
+        {Object.entries(sections).filter(([name]) => name !== "Header" && name !== "Announcement").map(([name, Component]) => <Component key={name} />)}
+      </>;
+  return <PosterContext.Provider value={state}>{content}<SearchPanel /><Overlays /></PosterContext.Provider>;
 }
 
 export default function App() {

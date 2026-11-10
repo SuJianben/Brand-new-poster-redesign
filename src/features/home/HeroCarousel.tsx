@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { Icon } from "./Icon";
 import { heroSlides } from "./data";
+export type HeroSlide = (typeof heroSlides)[number] & { id?: string; cta_link?: string };
+
 export function HeroCarousel({
   slides,
   onCategorySelect,
 }: {
-  slides: typeof heroSlides;
+  slides: HeroSlide[];
   onCategorySelect: (category: string) => void;
 }) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [paused, setPaused] = useState(false);
-  const slide = slides[activeSlide];
+  const safeIndex = Math.min(activeSlide, Math.max(0, slides.length - 1));
+  const slide = slides[safeIndex];
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || slides.length < 2) return;
     const timer = window.setInterval(
       () => setActiveSlide((current) => (current + 1) % slides.length),
       5000,
@@ -21,8 +24,25 @@ export function HeroCarousel({
     return () => window.clearInterval(timer);
   }, [paused, slides.length]);
 
+  useEffect(() => {
+    const onSelect = (event: Event) => {
+      const id = (event as CustomEvent<{ blockId?: string }>).detail?.blockId;
+      const index = slides.findIndex((item) => item.id === id);
+      if (index >= 0) { setActiveSlide(index); setPaused(true); }
+    };
+    const onDeselect = () => setPaused(false);
+    document.addEventListener("shopify:block:select", onSelect);
+    document.addEventListener("shopify:block:deselect", onDeselect);
+    return () => {
+      document.removeEventListener("shopify:block:select", onSelect);
+      document.removeEventListener("shopify:block:deselect", onDeselect);
+    };
+  }, [slides]);
+
+  if (!slide) return null;
+
   const move = (direction: number) => {
-    setActiveSlide((current) => (current + direction + slides.length) % slides.length);
+    setActiveSlide((current) => (safeIndex + direction + slides.length) % slides.length);
   };
 
   return (
@@ -44,7 +64,7 @@ export function HeroCarousel({
         </h1>
         <p>{slide.description}</p>
         <div className="hero-actions">
-          <a className="primary-cta" href="#shop" onClick={() => onCategorySelect(slide.category)}>
+          <a className="primary-cta" href={slide.cta_link || "#shop"} onClick={() => onCategorySelect(slide.category)}>
             {slide.cta} <Icon name="arrow" />
           </a>
           <div className="carousel-controls">
@@ -58,17 +78,17 @@ export function HeroCarousel({
             <div className="carousel-dots" role="tablist" aria-label="Choose a slide">
               {slides.map((item, index) => (
                 <button
-                  key={item.number}
-                  className={index === activeSlide ? "active" : ""}
+                  key={item.id || item.number}
+                  className={index === safeIndex ? "active" : ""}
                   onClick={() => setActiveSlide(index)}
                   aria-label={`Show slide ${index + 1}: ${item.title}`}
-                  aria-selected={index === activeSlide}
+                  aria-selected={index === safeIndex}
                   role="tab"
                 />
               ))}
             </div>
             <span className="carousel-count">
-              0{activeSlide + 1} / 0{slides.length}
+              {String(safeIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
             </span>
             <button className="carousel-arrow next" onClick={() => move(1)} aria-label="Next slide">
               <Icon name="arrow" />

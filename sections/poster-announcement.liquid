@@ -1,0 +1,42 @@
+<div data-poster-section="Announcement" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
+{% schema %}
+{
+  "name": "宣告栏",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement",
+      "label": "公告文字",
+      "default": "FREE WORLDWIDE SHIPPING OVER $75"
+    },
+    {
+      "type": "text",
+      "id": "announcement_center",
+      "label": "中间公告",
+      "default": "NEW DROP: THINKING IS A STREET SPORT"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "链接文字",
+      "default": "SHOP THE DROP →"
+    },
+    {
+      "type": "text",
+      "id": "link_url",
+      "label": "链接地址",
+      "default": "#shop"
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "presets": [
+    {
+      "name": "宣告栏"
+    }
+  ]
+}
+{% endschema %}

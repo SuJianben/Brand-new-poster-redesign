@@ -2,7 +2,77 @@
   "sections": {
     "hero": {
       "type": "poster-hero",
-      "settings": {}
+      "settings": {},
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "ART FOR LOUD MINDS",
+            "title": "YOUR WALLS",
+            "outline": "HATE BORING",
+            "description": "Pull philosophy off the shelf and put it on the wall. Original art prints that speak before you do.",
+            "cta": "Shop philosophy",
+            "category": "Philosophy",
+            "color": "#6c5ce7",
+            "image": "https://images.unsplash.com/photo-1626803302532-b83560c4d946?auto=format&fit=crop&w=1200&q=90",
+            "alt": "Creative philosophy poster featuring a classical statue",
+            "kicker": "THE ART OF",
+            "poster_title": "THINKING",
+            "poster_line": "THINKING IS A STREET SPORT.",
+            "number": "001",
+            "mark": "?",
+            "sticker": "ONLY 100 MADE",
+            "cta_link": "#shop"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "SERIOUSLY NOT SERIOUS",
+            "title": "BAD IDEAS",
+            "outline": "LOOK GOOD",
+            "description": "Satire for walls tired of inspirational quotes. Strange ideas, printed loud and made to keep.",
+            "cta": "Shop satire",
+            "category": "Satire",
+            "color": "#ff5c35",
+            "image": "https://images.unsplash.com/photo-1578831914933-6339766eb29b?auto=format&fit=crop&w=1200&q=90",
+            "alt": "Surreal humorous portrait art poster",
+            "kicker": "DON'T TAKE IT",
+            "poster_title": "SERIOUSLY",
+            "poster_line": "LIFE IS ALREADY WEIRD ENOUGH.",
+            "number": "002",
+            "mark": ":P",
+            "sticker": "WEIRD BY DESIGN",
+            "cta_link": "#shop"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "MAIN CHARACTER MATERIAL",
+            "title": "ICON MODE",
+            "outline": "STAYS LOUD",
+            "description": "Cult color and main-character energy. Give the people you love a permanent place on your wall.",
+            "cta": "Shop icons",
+            "category": "Icons",
+            "color": "#ff48a5",
+            "image": "https://images.unsplash.com/photo-1617690032954-692168050cac?auto=format&fit=crop&w=1200&q=90",
+            "alt": "Colorful editorial portrait art poster",
+            "kicker": "A MOMENT OF",
+            "poster_title": "COLOR",
+            "poster_line": "MAKE ROOM FOR THE SPOTLIGHT.",
+            "number": "003",
+            "mark": "★",
+            "sticker": "NEW ICON DROP",
+            "cta_link": "#shop"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ]
     },
     "marquee": {
       "type": "poster-marquee",
