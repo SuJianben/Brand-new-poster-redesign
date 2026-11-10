@@ -22,6 +22,12 @@ html body.template-product .ps-main-media { background: #6759d0 !important; }
     aspect-ratio: auto !important;
     padding: clamp(24px, 3vw, 50px) !important;
   }
+  html body.template-product .ps-main-media .ps-print-preview .print-preview__inner {
+    width: auto !important;
+    height: 100% !important;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+  }
 }
 .ps-product .ps-thumbnail { border: 2px solid #101115; border-radius: 0; }
 .ps-product .ps-thumbnail.is-active { outline: 4px solid #dfff00; outline-offset: -5px; }
