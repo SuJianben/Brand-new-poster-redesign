@@ -1658,7 +1658,7 @@ main {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 6vw;
-  background: var(--lime);
+  background: var(--paper);
 }
 .about-image {
   height: 560px;
