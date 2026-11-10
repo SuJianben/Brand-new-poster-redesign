@@ -18,7 +18,7 @@ html body.template-product .ps-main-media { background: #6759d0 !important; }
 /* Limit the gallery height on wide screens without changing the page margins. */
 @media (min-width: 961px) {
   html body.template-product .ps-layout {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 3fr) !important;
   }
   html body.template-product .ps-main-media {
     height: min(68vh, 680px) !important;
