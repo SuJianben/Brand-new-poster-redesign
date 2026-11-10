@@ -1,0 +1,10 @@
+{
+  "description": "Shop a vibrant collection of philosophy posters, plus humorous and celebrity designs, with an energetic hip-hop-inspired browsing experience.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
