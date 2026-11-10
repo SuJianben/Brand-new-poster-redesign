@@ -1,186 +1,157 @@
-<div data-poster-section="Footer" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{"id":{{ block.id | json }},"heading":{{ block.settings.heading | json }},"links":[{% if block.settings.menu != blank %}{% for link in block.settings.menu.links %}{% unless forloop.first %},{% endunless %}{"title":{{ link.title | json }},"url":{{ link.url | json }}}{% endfor %}{% else %}{% assign first_link = true %}{% for i in (1..5) %}{% assign label_key = 'link_' | append: i | append: '_label' %}{% assign url_key = 'link_' | append: i | append: '_url' %}{% assign label = block.settings[label_key] %}{% assign url = block.settings[url_key] %}{% if label != blank %}{% unless first_link %},{% endunless %}{"title":{{ label | json }},"url":{{ url | json }},"fallback":true}{% assign first_link = false %}{% endif %}{% endfor %}{% endif %}]}{% endfor %}]{% endcapture %}
+<div data-poster-section="Footer" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}" data-poster-blocks="{{ poster_blocks | escape }}"></div>
 {% schema %}
 {
   "name": "页脚",
   "settings": [
     {
       "type": "text",
+      "id": "logo_text",
+      "label": "品牌名称",
+      "default": "ODD WALL"
+    },
+    {
+      "type": "text",
+      "id": "logo_accent",
+      "label": "品牌名称强调符号",
+      "default": "!"
+    },
+    {
+      "type": "textarea",
       "id": "description",
       "label": "品牌简介",
       "default": "Independent art prints for loud minds, blank walls, and people who think a little sideways."
     },
     {
-      "type": "text",
-      "id": "all_posters_label",
-      "label": "All posters文字",
-      "default": "All posters"
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "显示订阅区",
+      "default": true
     },
     {
       "type": "text",
-      "id": "all_posters_url",
-      "label": "All posters链接",
-      "default": "#shop"
+      "id": "newsletter_title",
+      "label": "订阅区标题",
+      "default": "GOOD STUFF, OCCASIONALLY."
     },
     {
       "type": "text",
-      "id": "philosophy_label",
-      "label": "Philosophy文字",
-      "default": "Philosophy"
+      "id": "newsletter_placeholder",
+      "label": "邮箱输入提示",
+      "default": "Your email address"
     },
     {
       "type": "text",
-      "id": "philosophy_url",
-      "label": "Philosophy链接",
-      "default": "#shop"
+      "id": "copyright",
+      "label": "版权文字",
+      "default": "© 2026 ODD WALL STUDIO"
     },
     {
       "type": "text",
-      "id": "satire_label",
-      "label": "Satire文字",
-      "default": "Satire"
+      "id": "bottom_message",
+      "label": "底部说明",
+      "default": "PRINTED WITH CARE. SHIPPED WORLDWIDE."
     },
     {
       "type": "text",
-      "id": "satire_url",
-      "label": "Satire链接",
-      "default": "#shop"
+      "id": "back_label",
+      "label": "返回顶部文字",
+      "default": "Back to top ↑"
     },
     {
       "type": "text",
-      "id": "cult_icons_label",
-      "label": "Cult icons文字",
-      "default": "Cult icons"
-    },
-    {
-      "type": "text",
-      "id": "cult_icons_url",
-      "label": "Cult icons链接",
-      "default": "#shop"
-    },
-    {
-      "type": "text",
-      "id": "new_drops_label",
-      "label": "New drops文字",
-      "default": "New drops"
-    },
-    {
-      "type": "text",
-      "id": "new_drops_url",
-      "label": "New drops链接",
-      "default": "#shop"
-    },
-    {
-      "type": "text",
-      "id": "events_label",
-      "label": "Events文字",
-      "default": "Events"
-    },
-    {
-      "type": "text",
-      "id": "events_url",
-      "label": "Events链接",
-      "default": "#manifesto"
-    },
-    {
-      "type": "text",
-      "id": "quality_label",
-      "label": "Print quality文字",
-      "default": "Print quality"
-    },
-    {
-      "type": "text",
-      "id": "quality_url",
-      "label": "Print quality链接",
-      "default": "#top"
-    },
-    {
-      "type": "text",
-      "id": "shipping_label",
-      "label": "Shipping & returns文字",
-      "default": "Shipping & returns"
-    },
-    {
-      "type": "text",
-      "id": "shipping_url",
-      "label": "Shipping & returns链接",
-      "default": "#top"
-    },
-    {
-      "type": "text",
-      "id": "faq_label",
-      "label": "FAQ文字",
-      "default": "FAQ"
-    },
-    {
-      "type": "text",
-      "id": "faq_url",
-      "label": "FAQ链接",
-      "default": "#faq"
-    },
-    {
-      "type": "text",
-      "id": "about_label",
-      "label": "About us文字",
-      "default": "About us"
-    },
-    {
-      "type": "text",
-      "id": "about_url",
-      "label": "About us链接",
-      "default": "#about"
-    },
-    {
-      "type": "text",
-      "id": "instagram_label",
-      "label": "Instagram →文字",
-      "default": "Instagram →"
-    },
-    {
-      "type": "text",
-      "id": "instagram_url",
-      "label": "Instagram →链接",
-      "default": "#top"
-    },
-    {
-      "type": "text",
-      "id": "tiktok_label",
-      "label": "TikTok →文字",
-      "default": "TikTok →"
-    },
-    {
-      "type": "text",
-      "id": "tiktok_url",
-      "label": "TikTok →链接",
-      "default": "#top"
-    },
-    {
-      "type": "text",
-      "id": "pinterest_label",
-      "label": "Pinterest →文字",
-      "default": "Pinterest →"
-    },
-    {
-      "type": "text",
-      "id": "pinterest_url",
-      "label": "Pinterest →链接",
-      "default": "#top"
-    },
-    {
-      "type": "text",
-      "id": "spotify_label",
-      "label": "Spotify →文字",
-      "default": "Spotify →"
-    },
-    {
-      "type": "text",
-      "id": "spotify_url",
-      "label": "Spotify →链接",
+      "id": "back_url",
+      "label": "返回顶部链接",
       "default": "#top"
     }
   ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "菜单",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "菜单标题",
+          "default": "MENU"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "选择 Shopify 菜单"
+        },
+        {
+          "type": "paragraph",
+          "content": "未选择 Shopify 菜单时，显示下面填写的链接。"
+        },
+        {
+          "type": "text",
+          "id": "link_1_label",
+          "label": "链接 1 文字"
+        },
+        {
+          "type": "text",
+          "id": "link_1_url",
+          "label": "链接 1 地址"
+        },
+        {
+          "type": "text",
+          "id": "link_2_label",
+          "label": "链接 2 文字"
+        },
+        {
+          "type": "text",
+          "id": "link_2_url",
+          "label": "链接 2 地址"
+        },
+        {
+          "type": "text",
+          "id": "link_3_label",
+          "label": "链接 3 文字"
+        },
+        {
+          "type": "text",
+          "id": "link_3_url",
+          "label": "链接 3 地址"
+        },
+        {
+          "type": "text",
+          "id": "link_4_label",
+          "label": "链接 4 文字"
+        },
+        {
+          "type": "text",
+          "id": "link_4_url",
+          "label": "链接 4 地址"
+        },
+        {
+          "type": "text",
+          "id": "link_5_label",
+          "label": "链接 5 文字"
+        },
+        {
+          "type": "text",
+          "id": "link_5_url",
+          "label": "链接 5 地址"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "enabled_on": {
+    "groups": [
+      "footer"
+    ]
+  },
   "presets": [
     {
-      "name": "页脚"
+      "name": "页脚",
+      "blocks": [
+        {
+          "type": "menu"
+        }
+      ]
     }
   ]
 }

@@ -4,7 +4,60 @@
   "sections": {
     "footer": {
       "type": "poster-footer",
-      "settings": {}
+      "settings": {},
+      "blocks": {
+        "menu_1": {
+          "type": "menu",
+          "settings": {
+            "heading": "01 / SHOP",
+            "link_1_label": "All posters",
+            "link_1_url": "#shop",
+            "link_2_label": "Philosophy",
+            "link_2_url": "#shop",
+            "link_3_label": "Satire",
+            "link_3_url": "#shop",
+            "link_4_label": "Cult icons",
+            "link_4_url": "#shop",
+            "link_5_label": "New drops",
+            "link_5_url": "#shop"
+          }
+        },
+        "menu_2": {
+          "type": "menu",
+          "settings": {
+            "heading": "02 / INFO",
+            "link_1_label": "Events",
+            "link_1_url": "#manifesto",
+            "link_2_label": "Print quality",
+            "link_2_url": "#top",
+            "link_3_label": "Shipping & returns",
+            "link_3_url": "#top",
+            "link_4_label": "FAQ",
+            "link_4_url": "#faq",
+            "link_5_label": "About us",
+            "link_5_url": "#about"
+          }
+        },
+        "menu_3": {
+          "type": "menu",
+          "settings": {
+            "heading": "03 / FOLLOW",
+            "link_1_label": "Instagram →",
+            "link_1_url": "#top",
+            "link_2_label": "TikTok →",
+            "link_2_url": "#top",
+            "link_3_label": "Pinterest →",
+            "link_3_url": "#top",
+            "link_4_label": "Spotify →",
+            "link_4_url": "#top"
+          }
+        }
+      },
+      "block_order": [
+        "menu_1",
+        "menu_2",
+        "menu_3"
+      ]
     }
   },
   "order": [

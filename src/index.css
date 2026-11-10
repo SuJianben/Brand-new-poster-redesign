@@ -1715,9 +1715,12 @@ footer {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(320px, 2.15fr) repeat(3, minmax(135px, 1fr));
+  grid-template-columns: minmax(320px, 2.15fr) repeat(var(--footer-menu-columns, 3), minmax(0, 1fr));
   gap: 0;
   padding-bottom: 78px;
+}
+.footer-grid-no-menus .footer-info {
+  grid-column: 1 / -1;
 }
 .footer-info {
   padding-right: 6vw;
