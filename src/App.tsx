@@ -50,6 +50,7 @@ function PosterApp() {
         let settings: Record<string, string> = {};
         try { settings = JSON.parse(node.dataset.posterSettings || "{}"); } catch { /* use original defaults */ }
         if (node.dataset.posterBlocks !== undefined) settings._blocks = node.dataset.posterBlocks;
+        if (node.dataset.posterMenu !== undefined) settings._menu = node.dataset.posterMenu;
         for (const [key, value] of Object.entries(node.dataset)) {
           if (key.startsWith("posterImage") && value) {
             const suffix = key.slice("posterImage".length).replace(/([A-Z])/g, "_$1").toLowerCase();
