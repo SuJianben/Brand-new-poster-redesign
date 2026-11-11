@@ -1,4 +1,4 @@
-{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{% assign hero_image = block.settings.custom_image | default: block.settings.product.featured_image %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"image":{% if hero_image != blank %}{{ hero_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{% assign hero_product = block.settings.product %}{% assign hero_original = hero_product.metafields.custom.hanger_original_artwork_url.value %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% elsif hero_original != blank %}{{ hero_original | json }}{% elsif hero_product.featured_image != blank %}{{ hero_product.featured_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
 <div data-poster-section="Hero" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}" data-poster-blocks="{{ poster_blocks | escape }}"></div>
 {% schema %}
 {
@@ -103,7 +103,7 @@
           "type": "product",
           "id": "product",
           "label": "选择商品",
-          "info": "默认显示商品首图；上传图片后优先显示上传的图片。"
+          "info": "优先显示商品原始画作，无原画时显示商品首图；上传图片后优先显示上传的图片。"
         },
         {
           "type": "image_picker",
