@@ -321,10 +321,10 @@
   extraWrap.className = 'pf-postery-extra';
   extraWrap.innerHTML = `
     <div class="dw-postery-usps">
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon">✓</span><span>In stock · Made to order</span></div>
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon">✓</span><span>30-day easy returns</span></div>
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon">✓</span><span>Dispatched within 48h</span></div>
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon">✓</span><span>${isUS ? 'Free US shipping $49+' : 'Free tracked UK delivery'}</span></div>
+      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10"/></svg></span><span>In stock · Made to order</span></div>
+      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 3 6.7M3 4v7h7"/></svg></span><span>30-day easy returns</span></div>
+      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Dispatched within 48h</span></div>
+      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h11v12H3zM14 9h4l3 3v5h-7z"/><circle cx="7.5" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg></span><span>${isUS ? 'Free US shipping $49+' : 'Free tracked UK delivery'}</span></div>
     </div>
     <div class="dw-postery-promo-box">
       <strong>Buy 2 prints, get 1 free</strong>

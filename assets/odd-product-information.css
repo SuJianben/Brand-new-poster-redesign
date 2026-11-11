@@ -4,6 +4,7 @@
 .template-product .ps-purchase .dw-postery-usps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
 .template-product .ps-purchase .dw-postery-usp { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; font-weight: 600; line-height: 1.4; }
 .template-product .ps-purchase .dw-postery-usp__icon { display: grid; place-items: center; flex: 0 0 20px; width: 20px; height: 20px; border: 1.5px solid #101115; border-radius: 50%; background: #dfff00; font-size: 12px; line-height: 1; }
+.template-product .ps-purchase .dw-postery-usp__icon svg { display: block; width: 14px; height: 14px; }
 .template-product .ps-purchase .dw-postery-promo-box { padding: 18px 20px; border: 2px solid #101115; background: #dfff00; box-shadow: 4px 4px 0 #101115; }
 .template-product .ps-purchase .dw-postery-promo-box strong { display: block; font-family: "Archivo Black", sans-serif; font-size: 15px; line-height: 1.2; }
 .template-product .ps-purchase .dw-postery-promo-box p { margin: 8px 0 0; font-size: 13px; line-height: 1.45; }
@@ -11,11 +12,11 @@
 .template-product .ps-purchase .dw-postery-inline-desc { font-size: 14px; line-height: 1.65; }
 .template-product .ps-purchase .dw-postery-inline-desc__text { margin: 0; }
 .template-product .ps-purchase .dw-postery-inline-desc__text.is-clamped { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
-.template-product .ps-purchase .dw-postery-inline-desc__more { display: inline-block; margin-top: 8px; padding: 0 0 3px; border: 0; border-bottom: 2px solid #101115; background: transparent; font-size: 12px; font-weight: 700; cursor: pointer; }
+.template-product .ps-purchase .dw-postery-inline-desc__more { display: inline-block; margin-top: 8px; padding: 0 0 3px; border: 0; border-bottom: 2px solid #101115; background: transparent; font-size: 12px; font-weight: 700; text-decoration: none; cursor: pointer; transition: color .2s ease, border-color .2s ease, transform .2s ease; }
 .template-product .ps-purchase .dw-postery-inline-desc__more:hover { color: #6c5ce7; border-color: #6c5ce7; }
 .template-product .ps-purchase .dw-postery-meta-links { border-top: 2px solid #101115; }
 .template-product .ps-purchase .dw-postery-meta-item { border-bottom: 2px solid #101115; }
-.template-product .ps-purchase .dw-postery-meta-item summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 58px; padding: 16px 4px; list-style: none; cursor: pointer; font-size: 13px; font-weight: 700; letter-spacing: .04em; transition: color .2s ease; }
+.template-product .ps-purchase .dw-postery-meta-item summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 58px; padding: 16px 4px; list-style: none; cursor: pointer; font-size: 13px; font-weight: 700; letter-spacing: .04em; transition: color .2s ease, background-color .2s ease, padding .2s ease; }
 .template-product .ps-purchase .dw-postery-meta-item summary::-webkit-details-marker { display: none; }
 .template-product .ps-purchase .dw-postery-meta-item summary::marker { content: ''; }
 .template-product .ps-purchase .dw-postery-meta-item summary svg { flex: none; width: 20px; height: 20px; transition: transform .2s ease; }
@@ -23,11 +24,20 @@
 .template-product .ps-purchase .dw-postery-meta-item summary:hover { color: #6c5ce7; }
 .template-product .ps-purchase .dw-postery-meta-body { padding: 0 28px 18px 4px; font-size: 13px; line-height: 1.6; }
 .template-product .ps-purchase .dw-postery-meta-body p { margin: 0; }
+@keyframes odd-product-info-open { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.template-product .ps-purchase .dw-postery-meta-item[open] .dw-postery-meta-body { animation: odd-product-info-open .24s ease both; }
+@media (hover: hover) {
+  .template-product .ps-purchase .dw-postery-meta-item summary:hover { padding-left: 10px; padding-right: 10px; background: rgba(108, 92, 231, .08); }
+  .template-product .ps-purchase .dw-postery-meta-item:not([open]) summary:hover svg { transform: translateX(4px); }
+  .template-product .ps-purchase .dw-postery-inline-desc__more:hover { transform: translateY(-2px); }
+}
 @media (max-width: 380px) {
   .template-product .ps-purchase .dw-postery-usps { gap: 10px; }
   .template-product .ps-purchase .dw-postery-usp { font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .template-product .ps-purchase .dw-postery-meta-item summary,
-  .template-product .ps-purchase .dw-postery-meta-item summary svg { transition: none; }
+  .template-product .ps-purchase .dw-postery-meta-item summary svg,
+  .template-product .ps-purchase .dw-postery-inline-desc__more { transition: none; }
+  .template-product .ps-purchase .dw-postery-meta-item[open] .dw-postery-meta-body { animation: none; }
 }
