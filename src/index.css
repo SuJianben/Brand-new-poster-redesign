@@ -647,14 +647,6 @@ main {
   height: 70%;
   margin-inline: auto;
   object-fit: contain;
-  filter: grayscale(1) contrast(1.15);
-}
-.hero-poster::after {
-  content: "";
-  position: absolute;
-  inset: 14px 14px 30%;
-  background: linear-gradient(135deg, transparent 40%, rgba(223, 255, 0, 0.75));
-  mix-blend-mode: color;
 }
 .hero-poster-copy {
   padding: 10px 3px;
