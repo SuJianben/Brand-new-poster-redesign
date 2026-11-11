@@ -316,7 +316,8 @@
 
   // 5. Inject Postery Lower Right Blocks (2x2 USPs, Warm Sand Promo Box, Inline Description, Meta Accordion Links)
   const isUS = (window.Shopify?.country === 'US' || window.Shopify?.currency?.active === 'USD');
-  const descPlain = root.querySelector('.ps-short-description')?.textContent?.trim() || 'Printed to order on 200gsm archival matte fine art paper or gallery-wrapped stretched canvas using fade-resistant pigment inks.';
+  const descriptionNode = root.querySelector('.ps-short-description');
+  const descPlain = descriptionNode?.dataset.fullDescription?.trim() || descriptionNode?.textContent?.trim() || 'Printed to order on 200gsm archival matte fine art paper or gallery-wrapped stretched canvas using fade-resistant pigment inks.';
   const extraWrap = document.createElement('div');
   extraWrap.className = 'pf-postery-extra';
   extraWrap.innerHTML = `
@@ -332,8 +333,8 @@
       <small>${isUS ? 'Free US shipping over $49 · 5–7 business days delivery' : 'Free UK delivery on every order · 5–7 business days delivery'}</small>
     </div>
     <div class="dw-postery-inline-desc">
-      <p class="dw-postery-inline-desc__text is-clamped">${descPlain}</p>
-      <button type="button" class="dw-postery-inline-desc__more" onclick="const p=this.previousElementSibling;const c=p.classList.toggle('is-clamped');this.textContent=c?'Read more':'Show less';">Read more</button>
+      <p class="dw-postery-inline-desc__text is-clamped"></p>
+      <button type="button" class="dw-postery-inline-desc__more" aria-expanded="false" hidden>Read more</button>
     </div>
     <div class="dw-postery-meta-links">
       <details class="dw-postery-meta-item">
@@ -350,6 +351,7 @@
       </details>
     </div>
   `;
+  extraWrap.querySelector('.dw-postery-inline-desc__text').textContent = descPlain;
   if (buyButtons) buyButtons.after(extraWrap);
 
   // 6. Sync Pills, Mode Tabs & Size Scaling with current selection

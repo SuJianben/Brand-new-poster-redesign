@@ -25,7 +25,7 @@
 
   {% when 'short_description' %}
     {%- assign sd_first = product.description | split: '</p>' | first | strip_html | strip -%}
-    {%- if sd_first != blank -%}<p class="ps-short-description" {{ block.shopify_attributes }}>{{ sd_first | truncate: 160 }}</p>{%- endif -%}
+    {%- if sd_first != blank -%}<p class="ps-short-description" data-full-description="{{ sd_first | escape }}" {{ block.shopify_attributes }}>{{ sd_first | truncate: 160 }}</p>{%- endif -%}
 
   {% when 'vendor' %}
     {% if product.vendor != blank %}
