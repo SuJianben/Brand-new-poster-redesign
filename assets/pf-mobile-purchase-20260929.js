@@ -314,46 +314,6 @@
   `;
   if (buyButtons) buyButtons.before(pillsWrap);
 
-  // 5. Inject Postery Lower Right Blocks (2x2 USPs, Warm Sand Promo Box, Inline Description, Meta Accordion Links)
-  const isUS = (window.Shopify?.country === 'US' || window.Shopify?.currency?.active === 'USD');
-  const descriptionNode = root.querySelector('.ps-short-description');
-  const descPlain = descriptionNode?.dataset.fullDescription?.trim() || descriptionNode?.textContent?.trim() || 'Printed to order on 200gsm archival matte fine art paper or gallery-wrapped stretched canvas using fade-resistant pigment inks.';
-  const extraWrap = document.createElement('div');
-  extraWrap.className = 'pf-postery-extra';
-  extraWrap.innerHTML = `
-    <div class="dw-postery-usps">
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10"/></svg></span><span>In stock · Made to order</span></div>
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 3 6.7M3 4v7h7"/></svg></span><span>30-day easy returns</span></div>
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Dispatched within 48h</span></div>
-      <div class="dw-postery-usp"><span class="dw-postery-usp__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h11v12H3zM14 9h4l3 3v5h-7z"/><circle cx="7.5" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg></span><span>${isUS ? 'Free US shipping $49+' : 'Free tracked UK delivery'}</span></div>
-    </div>
-    <div class="dw-postery-promo-box">
-      <strong>Buy 2 prints, get 1 free</strong>
-      <p>Add any 3 prints to your bag — the lowest-priced print is automatically free</p>
-      <small>${isUS ? 'Free US shipping over $49 · 5–7 business days delivery' : 'Free UK delivery on every order · 5–7 business days delivery'}</small>
-    </div>
-    <div class="dw-postery-inline-desc">
-      <p class="dw-postery-inline-desc__text is-clamped"></p>
-      <button type="button" class="dw-postery-inline-desc__more" aria-expanded="false" hidden>Read more</button>
-    </div>
-    <div class="dw-postery-meta-links">
-      <details class="dw-postery-meta-item">
-        <summary><span>DETAILS &amp; MATERIALS</span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"></polyline></svg></summary>
-        <div class="dw-postery-meta-body">
-          <p>Printed on 200gsm uncoated archival matte fine art paper with fade-resistant pigment inks for deep colour and zero glare. Available as an unframed poster, with a printed passepartout and solid black wood frame, or as a frameless 3D gallery-wrapped stretched canvas.</p>
-        </div>
-      </details>
-      <details class="dw-postery-meta-item">
-        <summary><span>DELIVERY &amp; RETURNS</span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"></polyline></svg></summary>
-        <div class="dw-postery-meta-body">
-          <p>Dispatched within 48 hours, tracked delivery in 5–7 business days. ${isUS ? '$5.95 flat-rate US shipping (free over $49).' : 'Free UK delivery on every order.'} 30-day returns on unused prints. Contact: support@posterandform.com</p>
-        </div>
-      </details>
-    </div>
-  `;
-  extraWrap.querySelector('.dw-postery-inline-desc__text').textContent = descPlain;
-  if (buyButtons) buyButtons.after(extraWrap);
-
   // 6. Sync Pills, Mode Tabs & Size Scaling with current selection
   const variantsNode = document.querySelector('[data-ps-variants]');
   const variants = variantsNode ? JSON.parse(variantsNode.textContent) : [];

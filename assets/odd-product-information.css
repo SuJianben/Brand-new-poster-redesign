@@ -1,6 +1,8 @@
 /* Purchase information, scoped to the product page. */
 .template-product .ps-purchase .dw-postery-series:not(:has(.dw-postery-series__item)) { display: none; }
-.template-product .ps-purchase .pf-postery-extra { display: grid; gap: 22px; margin-top: 24px; }
+.template-product .ps-purchase .odd-info-block { margin-top: 22px; }
+.template-product .ps-purchase .ps-buy-buttons + .odd-info-block { margin-top: 24px; }
+.template-product .ps-purchase .odd-info-accordion + .odd-info-accordion { margin-top: 0; border-top: 0; }
 .template-product .ps-purchase .dw-postery-usps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
 .template-product .ps-purchase .dw-postery-usp { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; font-weight: 600; line-height: 1.4; }
 .template-product .ps-purchase .dw-postery-usp__icon { display: grid; place-items: center; flex: 0 0 20px; width: 20px; height: 20px; border: 1.5px solid #101115; border-radius: 50%; background: #dfff00; font-size: 12px; line-height: 1; }

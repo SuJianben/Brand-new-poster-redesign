@@ -4,6 +4,8 @@
 {% endcomment %}
 
 {% case block.type %}
+  {% when 'odd_benefits', 'odd_promotion', 'odd_description', 'odd_accordion' %}
+    {% render 'odd-product-information-block', block: block, product: product %}
   {% when 'sale_badge' %}
     {% assign variant_discount_percentage = 0 %}
     {% assign variant_has_discount = false %}
