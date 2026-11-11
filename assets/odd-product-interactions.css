@@ -1,4 +1,16 @@
 /* Purchase controls and their selection drawer share the storefront's visual language. */
+.template-product .pf-split-modal { opacity: 0; transition: opacity .28s ease; }
+.template-product .pf-split-modal.is-open { opacity: 1; }
+.template-product .pf-split-modal__sheet { transform: translateY(100%); transition: transform .28s ease; }
+.template-product .pf-split-modal.is-open .pf-split-modal__sheet { transform: translateY(0); }
+@media (min-width: 961px) {
+  .template-product .pf-split-modal__sheet { transform: translateX(100%); }
+  .template-product .pf-split-modal.is-open .pf-split-modal__sheet { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .template-product .pf-split-modal,
+  .template-product .pf-split-modal__sheet { transition: none; }
+}
 .template-product .ps-purchase :is(.pf-postery-tab, .pf-postery-pill, .ps-add-button, .pf-material__switch button, .pf-material__add),
 .template-product .pf-split-modal :is(.pf-split-modal__tab, .pf-split-modal__done, .pf-split-card) {
   transition: background-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease, border-color .2s ease;

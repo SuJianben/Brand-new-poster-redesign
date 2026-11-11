@@ -440,6 +440,7 @@
     </div>
   `;
   root.appendChild(modal);
+  const drawerMotion = window.OddProductDrawerMotion(modal);
 
   const slot = modal.querySelector('[data-pf-split-slot]');
   const caption = modal.querySelector('[data-pf-split-caption]');
@@ -553,7 +554,7 @@
     if (isMobile()) {
       slot.appendChild(preview);
     }
-    modal.hidden = false;
+    drawerMotion.open();
     document.documentElement.style.overflow = 'hidden';
     window.requestAnimationFrame(() => {
       root.productFramePreview?.fit?.();
@@ -564,17 +565,16 @@
 
   const closeModal = () => {
     if (modal.hidden) return;
-    if (slot.contains(preview)) {
-      previewHome.after(preview);
-    }
-    modal.hidden = true;
-    document.documentElement.style.overflow = '';
-    window.requestAnimationFrame(() => {
-      root.productFramePreview?.fit?.();
-      if (isMobile()) {
-        const top = mainMedia.getBoundingClientRect().top + window.scrollY - 70;
-        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-      }
+    drawerMotion.close(() => {
+      if (slot.contains(preview)) previewHome.after(preview);
+      document.documentElement.style.overflow = '';
+      window.requestAnimationFrame(() => {
+        root.productFramePreview?.fit?.();
+        if (isMobile()) {
+          const top = mainMedia.getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+      });
     });
   };
 
