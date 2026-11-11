@@ -642,8 +642,10 @@ main {
   box-shadow: 18px 18px 0 rgba(0, 0, 0, 0.22);
 }
 .hero-poster img {
-  width: 100%;
+  display: block;
+  width: 76%;
   height: 70%;
+  margin-inline: auto;
   object-fit: contain;
   filter: grayscale(1) contrast(1.15);
 }
