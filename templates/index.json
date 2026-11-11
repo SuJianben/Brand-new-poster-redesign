@@ -1,8 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "poster-hero",
-      "settings": {},
       "blocks": {
         "slide_1": {
           "type": "slide",
@@ -14,7 +22,7 @@
             "cta": "Shop philosophy",
             "category": "Philosophy",
             "color": "#6c5ce7",
-            "image": "https://images.unsplash.com/photo-1626803302532-b83560c4d946?auto=format&fit=crop&w=1200&q=90",
+            "image": "",
             "alt": "Creative philosophy poster featuring a classical statue",
             "kicker": "THE ART OF",
             "poster_title": "THINKING",
@@ -22,6 +30,7 @@
             "number": "001",
             "mark": "?",
             "sticker": "ONLY 100 MADE",
+            "product": "after-hours-cat",
             "cta_link": "#shop"
           }
         },
@@ -43,6 +52,7 @@
             "number": "002",
             "mark": ":P",
             "sticker": "WEIRD BY DESIGN",
+            "product": "aldeburgh-fishing-boats",
             "cta_link": "#shop"
           }
         },
@@ -64,6 +74,7 @@
             "number": "003",
             "mark": "★",
             "sticker": "NEW ICON DROP",
+            "product": "",
             "cta_link": "#shop"
           }
         }
@@ -72,15 +83,21 @@
         "slide_1",
         "slide_2",
         "slide_3"
-      ]
+      ],
+      "settings": {}
     },
     "marquee": {
       "type": "poster-marquee",
-      "settings": {}
+      "settings": {
+        "line_one": "PHILOSOPHY LEFT THE LIBRARY",
+        "line_two": "MAKE YOUR WALL TALK"
+      }
     },
     "shop": {
       "type": "poster-shop",
-      "settings": {}
+      "settings": {
+        "heading": "Fresh off the press"
+      }
     },
     "event": {
       "type": "poster-event",
@@ -88,7 +105,6 @@
     },
     "series": {
       "type": "poster-series",
-      "settings": {},
       "blocks": {
         "item_1": {
           "type": "item",
@@ -131,11 +147,13 @@
         "item_1",
         "item_2",
         "item_3"
-      ]
+      ],
+      "settings": {
+        "heading": "Pick your department."
+      }
     },
     "community": {
       "type": "poster-community",
-      "settings": {},
       "blocks": {
         "item_1": {
           "type": "item",
@@ -189,11 +207,13 @@
         "item_3",
         "item_4",
         "item_5"
-      ]
+      ],
+      "settings": {
+        "heading": "Good walls, great people."
+      }
     },
     "journal": {
       "type": "poster-journal",
-      "settings": {},
       "blocks": {
         "item_1": {
           "type": "item",
@@ -236,11 +256,13 @@
         "item_1",
         "item_2",
         "item_3"
-      ]
+      ],
+      "settings": {
+        "heading": "Read something strange."
+      }
     },
     "faq": {
       "type": "poster-faq",
-      "settings": {},
       "blocks": {
         "item_1": {
           "type": "item",
@@ -284,15 +306,22 @@
         "item_3",
         "item_4",
         "item_5"
-      ]
+      ],
+      "settings": {
+        "heading": "Questions, answered."
+      }
     },
     "about": {
       "type": "poster-about",
-      "settings": {}
+      "settings": {
+        "heading": "Ideas belong out in the open."
+      }
     },
     "trust": {
       "type": "poster-trust",
-      "settings": {}
+      "settings": {
+        "heading": "TRUST THE PROCESS"
+      }
     }
   },
   "order": [
