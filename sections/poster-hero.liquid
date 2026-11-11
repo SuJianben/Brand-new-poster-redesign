@@ -1,4 +1,4 @@
-{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{% assign hero_image = block.settings.custom_image | default: block.settings.product.featured_image %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"image":{% if hero_image != blank %}{{ hero_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
 <div data-poster-section="Hero" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}" data-poster-blocks="{{ poster_blocks | escape }}"></div>
 {% schema %}
 {
@@ -100,9 +100,15 @@
           "default": "ONLY 100 MADE"
         },
         {
+          "type": "product",
+          "id": "product",
+          "label": "选择商品",
+          "info": "默认显示商品首图；上传图片后优先显示上传的图片。"
+        },
+        {
           "type": "image_picker",
           "id": "custom_image",
-          "label": "上传图片（优先于图片链接）"
+          "label": "上传图片（优先于商品首图）"
         },
         {
           "type": "text",
