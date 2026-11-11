@@ -644,7 +644,7 @@ main {
 .hero-poster img {
   width: 100%;
   height: 70%;
-  object-fit: cover;
+  object-fit: contain;
   filter: grayscale(1) contrast(1.15);
 }
 .hero-poster::after {
