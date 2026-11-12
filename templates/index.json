@@ -202,7 +202,7 @@
         "item_1": {
           "type": "item",
           "settings": {
-            "collection": "aqua-reverie-art-prints",
+            "collection": "",
             "number": "01",
             "name": "The Thinkers",
             "category": "Philosophy",
@@ -216,7 +216,7 @@
         "item_2": {
           "type": "item",
           "settings": {
-            "collection": "colourful-wall-art",
+            "collection": "",
             "number": "02",
             "name": "Comic Relief",
             "category": "Satire",
@@ -230,7 +230,7 @@
         "item_3": {
           "type": "item",
           "settings": {
-            "collection": "cosy-cat-moments-art-prints",
+            "collection": "",
             "number": "03",
             "name": "The Icon File",
             "category": "Icons",
@@ -257,6 +257,11 @@
         "item_1": {
           "type": "item",
           "settings": {
+            "products": [
+              "after-the-shower",
+              "afternoon-arches",
+              "aldeburgh-fishing-boats"
+            ],
             "link_url": "",
             "image": "https://images.unsplash.com/photo-1659640219304-b5656eee3465?auto=format&fit=crop&w=1200&q=85",
             "alt": "Colorful living room with art prints above a blue sofa",
@@ -267,6 +272,7 @@
         "item_2": {
           "type": "item",
           "settings": {
+            "products": [],
             "link_url": "",
             "image": "https://images.unsplash.com/photo-1650137959510-d64eef290e86?auto=format&fit=crop&w=900&q=85",
             "alt": "Eclectic gallery wall in a colorful apartment",
@@ -277,6 +283,7 @@
         "item_3": {
           "type": "item",
           "settings": {
+            "products": [],
             "link_url": "",
             "image": "https://images.unsplash.com/photo-1758718036788-de50f9fd2192?auto=format&fit=crop&w=1000&q=85",
             "alt": "Creative studio desk with framed wall art",
@@ -287,6 +294,7 @@
         "item_4": {
           "type": "item",
           "settings": {
+            "products": [],
             "link_url": "",
             "image": "https://images.unsplash.com/photo-1650138318699-a7916aced967?auto=format&fit=crop&w=900&q=85",
             "alt": "Bright living room full of framed artwork",
@@ -297,6 +305,7 @@
         "item_5": {
           "type": "item",
           "settings": {
+            "products": [],
             "link_url": "",
             "image": "https://images.unsplash.com/photo-1650137269022-cbeaf3274bf7?auto=format&fit=crop&w=900&q=85",
             "alt": "Vertical view of an eclectic art-filled home",
