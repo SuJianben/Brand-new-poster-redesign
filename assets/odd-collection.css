@@ -36,7 +36,12 @@
 .odd-collection__sort { display: flex; align-items: center; gap: 10px; font-weight: 700; white-space: nowrap; }
 .odd-collection__sort select { cursor: pointer; max-width: 180px; padding: 8px 24px 8px 8px; font-weight: 500; }
 .odd-collection__grid.product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px 18px; }
+.odd-collection__grid .product-card { min-width: 0; }
+.odd-collection__grid .poster-paper { display: block; }
 .odd-collection__grid .poster-title strong { font-size: clamp(14px, 1.5vw, 23px); letter-spacing: -1px; }
+.odd-collection__grid .poster-title strong, .odd-collection__grid .product-info h3 { overflow-wrap: anywhere; }
+.odd-collection__grid .quick-add { text-decoration: none; }
+.odd-collection__grid .like-btn { pointer-events: none; }
 .odd-collection__grid .product-info h3 { font-size: 15px; }
 .odd-collection__grid .product-info > strong { font-size: 15px; white-space: nowrap; }
 .odd-collection__grid .product-info { gap: 8px; }
