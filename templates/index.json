@@ -139,7 +139,59 @@
     },
     "event": {
       "type": "poster-event",
+      "blocks": {
+        "slide_rGbLk3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/paf-pcd261021-blue-horizon-reverie-dusk-study-canvas-front-1407c28b70dc.png",
+            "title": "ART THAT SPEAKS UP.",
+            "description": "Find the print that gives your space a voice.",
+            "button_label": "EXPLORE PRINTS",
+            "link_url": ""
+          }
+        },
+        "slide_iBcVHb": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/paf-pcd261021-blue-petal-tapestry-canvas-front-c6a99d53af0e.png",
+            "title": "ART THAT SPEAKS UP.",
+            "description": "Find the print that gives your space a voice.",
+            "button_label": "EXPLORE PRINTS",
+            "link_url": ""
+          }
+        },
+        "slide_EwC3zW": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/paf-pcd261021-blue-organic-rhythm-canvas-front-5ce2cf32e7da.png",
+            "title": "ART THAT SPEAKS UP.",
+            "description": "Find the print that gives your space a voice.",
+            "button_label": "EXPLORE PRINTS",
+            "link_url": ""
+          }
+        },
+        "slide_UmTedJ": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/paf-pcd261021-blue-leaf-arrangement-canvas-front-b4c95db7ae84.png",
+            "title": "ART THAT SPEAKS UP.",
+            "description": "Find the print that gives your space a voice.",
+            "button_label": "EXPLORE PRINTS",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_rGbLk3",
+        "slide_iBcVHb",
+        "slide_EwC3zW",
+        "slide_UmTedJ"
+      ],
       "settings": {
+        "heading": "CURATED PRINTS",
+        "eyebrow": "FEATURED COLLECTIONS",
+        "autoplay": true,
+        "interval": 5,
         "link_one": "",
         "link_two": ""
       }
