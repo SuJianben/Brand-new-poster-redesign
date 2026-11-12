@@ -202,39 +202,42 @@
         "item_1": {
           "type": "item",
           "settings": {
+            "collection": "",
             "number": "01",
             "name": "The Thinkers",
             "category": "Philosophy",
             "count": "12 PRINTS",
             "line": "Big questions. Better walls.",
             "color": "#6c5ce7",
-            "link_url": "",
+            "link_url": "shopify://collections/cats-around-the-world-art-prints",
             "image": "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?auto=format&fit=crop&w=1200&q=85"
           }
         },
         "item_2": {
           "type": "item",
           "settings": {
+            "collection": "",
             "number": "02",
             "name": "Comic Relief",
             "category": "Satire",
             "count": "08 PRINTS",
             "line": "For rooms that take nothing seriously.",
             "color": "#ff5c35",
-            "link_url": "",
+            "link_url": "shopify://collections/buy-2-get-1-eligible-prints",
             "image": "https://images.unsplash.com/photo-1578831914933-6339766eb29b?auto=format&fit=crop&w=1200&q=85"
           }
         },
         "item_3": {
           "type": "item",
           "settings": {
+            "collection": "",
             "number": "03",
             "name": "The Icon File",
             "category": "Icons",
             "count": "10 PRINTS",
             "line": "Cult energy, permanently on display.",
             "color": "#ff48a5",
-            "link_url": "",
+            "link_url": "shopify://collections/cosy-cat-moments-art-prints",
             "image": "https://images.unsplash.com/photo-1617690032954-692168050cac?auto=format&fit=crop&w=1200&q=85"
           }
         }
