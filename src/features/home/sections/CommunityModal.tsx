@@ -1,18 +1,24 @@
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { CommunityPost } from "../communityPosts";
 import { Icon } from "../Icon";
 
 export function CommunityModal({ post, onClose }: { post: CommunityPost; onClose: () => void }) {
   const dialog = useRef<HTMLDivElement>(null);
+  const [closing, setClosing] = useState(false);
   const titleId = useId();
+  useEffect(() => {
+    if (!closing) return;
+    const fallback = window.setTimeout(onClose, 500);
+    return () => window.clearTimeout(fallback);
+  }, [closing, onClose]);
   useEffect(() => {
     const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     dialog.current?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { event.preventDefault(); onClose(); return; }
+      if (event.key === "Escape") { event.preventDefault(); setClosing(true); return; }
       if (event.key !== "Tab" || !dialog.current) return;
       const elements = Array.from(dialog.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
       if (!elements.length) { event.preventDefault(); return; }
@@ -25,9 +31,9 @@ export function CommunityModal({ post, onClose }: { post: CommunityPost; onClose
   }, [onClose]);
 
   return createPortal(
-    <div className="ow-social-dialog-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <div className={`ow-social-dialog-backdrop${closing ? " is-closing" : ""}`} onMouseDown={(event) => { if (event.target === event.currentTarget) setClosing(true); }} onAnimationEnd={(event) => { if (closing && event.target === event.currentTarget && event.animationName === "ow-social-backdrop-out") onClose(); }}>
       <div className="ow-social-dialog" role="dialog" aria-modal="true" aria-labelledby={titleId} ref={dialog} tabIndex={-1}>
-        <button className="ow-social-dialog__close" type="button" onClick={onClose} aria-label="Close"><Icon name="close" /></button>
+        <button className="ow-social-dialog__close" type="button" onClick={() => setClosing(true)} aria-label="Close"><Icon name="close" /></button>
         <div className="ow-social-dialog__image">{post.image && <img src={post.image} alt={post.alt} />}</div>
         <div className="ow-social-dialog__details">
           <div className="ow-social-dialog__heading"><span>{post.handle}</span><h2 id={titleId}>SHOP THE LOOK<span>!</span></h2></div>

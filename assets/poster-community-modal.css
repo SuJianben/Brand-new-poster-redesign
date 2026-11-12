@@ -1,7 +1,13 @@
 .social-grid button.social-post { display: block; width: 100%; padding: 0; text-align: left; cursor: pointer; }
 .social-grid button.social-post:focus-visible { outline: 3px solid #6c5ce7; outline-offset: 3px; }
-.ow-social-dialog-backdrop { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 24px; background: rgba(16, 17, 20, .72); }
-.ow-social-dialog { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); width: min(1100px, 100%); height: min(720px, calc(100dvh - 48px)); background: #f2efe6; border: 2px solid #101114; box-shadow: 8px 8px 0 #ff5c35; outline: none; overflow: hidden; }
+.ow-social-dialog-backdrop { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 24px; background: rgba(16, 17, 20, .72); animation: ow-social-backdrop-in .3s ease both; }
+.ow-social-dialog { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); width: min(1100px, 100%); height: min(720px, calc(100dvh - 48px)); background: #f2efe6; border: 2px solid #101114; box-shadow: 8px 8px 0 #ff5c35; outline: none; overflow: hidden; animation: ow-social-dialog-in .34s cubic-bezier(.22, 1, .36, 1) both; }
+.ow-social-dialog-backdrop.is-closing { animation: ow-social-backdrop-out .24s ease both; }
+.ow-social-dialog-backdrop.is-closing .ow-social-dialog { animation: ow-social-dialog-out .24s ease both; }
+@keyframes ow-social-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ow-social-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes ow-social-dialog-in { from { opacity: 0; transform: translateY(20px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes ow-social-dialog-out { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(12px) scale(.97); } }
 .ow-social-dialog__close { position: absolute; top: 16px; right: 16px; z-index: 2; display: grid; place-items: center; width: 42px; height: 42px; padding: 9px; border: 2px solid #101114; background: #dfff00; color: #101114; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .ow-social-dialog__close:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 #ff5c35; }
 .ow-social-dialog__close svg, .ow-social-dialog__product > svg, .ow-social-dialog__original svg { width: 20px; height: 20px; flex: none; }
@@ -28,4 +34,4 @@
   .ow-social-dialog__details { padding: 24px 20px; }
   .ow-social-dialog__close { top: 10px; right: 10px; }
 }
-@media (prefers-reduced-motion: reduce) { .ow-social-dialog__close, .ow-social-dialog__product { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .ow-social-dialog-backdrop, .ow-social-dialog { animation-duration: .001s !important; } .ow-social-dialog__close, .ow-social-dialog__product { transition: none; } }
