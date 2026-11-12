@@ -1,8 +1,11 @@
-import { configuredItems } from "../configuredItems";
-import { socialPosts } from "../data";
+import { useCallback, useState } from "react";
+import { readCommunityPosts, type CommunityPost } from "../communityPosts";
+import { CommunityModal } from "./CommunityModal";
 
 type Settings = Record<string, string | undefined>;
 export function Community({ settings = {} }: { settings?: Settings }) {
+  const [selected, setSelected] = useState<CommunityPost | null>(null);
+  const close = useCallback(() => setSelected(null), []);
 
   return (
     <>
@@ -18,15 +21,15 @@ export function Community({ settings = {} }: { settings?: Settings }) {
           </div>
         </div>
         <div className="social-grid">
-          {configuredItems(settings, socialPosts).map((post, index) => (
-            <a className={`social-post post-${index + 1}`} href={post.link_url || "#community"} key={post.handle}>
+          {readCommunityPosts(settings).map((post, index) => (
+            <button type="button" className={`social-post post-${index + 1}`} onClick={() => setSelected(post)} aria-label={`View products featured by ${post.handle || "this post"}`} key={post.id || `${post.handle}-${index}`}>
               <img src={post.image} alt={post.alt} />
               <div>
                 <strong>{post.handle}</strong>
                 <span>VIEW POST →</span>
               </div>
               <small>Photo · {post.credit}</small>
-            </a>
+            </button>
           ))}
         </div>
         <blockquote className="social-quote">
@@ -35,6 +38,7 @@ export function Community({ settings = {} }: { settings?: Settings }) {
           <cite>— JAMIE, VERIFIED BUYER</cite>
         </blockquote>
       </section>
+      {selected && <CommunityModal post={selected} onClose={close} />}
     </>
   );
 }

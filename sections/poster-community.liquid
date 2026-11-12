@@ -1,4 +1,5 @@
-{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{"settings":{{ block.settings | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
+{{ 'poster-community-modal.css' | asset_url | stylesheet_tag }}
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{"id":{{ block.id | json }},"settings":{"image":{{ block.settings.image | json }},"alt":{{ block.settings.alt | json }},"handle":{{ block.settings.handle | json }},"credit":{{ block.settings.credit | json }},"link_url":{{ block.settings.link_url | append: '' | json }}},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% else %}null{% endif %},"products":[{% for item in block.settings.products %}{% unless forloop.first %},{% endunless %}{"id":{{ item.id | json }},"title":{{ item.title | json }},"url":{{ item.url | append: '' | json }},"price":{{ item.price | money | json }},"price_varies":{{ item.price_varies | json }},"image":{% if item.featured_image != blank %}{{ item.featured_image | image_url: width: 400 | json }}{% else %}null{% endif %}}{% endfor %}]}{% endfor %}]{% endcapture %}
 <div data-poster-section="Community" data-poster-id="{{ section.id }}" data-poster-blocks="{{ poster_blocks | escape }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
 {% schema %}
 {
@@ -22,9 +23,16 @@
       "name": "条目",
       "settings": [
         {
+          "type": "product_list",
+          "id": "products",
+          "label": "关联商品",
+          "info": "选择这张图片中展示的商品。",
+          "limit": 20
+        },
+        {
           "type": "url",
           "id": "link_url",
-          "label": "跳转链接"
+          "label": "社媒原帖链接"
         },
         {
           "type": "text",
@@ -54,6 +62,6 @@
       ]
     }
   ],
-  "max_blocks": 30
+  "max_blocks": 5
 }
 {% endschema %}
