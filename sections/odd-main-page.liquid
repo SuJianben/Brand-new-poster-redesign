@@ -1,0 +1,24 @@
+{{ 'odd-page.css' | asset_url | stylesheet_tag }}
+<section class="odd-page odd-page--{{ section.settings.content_width }}">
+  <div class="odd-page__inner">
+    {% if section.settings.show_title %}
+      <header class="odd-page__header">
+        <p class="odd-page__breadcrumb"><a href="{{ routes.root_url }}">HOME</a><span aria-hidden="true"> / </span>PAGE</p>
+        <h1>{{ page.title | escape }}</h1>
+      </header>
+    {% endif %}
+    <div class="odd-page__content">{{ page.content }}</div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "普通页面",
+  "settings": [
+    {"type":"checkbox","id":"show_title","label":"显示页面标题","default":true},
+    {"type":"select","id":"content_width","label":"正文宽度","default":"standard","options":[
+      {"value":"standard","label":"标准"},
+      {"value":"wide","label":"宽"}
+    ]}
+  ]
+}
+{% endschema %}

@@ -14,7 +14,7 @@
     <title>{{ page_title | escape }}</title>
     {{ content_for_header }}
     {{ 'poster-home.css' | asset_url | stylesheet_tag }}
-    {% if request.page_type == 'product' or request.page_type == 'collection' %}
+    {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'page' %}
       {% liquid
         assign pf_market_root = routes.root_url | append: '/' | replace: '//', '/'
       %}
@@ -35,7 +35,7 @@
       {% sections 'footer-group' %}
       <div id="root"></div>
     </main>
-    {% if request.page_type == 'product' or request.page_type == 'collection' %}{% render 'cart-drawer' %}{% endif %}
+    {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'page' %}{% render 'cart-drawer' %}{% endif %}
     <script type="module" src="{{ 'poster-home.js' | asset_url }}"></script>
   </body>
 </html>

@@ -1,0 +1,33 @@
+.odd-page {
+  color: var(--ink);
+  background: var(--paper);
+  padding: 70px 5vw 110px;
+}
+.odd-page__inner { max-width: 1000px; margin: 0 auto; }
+.odd-page--wide .odd-page__inner { max-width: 1600px; }
+.odd-page__header { margin-bottom: 48px; }
+.odd-page__breadcrumb { margin: 0 0 24px; font: 10px "Archivo Black", sans-serif; letter-spacing: 1.5px; }
+.odd-page__breadcrumb span { color: var(--orange); margin: 0 6px; }
+.odd-page__header h1 { margin: 0; font: clamp(38px, 5vw, 68px)/1 "Archivo Black", sans-serif; letter-spacing: -2px; overflow-wrap: anywhere; }
+.odd-page__content { font-size: 16px; line-height: 1.7; overflow-wrap: break-word; }
+.odd-page__content > :first-child { margin-top: 0; }
+.odd-page__content h2, .odd-page__content h3, .odd-page__content h4 { margin: 1.5em 0 .55em; font-family: "Archivo Black", sans-serif; line-height: 1.2; }
+.odd-page__content h2 { font-size: clamp(24px, 3vw, 38px); letter-spacing: -1px; }
+.odd-page__content h3 { font-size: 22px; }
+.odd-page__content h4 { font-size: 18px; }
+.odd-page__content p, .odd-page__content ul, .odd-page__content ol, .odd-page__content blockquote { margin: 0 0 1.25em; }
+.odd-page__content ul, .odd-page__content ol { padding-left: 1.5em; }
+.odd-page__content ul { list-style: disc; }
+.odd-page__content ol { list-style: decimal; }
+.odd-page__content a { text-decoration: underline; text-underline-offset: 3px; }
+.odd-page__content a:hover { color: var(--purple); }
+.odd-page__content img, .odd-page__content video, .odd-page__content iframe { max-width: 100%; }
+.odd-page__content img, .odd-page__content video { height: auto; }
+.odd-page__content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin-bottom: 1.25em; }
+.odd-page__content th, .odd-page__content td { border: 1px solid var(--ink); padding: .65em; }
+.odd-page__content blockquote { border-left: 4px solid var(--orange); padding-left: 1em; }
+@media (max-width: 600px) {
+  .odd-page { padding: 44px 5vw 70px; }
+  .odd-page__header { margin-bottom: 32px; }
+  .odd-page__content { font-size: 15px; }
+}

@@ -7,7 +7,7 @@ type Settings = Record<string, string | undefined>;
 export function Header({ settings = {} }: { settings?: Settings }) {
   const items = readHeaderNavigation(settings);
   const pageType = document.documentElement.dataset.posterPageType;
-  const commercePage = pageType === "product" || pageType === "collection";
+  const commercePage = pageType === "product" || pageType === "collection" || pageType === "page";
   const cartCount = commercePage ? Number(document.documentElement.dataset.posterCartCount || 0) : undefined;
   const { searchOpen, setSearchOpen, setCartOpen, cart, closePanels } = usePoster();
   return (<><header className="site-header">

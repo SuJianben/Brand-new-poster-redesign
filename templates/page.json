@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "odd-main-page",
+      "settings": { "show_title": true, "content_width": "standard" }
+    }
+  },
+  "order": ["main"]
+}
