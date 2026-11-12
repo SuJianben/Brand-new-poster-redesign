@@ -23,29 +23,28 @@ export function Event({ settings = {} }: { settings?: Settings }) {
   const { setFilter } = usePoster();
   const slides = slidesFor(settings);
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [editorPaused, setEditorPaused] = useState(false);
   const index = Math.min(active, slides.length - 1);
   const slide = slides[index];
   const interval = Math.max(3, Number(settings.interval) || 5) * 1000;
-  useEffect(() => {
-    if (settings.autoplay === false || paused || slides.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setActive((current) => (current + 1) % slides.length), interval);
-    return () => window.clearInterval(timer);
-  }, [settings.autoplay, paused, slides.length, interval]);
+  const autoplay = settings.autoplay !== false && slides.length > 1;
+  const paused = hovered || focused || editorPaused;
   useEffect(() => {
     const onSelect = (event: Event) => {
       const blockId = (event as CustomEvent<{ blockId?: string }>).detail?.blockId;
       const next = slides.findIndex((item) => item.id === blockId);
-      if (next >= 0) { setActive(next); setPaused(true); }
+      if (next >= 0) { setActive(next); setEditorPaused(true); }
     };
-    const onDeselect = () => setPaused(false);
+    const onDeselect = () => setEditorPaused(false);
     document.addEventListener("shopify:block:select", onSelect);
     document.addEventListener("shopify:block:deselect", onDeselect);
     return () => { document.removeEventListener("shopify:block:select", onSelect); document.removeEventListener("shopify:block:deselect", onDeselect); };
   }, [settings._blocks]);
   if (!slide) return null;
   return (
-    <section className="ow-event" id="manifesto" aria-label={value(settings, "heading", "CURATED PRINTS")} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}>
+    <section className="ow-event" id="manifesto" aria-label={value(settings, "heading", "CURATED PRINTS")} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocus={() => setFocused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
       <div className="ow-event__rail"><h2>{value(settings, "heading", "CURATED PRINTS")}</h2></div>
       <div className="ow-event__copy">
         <span className="ow-event__eyebrow">{value(settings, "eyebrow", "FEATURED COLLECTIONS")}</span>
@@ -57,11 +56,12 @@ export function Event({ settings = {} }: { settings?: Settings }) {
         <div className="ow-event__thumbs" role="tablist" aria-label="Featured collections">
           {slides.map((item, position) => <button type="button" role="tab" aria-selected={position === index} className={position === index ? "is-active" : ""} key={item.id} onClick={() => setActive(position)} aria-label={item.title || `Slide ${position + 1}`}>
             {item.image && <img src={item.image} alt="" loading="lazy" />}
-            <span>{String(position + 1).padStart(2, "0")}</span>
+            {position === index && <span key={item.id} className={`ow-event__progress${autoplay ? " is-running" : ""}`} style={{ animationDuration: `${interval}ms`, animationPlayState: paused ? "paused" : "running" }} onAnimationEnd={() => { if (autoplay) setActive((current) => (current + 1) % slides.length); }} aria-hidden="true" />}
+            <span className="ow-event__number">{String(position + 1).padStart(2, "0")}</span>
           </button>)}
         </div>
       </div>
-      <div className="ow-event__visual" key={slide.id}>{slide.image && <img src={slide.image} alt={slide.title} />}</div>
+      <div className="ow-event__visual">{slides.map((item, position) => item.image && <img key={item.id} className={position === index ? "is-active" : ""} src={item.image} alt={position === index ? item.title : ""} aria-hidden={position !== index} />)}</div>
     </section>
   );
 }
