@@ -1,4 +1,4 @@
-{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{"settings":{{ block.settings | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{% assign selected_collection = block.settings.collection %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% elsif selected_collection.featured_image != blank %}{{ selected_collection.featured_image | image_url: width: 1600 | json }}{% else %}null{% endif %},"collection":{% if selected_collection != blank %}{"title":{{ selected_collection.title | json }},"url":{{ selected_collection.url | append: "" | json }},"count":{{ selected_collection.all_products_count | json }}}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
 <div data-poster-section="Series" data-poster-id="{{ section.id }}" data-poster-blocks="{{ poster_blocks | escape }}" data-poster-settings="{{ section.settings | json | escape }}"></div>
 {% schema %}
 {
@@ -22,6 +22,12 @@
       "name": "条目",
       "settings": [
         {
+          "type": "collection",
+          "id": "collection",
+          "label": "选择产品系列",
+          "info": "选择后自动显示系列名称、商品数量和系列链接；上传图片可覆盖系列图片。"
+        },
+        {
           "type": "text",
           "id": "number",
           "label": "编号"
@@ -29,7 +35,7 @@
         {
           "type": "text",
           "id": "name",
-          "label": "系列名称"
+          "label": "系列名称（未选系列时使用）"
         },
         {
           "type": "text",
@@ -39,7 +45,7 @@
         {
           "type": "text",
           "id": "count",
-          "label": "数量文字"
+          "label": "数量文字（未选系列时使用）"
         },
         {
           "type": "text",
@@ -55,7 +61,7 @@
         {
           "type": "url",
           "id": "link_url",
-          "label": "跳转链接"
+          "label": "跳转链接（未选系列时使用）"
         },
         {
           "type": "text",
@@ -65,7 +71,7 @@
         {
           "type": "image_picker",
           "id": "custom_image",
-          "label": "上传图片（优先于图片链接）"
+          "label": "上传图片（优先于系列图片）"
         }
       ]
     }

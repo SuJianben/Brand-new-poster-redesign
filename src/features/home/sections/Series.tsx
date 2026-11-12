@@ -1,7 +1,6 @@
-import { configuredItems } from "../configuredItems";
+import { readSeries } from "../seriesItems";
 import { usePoster } from "../state";
 import { Icon } from "../Icon";
-import { productSeries } from "../data";
 
 type Settings = Record<string, string | undefined>;
 export function Series({ settings = {} }: { settings?: Settings }) {
@@ -20,16 +19,16 @@ export function Series({ settings = {} }: { settings?: Settings }) {
           </p>
         </div>
         <div className="series-grid">
-          {configuredItems(settings, productSeries).map((series) => (
+          {readSeries(settings).map((series) => (
             <a
               href={series.link_url || "#shop"}
               className="series-card"
               style={{ backgroundColor: series.color }}
               onClick={() => setFilter(series.category)}
-              key={series.name}
+              key={series.id || series.name}
             >
               <div className="series-image">
-                <img src={series.image} alt={`${series.name} poster collection`} />
+                {series.image && <img src={series.image} alt={`${series.name} poster collection`} />}
                 <span>{series.count}</span>
               </div>
               <div className="series-copy">
