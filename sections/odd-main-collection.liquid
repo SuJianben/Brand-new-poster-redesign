@@ -43,7 +43,7 @@
         <div class="product-grid odd-collection__grid" data-collection-grid>
           {% for card_product in collection.products %}
             {% assign card_index = paginate.current_offset | plus: forloop.index %}
-            {% render 'odd-recommendation-card', product: card_product, index: card_index %}
+            {% render 'odd-recommendation-card', product: card_product, index: card_index, collection_card: true %}
           {% else %}
             <p class="odd-collection__empty">No prints found. Try a different filter.</p>
           {% endfor %}

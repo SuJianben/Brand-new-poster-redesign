@@ -6,6 +6,12 @@
     if (mobileFilters && window.matchMedia('(max-width: 800px)').matches) mobileFilters.open = false;
     const sort = root.querySelector('[data-collection-sort]');
     sort?.addEventListener('change', () => sort.form?.requestSubmit());
+    const filterForm = root.querySelector('.odd-filters');
+    filterForm?.addEventListener('change', (event) => {
+      if (event.target.matches('input[type="checkbox"], input[type="number"]')) {
+        filterForm.requestSubmit();
+      }
+    });
     root.addEventListener('click', async (event) => {
       const link = event.target.closest('[data-collection-more]');
       if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.dataset.loading) return;
