@@ -202,7 +202,7 @@
         "item_1": {
           "type": "item",
           "settings": {
-            "collection": "",
+            "collection": "aqua-reverie-art-prints",
             "number": "01",
             "name": "The Thinkers",
             "category": "Philosophy",
@@ -216,7 +216,7 @@
         "item_2": {
           "type": "item",
           "settings": {
-            "collection": "",
+            "collection": "colourful-wall-art",
             "number": "02",
             "name": "Comic Relief",
             "category": "Satire",
@@ -230,7 +230,7 @@
         "item_3": {
           "type": "item",
           "settings": {
-            "collection": "",
+            "collection": "cosy-cat-moments-art-prints",
             "number": "03",
             "name": "The Icon File",
             "category": "Icons",
