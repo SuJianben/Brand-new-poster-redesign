@@ -346,55 +346,10 @@
     },
     "journal": {
       "type": "poster-journal",
-      "blocks": {
-        "item_1": {
-          "type": "item",
-          "settings": {
-            "tag": "BEHIND THE PRINT",
-            "date": "08 MIN READ",
-            "title": "Why the best posters still start with ink and a mess",
-            "excerpt": "Inside the hands-on process behind our loudest limited editions.",
-            "link_url": "",
-            "image": "https://images.unsplash.com/photo-1663433567177-9f94be0bff4c?auto=format&fit=crop&w=1400&q=85",
-            "alt": "Artist working at a printing machine",
-            "credit": "Anthony Roberts"
-          }
-        },
-        "item_2": {
-          "type": "item",
-          "settings": {
-            "tag": "WALL THEORY",
-            "date": "05 MIN READ",
-            "title": "How to build a gallery wall without overthinking it",
-            "excerpt": "A practical guide to scale, spacing, color, and breaking the rules.",
-            "link_url": "",
-            "image": "https://images.unsplash.com/photo-1578855019520-af8101c056e2?auto=format&fit=crop&w=1100&q=85",
-            "alt": "Colorful paintings inside a contemporary gallery",
-            "credit": "Mike Von"
-          }
-        },
-        "item_3": {
-          "type": "item",
-          "settings": {
-            "tag": "STREET NOTES",
-            "date": "04 MIN READ",
-            "title": "What the street taught us about typography",
-            "excerpt": "Layers, accidents, and letters that refuse to whisper.",
-            "link_url": "",
-            "image": "https://images.unsplash.com/photo-1770274484406-09405c9c01df?auto=format&fit=crop&w=1100&q=85",
-            "alt": "Urban wall covered with layered posters and flyers",
-            "credit": "moniek van rosse"
-          }
-        }
-      },
-      "block_order": [
-        "item_1",
-        "item_2",
-        "item_3"
-      ],
       "settings": {
-        "all_link": "",
-        "heading": "Read something strange."
+        "heading": "Read something strange.",
+        "blog": "news",
+        "article_limit": 3
       }
     },
     "faq": {

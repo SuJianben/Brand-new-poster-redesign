@@ -12,17 +12,17 @@ export function Journal({ settings = {} }: { settings?: Settings }) {
           <div>
             <h2>{settings.heading ?? "Read something strange."}</h2>
           </div>
-          <a className="primary-cta" href={settings.all_link || "#journal"}>
+          {settings.blog_url && <a className="primary-cta" href={settings.blog_url}>
             View all stories <Icon name="arrow" />
-          </a>
+          </a>}
         </div>
         <div className="journal-grid">
           {configuredItems(settings, journalPosts).map((post, index) => (
             <article className={`journal-card journal-card-${index + 1}`} key={post.title}>
-              <a className="journal-image" href={post.link_url || "#journal"}>
+              {post.image && <a className="journal-image" href={post.link_url || "#journal"}>
                 <img src={post.image} alt={post.alt} />
-                <small>Photo · {post.credit}</small>
-              </a>
+                {post.credit && <small>Photo · {post.credit}</small>}
+              </a>}
               <div className="journal-meta">
                 <span>{post.tag}</span>
                 <span>{post.date}</span>
