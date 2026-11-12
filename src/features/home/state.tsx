@@ -12,6 +12,10 @@ export function usePosterState() {
   const [toast, setToast] = useState("");
 
   useEffect(() => {
+    document.dispatchEvent(new CustomEvent("poster:category-select", { detail: filter }));
+  }, [filter]);
+
+  useEffect(() => {
     if (!toast) return;
     const timer = window.setTimeout(() => setToast(""), 1800);
     return () => window.clearTimeout(timer);
