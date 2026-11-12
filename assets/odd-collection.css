@@ -61,9 +61,11 @@
   .odd-collection__mobile-filters > summary { display: flex; justify-content: space-between; list-style: none; padding: 14px; border: 2px solid var(--ink); font: 12px "Archivo Black"; cursor: pointer; }
   .odd-collection__mobile-filters[open] > summary span { transform: rotate(45deg); }
   .odd-collection__filter-content { padding: 18px 0; }
-  .odd-filters__title { display: none; }
+  .odd-filters__title { padding-bottom: 12px; }
   .odd-collection__toolbar { margin-top: 16px; }
   .odd-collection__grid.product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 12px; }
   .odd-collection__grid .poster-title strong { font-size: 15px; }
+  .odd-collection__grid .quick-add { padding: 8px; font-size: 11px; }
+  .odd-collection__grid .quick-add svg { width: 15px; flex-shrink: 0; }
   .odd-collection__grid .product-info { align-items: start; flex-direction: column; }
 }
