@@ -19,7 +19,7 @@ export function Community({ settings = {} }: { settings?: Settings }) {
         </div>
         <div className="social-grid">
           {configuredItems(settings, socialPosts).map((post, index) => (
-            <a className={`social-post post-${index + 1}`} href="#community" key={post.handle}>
+            <a className={`social-post post-${index + 1}`} href={post.link_url || "#community"} key={post.handle}>
               <img src={post.image} alt={post.alt} />
               <div>
                 <strong>{post.handle}</strong>

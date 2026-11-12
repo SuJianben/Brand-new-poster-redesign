@@ -7,7 +7,7 @@ export function Event({ settings = {} }: { settings?: Settings }) {
     <>
       <section className="event-showcase" id="manifesto" aria-label="Odd Wall art event">
         <a
-          href="#shop"
+          href={settings.link_one || "#shop"}
           onClick={() => setFilter("Philosophy")}
           aria-label="Shop the abstract philosophy campaign"
         >
@@ -17,7 +17,7 @@ export function Event({ settings = {} }: { settings?: Settings }) {
           />
         </a>
         <a
-          href="#shop"
+          href={settings.link_two || "#shop"}
           onClick={() => setFilter("Satire")}
           aria-label="Shop the colorful satire campaign"
         >

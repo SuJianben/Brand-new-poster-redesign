@@ -21,7 +21,7 @@ export function About({ settings = {} }: { settings?: Settings }) {
             for everyday spaces. Every edition is made in small runs, on archival paper, with enough
             personality to start a conversation.
           </p>
-          <a className="primary-cta" href="#shop">
+          <a className="primary-cta" href={settings.link_url || "#shop"}>
             MEET THE PRINTS <Icon name="arrow" />
           </a>
         </div>

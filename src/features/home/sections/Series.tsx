@@ -22,7 +22,7 @@ export function Series({ settings = {} }: { settings?: Settings }) {
         <div className="series-grid">
           {configuredItems(settings, productSeries).map((series) => (
             <a
-              href="#shop"
+              href={series.link_url || "#shop"}
               className="series-card"
               style={{ backgroundColor: series.color }}
               onClick={() => setFilter(series.category)}

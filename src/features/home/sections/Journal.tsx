@@ -12,14 +12,14 @@ export function Journal({ settings = {} }: { settings?: Settings }) {
           <div>
             <h2>{settings.heading ?? "Read something strange."}</h2>
           </div>
-          <a className="primary-cta" href="#journal">
+          <a className="primary-cta" href={settings.all_link || "#journal"}>
             View all stories <Icon name="arrow" />
           </a>
         </div>
         <div className="journal-grid">
           {configuredItems(settings, journalPosts).map((post, index) => (
             <article className={`journal-card journal-card-${index + 1}`} key={post.title}>
-              <a className="journal-image" href="#journal">
+              <a className="journal-image" href={post.link_url || "#journal"}>
                 <img src={post.image} alt={post.alt} />
                 <small>Photo · {post.credit}</small>
               </a>
@@ -28,10 +28,10 @@ export function Journal({ settings = {} }: { settings?: Settings }) {
                 <span>{post.date}</span>
               </div>
               <h3>
-                <a href="#journal">{post.title}</a>
+                <a href={post.link_url || "#journal"}>{post.title}</a>
               </h3>
               <p>{post.excerpt}</p>
-              <a className="journal-link" href="#journal">
+              <a className="journal-link" href={post.link_url || "#journal"}>
                 READ STORY <Icon name="arrow" />
               </a>
             </article>
