@@ -1,0 +1,25 @@
+<form id="{{ form_id }}" action="{{ collection.url }}" method="get" class="odd-filters">
+  <div class="odd-filters__title"><strong>FILTERS</strong><a href="{{ collection.url }}?sort_by={{ current_sort | url_encode }}">CLEAR ALL</a></div>
+  {% for filter in filters %}
+    <details class="odd-filters__group" open>
+      <summary>{{ filter.label | escape }} <span aria-hidden="true">−</span></summary>
+      {% case filter.type %}
+        {% when 'list', 'boolean' %}
+          <ul class="odd-filters__values">
+            {% for value in filter.values %}
+              <li><label>
+                <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value | escape }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                <span>{{ value.label | escape }}</span><small>{{ value.count }}</small>
+              </label></li>
+            {% endfor %}
+          </ul>
+        {% when 'price_range' %}
+          <div class="odd-filters__price">
+            <label>From <input name="{{ filter.min_value.param_name }}" type="number" min="0" step="any" inputmode="decimal" placeholder="0" {% if filter.min_value.value != nil %}value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"{% endif %}></label>
+            <label>To <input name="{{ filter.max_value.param_name }}" type="number" min="0" step="any" inputmode="decimal" placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}" {% if filter.max_value.value != nil %}value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"{% endif %}></label>
+          </div>
+      {% endcase %}
+    </details>
+  {% endfor %}
+  <button class="odd-filters__apply" type="submit">APPLY FILTERS <span aria-hidden="true">→</span></button>
+</form>

@@ -1,0 +1,64 @@
+.odd-collection {
+  padding: 62px 5vw 100px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.odd-collection__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 34px;
+  border-bottom: 2px solid var(--ink);
+}
+.odd-collection__eyebrow { margin: 0 0 18px; font: 10px "Archivo Black"; letter-spacing: 1.5px; }
+.odd-collection__eyebrow span { color: var(--orange); margin: 0 6px; }
+.odd-collection__heading h1 { margin: 0; font: clamp(40px, 4.7vw, 68px)/.96 "Archivo Black"; letter-spacing: -3px; }
+.odd-collection__description { max-width: 390px; font-size: 14px; line-height: 1.6; }
+.odd-collection__layout { display: grid; grid-template-columns: minmax(195px, 230px) minmax(0, 1fr); gap: 34px; padding-top: 34px; }
+.odd-collection__mobile-filters > summary { display: none; }
+.odd-filters__title { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; font: 12px "Archivo Black"; }
+.odd-filters__title a { font: 10px "Space Grotesk", sans-serif; text-decoration: underline; }
+.odd-filters__group { border-top: 2px solid var(--ink); padding: 17px 0; }
+.odd-filters__group summary { display: flex; justify-content: space-between; cursor: pointer; font-weight: 700; list-style: none; }
+.odd-filters__group summary::-webkit-details-marker, .odd-collection__mobile-filters summary::-webkit-details-marker { display: none; }
+.odd-filters__group:not([open]) summary span { transform: rotate(90deg); }
+.odd-filters__values { list-style: none; padding: 8px 0 0; margin: 0; max-height: 280px; overflow: auto; }
+.odd-filters__values label { display: flex; gap: 9px; align-items: center; padding: 6px 0; font-size: 13px; cursor: pointer; }
+.odd-filters__values input { appearance: auto; accent-color: var(--ink); width: 16px; height: 16px; }
+.odd-filters__values small { margin-left: auto; color: #777; }
+.odd-filters__price { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-top: 12px; font-size: 12px; }
+.odd-filters__price input { display: block; width: 100%; border: 1px solid var(--ink); background: white; padding: 8px; margin-top: 5px; }
+.odd-filters__apply { width: 100%; display: flex; justify-content: space-between; background: var(--ink); color: white; padding: 14px; font: 11px "Archivo Black"; cursor: pointer; }
+.odd-filters__apply:hover { background: var(--purple); }
+.odd-collection__results { min-width: 0; }
+.odd-collection__toolbar { display: flex; align-items: center; justify-content: space-between; gap: 15px; min-height: 42px; margin-bottom: 22px; border-bottom: 1px solid var(--ink); font-size: 11px; letter-spacing: .5px; }
+.odd-collection__sort { display: flex; align-items: center; gap: 10px; font-weight: 700; white-space: nowrap; }
+.odd-collection__sort select { cursor: pointer; max-width: 180px; padding: 8px 24px 8px 8px; font-weight: 500; }
+.odd-collection__grid.product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px 18px; }
+.odd-collection__grid .poster-title strong { font-size: clamp(14px, 1.5vw, 23px); letter-spacing: -1px; }
+.odd-collection__grid .product-info h3 { font-size: 15px; }
+.odd-collection__grid .product-info > strong { font-size: 15px; white-space: nowrap; }
+.odd-collection__grid .product-info { gap: 8px; }
+.odd-collection__empty { grid-column: 1 / -1; padding: 48px 0; }
+.odd-collection__pagination { text-align: center; margin: 52px auto 0; font-size: 12px; }
+.odd-collection__more { display: inline-flex; justify-content: space-between; gap: 40px; margin-top: 16px; }
+.odd-collection__more[aria-busy="true"] { opacity: .65; pointer-events: none; }
+@media (max-width: 1100px) {
+  .odd-collection__grid.product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .odd-collection { padding: 42px 5vw 70px; }
+  .odd-collection__heading { display: block; padding-bottom: 25px; }
+  .odd-collection__heading h1 { letter-spacing: -2px; }
+  .odd-collection__description { margin-top: 16px; }
+  .odd-collection__layout { display: block; padding-top: 20px; }
+  .odd-collection__mobile-filters > summary { display: flex; justify-content: space-between; list-style: none; padding: 14px; border: 2px solid var(--ink); font: 12px "Archivo Black"; cursor: pointer; }
+  .odd-collection__mobile-filters[open] > summary span { transform: rotate(45deg); }
+  .odd-collection__filter-content { padding: 18px 0; }
+  .odd-filters__title { display: none; }
+  .odd-collection__toolbar { margin-top: 16px; }
+  .odd-collection__grid.product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 12px; }
+  .odd-collection__grid .poster-title strong { font-size: 15px; }
+  .odd-collection__grid .product-info { align-items: start; flex-direction: column; }
+}

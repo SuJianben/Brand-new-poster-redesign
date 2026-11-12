@@ -1,0 +1,73 @@
+{{ 'odd-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'odd-collection.js' | asset_url }}" defer></script>
+{%- liquid
+  assign current_sort = collection.sort_by | default: collection.default_sort_by
+  assign form_id = 'CollectionFilters-' | append: section.id
+-%}
+{% paginate collection.products by section.settings.products_per_page %}
+  <section class="odd-collection" data-odd-collection>
+    <header class="odd-collection__heading">
+      <div>
+        <p class="odd-collection__eyebrow"><a href="{{ routes.root_url }}">HOME</a> <span>/</span> COLLECTION</p>
+        <h1>{{ collection.title | escape }}</h1>
+      </div>
+      {% if section.settings.show_description and collection.description != blank %}
+        <div class="odd-collection__description">{{ collection.description }}</div>
+      {% endif %}
+    </header>
+    <div class="odd-collection__layout">
+      <aside class="odd-collection__sidebar">
+        {% if section.settings.show_filters and collection.filters.size > 0 %}
+          <details class="odd-collection__mobile-filters" open>
+            <summary>FILTERS <span>+</span></summary>
+            <div class="odd-collection__filter-content">
+              {% render 'odd-collection-filters', filters: collection.filters, collection: collection, form_id: form_id, current_sort: current_sort %}
+            </div>
+          </details>
+        {% else %}
+          <form id="{{ form_id }}" action="{{ collection.url }}" method="get"></form>
+        {% endif %}
+      </aside>
+      <div class="odd-collection__results">
+        <div class="odd-collection__toolbar">
+          <p><strong>{{ collection.products_count }}</strong> {% if collection.products_count == 1 %}PRINT{% else %}PRINTS{% endif %}</p>
+          <label class="odd-collection__sort">SORT BY
+            <select name="sort_by" form="{{ form_id }}" data-collection-sort>
+              {% for option in collection.sort_options %}
+                <option value="{{ option.value | escape }}" {% if option.value == current_sort %}selected{% endif %}>{{ option.name | escape }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <noscript><button type="submit" form="{{ form_id }}">Apply sort</button></noscript>
+        </div>
+        <div class="product-grid odd-collection__grid" data-collection-grid>
+          {% for card_product in collection.products %}
+            {% assign card_index = paginate.current_offset | plus: forloop.index %}
+            {% render 'odd-recommendation-card', product: card_product, index: card_index %}
+          {% else %}
+            <p class="odd-collection__empty">No prints found. Try a different filter.</p>
+          {% endfor %}
+        </div>
+        {% if paginate.pages > 1 %}
+          <div class="odd-collection__pagination" data-collection-pagination>
+            <p data-collection-progress>Showing {{ paginate.current_offset | plus: collection.products.size }} of {{ paginate.items }} prints</p>
+            {% if paginate.next %}
+              <a class="primary-cta odd-collection__more" data-collection-more href="{{ paginate.next.url }}">LOAD MORE <span aria-hidden="true">→</span></a>
+            {% endif %}
+            {% if paginate.previous %}<noscript><a href="{{ paginate.previous.url }}">Previous page</a></noscript>{% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endpaginate %}
+{% schema %}
+{
+  "name": "系列商品",
+  "settings": [
+    {"type":"range","id":"products_per_page","label":"每页商品数量","min":8,"max":48,"step":4,"default":24},
+    {"type":"checkbox","id":"show_description","label":"显示系列描述","default":true},
+    {"type":"checkbox","id":"show_filters","label":"显示筛选","default":true}
+  ]
+}
+{% endschema %}
