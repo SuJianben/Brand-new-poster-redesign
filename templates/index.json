@@ -95,13 +95,54 @@
     },
     "shop": {
       "type": "poster-shop",
+      "blocks": {
+        "category_HfXAyi": {
+          "type": "category",
+          "settings": {
+            "label": "",
+            "collection": "animals-prints"
+          }
+        },
+        "category_VdLmQc": {
+          "type": "category",
+          "settings": {
+            "label": "",
+            "collection": "animals-prints"
+          }
+        },
+        "category_dBMzfe": {
+          "type": "category",
+          "settings": {
+            "label": "",
+            "collection": "best-sellers"
+          }
+        },
+        "category_Be8x8G": {
+          "type": "category",
+          "settings": {
+            "label": "",
+            "collection": "all-art-prints"
+          }
+        }
+      },
+      "block_order": [
+        "category_HfXAyi",
+        "category_VdLmQc",
+        "category_dBMzfe",
+        "category_Be8x8G"
+      ],
       "settings": {
-        "heading": "Fresh off the press"
+        "heading": "Fresh off the press",
+        "subtitle": "No answers to life,\njust better walls.",
+        "product_limit": 6
       }
     },
     "event": {
       "type": "poster-event",
-      "settings": {}
+      "settings": {
+        "link_one": "",
+        "link_two": ""
+      }
     },
     "series": {
       "type": "poster-series",
@@ -115,6 +156,7 @@
             "count": "12 PRINTS",
             "line": "Big questions. Better walls.",
             "color": "#6c5ce7",
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?auto=format&fit=crop&w=1200&q=85"
           }
         },
@@ -127,6 +169,7 @@
             "count": "08 PRINTS",
             "line": "For rooms that take nothing seriously.",
             "color": "#ff5c35",
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1578831914933-6339766eb29b?auto=format&fit=crop&w=1200&q=85"
           }
         },
@@ -139,6 +182,7 @@
             "count": "10 PRINTS",
             "line": "Cult energy, permanently on display.",
             "color": "#ff48a5",
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1617690032954-692168050cac?auto=format&fit=crop&w=1200&q=85"
           }
         }
@@ -158,6 +202,7 @@
         "item_1": {
           "type": "item",
           "settings": {
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1659640219304-b5656eee3465?auto=format&fit=crop&w=1200&q=85",
             "alt": "Colorful living room with art prints above a blue sofa",
             "handle": "@ROOMFORODD",
@@ -167,6 +212,7 @@
         "item_2": {
           "type": "item",
           "settings": {
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1650137959510-d64eef290e86?auto=format&fit=crop&w=900&q=85",
             "alt": "Eclectic gallery wall in a colorful apartment",
             "handle": "@WALLTALKDAILY",
@@ -176,6 +222,7 @@
         "item_3": {
           "type": "item",
           "settings": {
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1758718036788-de50f9fd2192?auto=format&fit=crop&w=1000&q=85",
             "alt": "Creative studio desk with framed wall art",
             "handle": "@STUDIOAFTERDARK",
@@ -185,6 +232,7 @@
         "item_4": {
           "type": "item",
           "settings": {
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1650138318699-a7916aced967?auto=format&fit=crop&w=900&q=85",
             "alt": "Bright living room full of framed artwork",
             "handle": "@MAXIMALMOOD",
@@ -194,6 +242,7 @@
         "item_5": {
           "type": "item",
           "settings": {
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1650137269022-cbeaf3274bf7?auto=format&fit=crop&w=900&q=85",
             "alt": "Vertical view of an eclectic art-filled home",
             "handle": "@NOEMPTYWALLS",
@@ -222,6 +271,7 @@
             "date": "08 MIN READ",
             "title": "Why the best posters still start with ink and a mess",
             "excerpt": "Inside the hands-on process behind our loudest limited editions.",
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1663433567177-9f94be0bff4c?auto=format&fit=crop&w=1400&q=85",
             "alt": "Artist working at a printing machine",
             "credit": "Anthony Roberts"
@@ -234,6 +284,7 @@
             "date": "05 MIN READ",
             "title": "How to build a gallery wall without overthinking it",
             "excerpt": "A practical guide to scale, spacing, color, and breaking the rules.",
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1578855019520-af8101c056e2?auto=format&fit=crop&w=1100&q=85",
             "alt": "Colorful paintings inside a contemporary gallery",
             "credit": "Mike Von"
@@ -246,6 +297,7 @@
             "date": "04 MIN READ",
             "title": "What the street taught us about typography",
             "excerpt": "Layers, accidents, and letters that refuse to whisper.",
+            "link_url": "",
             "image": "https://images.unsplash.com/photo-1770274484406-09405c9c01df?auto=format&fit=crop&w=1100&q=85",
             "alt": "Urban wall covered with layered posters and flyers",
             "credit": "moniek van rosse"
@@ -258,6 +310,7 @@
         "item_3"
       ],
       "settings": {
+        "all_link": "",
         "heading": "Read something strange."
       }
     },
@@ -314,7 +367,8 @@
     "about": {
       "type": "poster-about",
       "settings": {
-        "heading": "Ideas belong out in the open."
+        "heading": "Ideas belong out in the open.",
+        "link_url": ""
       }
     },
     "trust": {
