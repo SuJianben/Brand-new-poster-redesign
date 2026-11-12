@@ -1,4 +1,4 @@
-{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{% assign hero_product = block.settings.product %}{% assign hero_original = blank %}{% if hero_product != blank %}{% capture hero_original %}{% render 'pf-black-frame-artwork', product: hero_product, slot: 'url' %}{% endcapture %}{% assign hero_original = hero_original | strip | default: hero_product.metafields.custom.hanger_original_artwork_url.value %}{% endif %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% elsif hero_original != blank %}{{ hero_original | json }}{% elsif hero_product.featured_image != blank %}{{ hero_product.featured_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
+{% capture poster_blocks %}[{% for block in section.blocks %}{% unless forloop.first %},{% endunless %}{% assign hero_product = block.settings.product %}{% assign hero_original = blank %}{% if hero_product != blank %}{% capture hero_original %}{% render 'pf-black-frame-artwork', product: hero_product, slot: 'url' %}{% endcapture %}{% assign hero_original = hero_original | strip | default: hero_product.metafields.custom.hanger_original_artwork_url.value %}{% endif %}{"id":{{ block.id | json }},"settings":{{ block.settings | json }},"cta_link":{{ block.settings.cta_link | append: "" | json }},"image":{% if block.settings.custom_image != blank %}{{ block.settings.custom_image | image_url: width: 1600 | json }}{% elsif hero_original != blank %}{{ hero_original | json }}{% elsif hero_product.featured_image != blank %}{{ hero_product.featured_image | image_url: width: 1600 | json }}{% else %}null{% endif %}}{% endfor %}]{% endcapture %}
 <div data-poster-section="Hero" data-poster-id="{{ section.id }}" data-poster-settings="{{ section.settings | json | escape }}" data-poster-blocks="{{ poster_blocks | escape }}"></div>
 {% schema %}
 {
@@ -111,10 +111,9 @@
           "label": "上传图片（优先于商品首图）"
         },
         {
-          "type": "text",
+          "type": "url",
           "id": "cta_link",
-          "label": "按钮链接",
-          "default": "#shop"
+          "label": "按钮链接"
         }
       ]
     }
