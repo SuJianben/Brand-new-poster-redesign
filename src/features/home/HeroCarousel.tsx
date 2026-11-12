@@ -107,6 +107,12 @@ export function HeroCarousel({
         <div className="poster-cluster">
           <div className="hero-poster">
             <img src={slide.image} alt={slide.alt} />
+            <a
+              href={slide.cta_link || "#shop"}
+              onClick={() => onCategorySelect(slide.category)}
+              aria-label={slide.cta}
+              style={{ position: "absolute", inset: 0, zIndex: 1 }}
+            />
             <div className="hero-poster-copy">
               <small>{slide.kicker}</small>
               <strong>{slide.posterTitle}</strong>
