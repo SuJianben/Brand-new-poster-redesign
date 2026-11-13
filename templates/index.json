@@ -406,20 +406,55 @@
       "type": "poster-about",
       "settings": {
         "heading": "Ideas belong out in the open.",
-        "link_url": ""
+        "link_url": "shopify://pages/about-us"
       }
     },
     "trust": {
       "type": "poster-trust",
       "blocks": {
-        "paper": {"type":"item","settings":{"icon":"paper","title":"Museum-grade paper","description":"Heavy, tactile 230gsm stock with rich pigment inks that stay loud."}},
-        "responsible": {"type":"item","settings":{"icon":"leaf","title":"Printed responsibly","description":"FSC-certified paper, water-based inks, and plastic-free packaging."}},
-        "shipping": {"type":"item","settings":{"icon":"shipping","title":"Ships worldwide","description":"Tracked delivery in protective tubes. Free shipping over $75."}},
-        "returns": {"type":"item","settings":{"icon":"return","title":"30-day returns","description":"Changed your mind? Send it back, no awkward questions attached."}}
+        "paper": {
+          "type": "item",
+          "settings": {
+            "icon": "paper",
+            "title": "Museum-grade paper",
+            "description": "Heavy, tactile 230gsm stock with rich pigment inks that stay loud."
+          }
+        },
+        "responsible": {
+          "type": "item",
+          "settings": {
+            "icon": "leaf",
+            "title": "Printed responsibly",
+            "description": "FSC-certified paper, water-based inks, and plastic-free packaging."
+          }
+        },
+        "shipping": {
+          "type": "item",
+          "settings": {
+            "icon": "shipping",
+            "title": "Ships worldwide",
+            "description": "Tracked delivery in protective tubes. Free shipping over $75."
+          }
+        },
+        "returns": {
+          "type": "item",
+          "settings": {
+            "icon": "return",
+            "title": "30-day returns",
+            "description": "Changed your mind? Send it back, no awkward questions attached."
+          }
+        }
       },
-      "block_order": ["paper", "responsible", "shipping", "returns"],
+      "block_order": [
+        "paper",
+        "responsible",
+        "shipping",
+        "returns"
+      ],
       "settings": {
-        "heading": "TRUST THE PROCESS"
+        "heading": "TRUST THE PROCESS",
+        "score": "4.9",
+        "description": "Based on 1,200+ very opinionated walls."
       }
     }
   },
