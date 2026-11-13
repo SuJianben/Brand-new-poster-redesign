@@ -1,7 +1,7 @@
 .search-panel { position: fixed; inset: 0; z-index: 75; visibility: hidden; opacity: 0; transition: opacity .3s, visibility .3s; }
 .search-panel.is-open { visibility: visible; opacity: 1; }
 .search-panel__backdrop { position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5); border: 0; cursor: default; }
-.search-panel__sheet { position: absolute; left: 0; right: 0; overflow-y: auto; background: var(--lime); border-bottom: 2px solid var(--ink); padding: 24px 6vw 32px; transform: scale(.08,.12); transform-origin: var(--search-origin-x, 85%) top; border-radius: 50%; transition: transform .25s ease-in, border-radius .25s ease-in; }
+.search-panel__sheet { position: absolute; left: 0; right: 0; overflow-y: auto; background: var(--lime); border-bottom: 2px solid var(--ink); padding: 24px 6vw 32px; transform-origin: var(--search-origin-x, 85%) top; }
 .search-panel__tail { position: absolute; z-index: 1; width: clamp(56px, 8vw, 120px); height: 45px; background: var(--lime); clip-path: polygon(100% 0, 100% 72%, 0 100%); opacity: 0; pointer-events: none; transform: translateX(-100%); transform-origin: right top; }
 .search-panel.is-open .search-panel__tail { animation: search-bubble-tail-grow .65s cubic-bezier(.22, 1, .36, 1) both, search-bubble-tail-fade .65s linear both; }
 .search-panel.is-open .search-panel__sheet { transform: scale(1); border-radius: 0; animation: search-bubble-expand .65s cubic-bezier(.22, 1, .36, 1) both; }
