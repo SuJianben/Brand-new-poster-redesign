@@ -1,5 +1,7 @@
 .poster-shop [data-shop-panel][hidden] { display: none; }
 .poster-shop .poster-paper { display: block; }
+.poster-shop .poster-paper img { filter: none; }
+.poster-shop .poster-paper::after { content: none; }
 .poster-shop .poster-title strong { overflow-wrap: anywhere; }
 .poster-shop .product-info h3 { overflow-wrap: anywhere; }
 .poster-shop .quick-add { text-decoration: none; }
