@@ -2436,6 +2436,10 @@ footer {
   .faq-section .faq-heading h2 {
     font-size: 22px !important;
   }
+  .faq-section .faq-trigger h3 {
+    font-size: 18px;
+    letter-spacing: -0.6px;
+  }
   .quick-add {
     transform: translateY(0);
   }
