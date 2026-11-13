@@ -32,4 +32,7 @@
   .ow-event__visual { grid-row: 2; margin: 20px 20px 0; }
   .ow-event__visual img { height: 100%; }
 }
+@media (max-width: 600px) {
+  .ow-event__rail h2 { font-size: clamp(24px, 4.4vw, 68px); font-weight: 700; line-height: 1; letter-spacing: clamp(-5px, -0.3vw, -1.5px); }
+}
 @media (prefers-reduced-motion: reduce) { .ow-event__content, .ow-event__progress.is-running { animation: none; } .ow-event__thumbs button, .ow-event__thumbs img, .ow-event__visual img { transition: none; } }
