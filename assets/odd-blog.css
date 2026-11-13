@@ -1,0 +1,18 @@
+.odd-blog { padding: 70px 5vw 110px; background: var(--paper); color: var(--ink); }
+.odd-blog__heading { margin: 0 0 48px; }
+.odd-blog__breadcrumb { margin: 0 0 24px; font: 10px "Archivo Black", sans-serif; letter-spacing: 1.5px; }
+.odd-blog__breadcrumb span { color: var(--orange); margin: 0 6px; }
+.odd-blog__heading h1 { margin: 0; font: clamp(40px, 5vw, 68px)/1 "Archivo Black", sans-serif; letter-spacing: -2px; overflow-wrap: anywhere; }
+.odd-blog-card h2 { margin: 15px 0 12px; font: clamp(21px, 2vw, 31px)/1.05 "Archivo Black", sans-serif; letter-spacing: -2px; overflow-wrap: anywhere; }
+.odd-blog-card h2 a { transition: color .25s; }
+.odd-blog-card h2 a:hover { color: var(--purple); }
+.odd-blog-card > p { margin: 0 0 16px; }
+.odd-blog__pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 48px; }
+.odd-blog__pagination a, .odd-blog__pagination span { display: grid; place-items: center; min-width: 42px; min-height: 42px; border: 2px solid var(--ink); padding: 8px; font-weight: 700; }
+.odd-blog__pagination a:hover, .odd-blog__pagination [aria-current="page"] { background: var(--ink); color: white; }
+@media (max-width: 900px) { .odd-blog__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .odd-blog { padding: 44px 5vw 70px; }
+  .odd-blog__heading { margin-bottom: 32px; }
+  .odd-blog__grid { grid-template-columns: 1fr; gap: 18px; }
+}

@@ -1,0 +1,15 @@
+{%- assign alt_text = article.image.alt | default: article.title -%}
+<article class="journal-card odd-blog-card">
+  {% if article.image != blank %}
+    <a class="journal-image" href="{{ article.url }}">
+      {{ article.image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: alt_text }}
+    </a>
+  {% endif %}
+  <div class="journal-meta">
+    <span>{{ article.tags.first | default: blog.title | escape }}</span>
+    {% if show_date %}<span>{{ article.published_at | date: '%b %d, %Y' }}</span>{% endif %}
+  </div>
+  <h2><a href="{{ article.url }}">{{ article.title | escape }}</a></h2>
+  {% if show_excerpt %}<p>{{ article.excerpt_or_content | strip_html | strip | truncate: 140 | escape }}</p>{% endif %}
+  <a class="journal-link" href="{{ article.url }}">READ STORY <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</article>

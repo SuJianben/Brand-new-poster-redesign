@@ -1,0 +1,35 @@
+{{ 'odd-blog.css' | asset_url | stylesheet_tag }}
+{% paginate blog.articles by section.settings.articles_per_page %}
+  <section class="odd-blog">
+    <header class="odd-blog__heading">
+      <p class="odd-blog__breadcrumb"><a href="{{ routes.root_url }}">HOME</a><span aria-hidden="true"> / </span>JOURNAL</p>
+      <h1>{{ blog.title | escape }}</h1>
+    </header>
+    <div class="journal-grid odd-blog__grid">
+      {% for article in blog.articles %}
+        {% render 'odd-blog-card', article: article, blog: blog, show_date: section.settings.show_date, show_excerpt: section.settings.show_excerpt %}
+      {% endfor %}
+    </div>
+    {% if paginate.pages > 1 %}
+      <nav class="odd-blog__pagination" aria-label="Blog pages">
+        {% if paginate.previous %}<a href="{{ paginate.previous.url }}" aria-label="Previous page">←</a>{% endif %}
+        {% for part in paginate.parts %}
+          {% if part.is_link %}<a href="{{ part.url }}">{{ part.title }}</a>
+          {% elsif part.title == paginate.current_page %}<span aria-current="page">{{ part.title }}</span>
+          {% else %}<span>{{ part.title }}</span>{% endif %}
+        {% endfor %}
+        {% if paginate.next %}<a href="{{ paginate.next.url }}" aria-label="Next page">→</a>{% endif %}
+      </nav>
+    {% endif %}
+  </section>
+{% endpaginate %}
+{% schema %}
+{
+  "name": "博客文章列表",
+  "settings": [
+    {"type":"range","id":"articles_per_page","label":"每页文章数量","min":3,"max":24,"step":3,"default":9},
+    {"type":"checkbox","id":"show_date","label":"显示发布日期","default":true},
+    {"type":"checkbox","id":"show_excerpt","label":"显示文章摘要","default":true}
+  ]
+}
+{% endschema %}
