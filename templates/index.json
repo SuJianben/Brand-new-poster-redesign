@@ -452,6 +452,7 @@
         "returns"
       ],
       "settings": {
+        "show_score": false,
         "heading": "TRUST THE PROCESS",
         "score": "4.9",
         "description": "Based on 1,200+ very opinionated walls."
