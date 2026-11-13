@@ -10,14 +10,15 @@ const defaults: { icon: TrustIconName; title: string; description: string }[] = 
 ];
 
 export function Trust({ settings = {} }: { settings?: Settings }) {
+  const showScore = (settings as Record<string, unknown>).show_score !== false;
   return (
-    <section className="trust-section" aria-label="Why shop with Odd Wall">
-      <div className="trust-score">
+    <section className={`trust-section${showScore ? "" : " trust-section--no-score"}`} aria-label="Why shop with Odd Wall">
+      {showScore && <div className="trust-score">
         <span>{settings.heading ?? "TRUST THE PROCESS"}</span>
         <strong>{settings.score ?? "4.9"}</strong>
         <div>★★★★★</div>
         <p>{settings.description ?? "Based on 1,200+ very opinionated walls."}</p>
-      </div>
+      </div>}
       <div className="trust-grid">
         {configuredItems(settings, defaults).map((item, index) => (
           <article key={index}>
