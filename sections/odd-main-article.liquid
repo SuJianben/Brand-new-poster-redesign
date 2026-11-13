@@ -1,0 +1,53 @@
+{{ 'odd-article.css' | asset_url | stylesheet_tag }}
+<article class="odd-article">
+  <div class="odd-article__inner">
+    <nav class="odd-article__breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">HOME</a><span aria-hidden="true"> / </span><a href="{{ blog.url }}">{{ blog.title | escape }}</a>
+    </nav>
+    <header class="odd-article__header">
+      {% if article.tags.size > 0 %}<p class="odd-article__tag">{{ article.tags.first | escape }}</p>{% endif %}
+      <h1>{{ article.title | escape }}</h1>
+      {% if section.settings.show_date or section.settings.show_author %}
+        <div class="odd-article__meta">
+          {% if section.settings.show_date %}<time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%b %d, %Y' }}</time>{% endif %}
+          {% if section.settings.show_author %}<span>{{ article.author | escape }}</span>{% endif %}
+        </div>
+      {% endif %}
+    </header>
+    {% if section.settings.show_image and article.image %}
+      <div class="odd-article__cover">{{ article.image | image_url: width: 2000 | image_tag: loading: 'eager', widths: '480, 750, 1100, 1500, 2000', sizes: '(min-width: 1600px) 1400px, 90vw' }}</div>
+    {% endif %}
+    <div class="odd-article__body">{{ article.content }}</div>
+    <div class="odd-article__back"><a href="{{ blog.url }}">← &nbsp;BACK TO {{ blog.title | escape }}</a></div>
+    {% if blog.comments_enabled? %}
+      <section class="odd-article__comments" aria-labelledby="odd-comments-heading">
+        <h2 id="odd-comments-heading">Comments ({{ article.comments_count }})</h2>
+        {% paginate article.comments by 10 %}
+          {% for comment in article.comments %}
+            <div class="odd-article__comment"><strong>{{ comment.author | escape }}</strong><time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">{{ comment.created_at | date: '%b %d, %Y' }}</time><div>{{ comment.content }}</div></div>
+          {% endfor %}
+          {% if paginate.pages > 1 %}<nav aria-label="Comment pages">{{ paginate | default_pagination }}</nav>{% endif %}
+        {% endpaginate %}
+        {% form 'new_comment', article %}
+          <h3>Leave a comment</h3>
+          {% if form.posted_successfully? %}<p role="status">Your comment has been submitted.{% if blog.moderated? %} It will appear after approval.{% endif %}</p>{% endif %}
+          {{ form.errors | default_errors }}
+          <label for="CommentAuthor-{{ section.id }}">Name</label><input id="CommentAuthor-{{ section.id }}" type="text" name="comment[author]" value="{{ form.author | escape }}" required>
+          <label for="CommentEmail-{{ section.id }}">Email</label><input id="CommentEmail-{{ section.id }}" type="email" name="comment[email]" value="{{ form.email | escape }}" required>
+          <label for="CommentBody-{{ section.id }}">Comment</label><textarea id="CommentBody-{{ section.id }}" name="comment[body]" rows="5" required>{{ form.body | escape }}</textarea>
+          <button type="submit">POST COMMENT <span aria-hidden="true">→</span></button>
+        {% endform %}
+      </section>
+    {% endif %}
+  </div>
+</article>
+{% schema %}
+{
+  "name": "博客文章详情",
+  "settings": [
+    {"type":"checkbox","id":"show_image","label":"显示文章封面","default":true},
+    {"type":"checkbox","id":"show_date","label":"显示发布日期","default":true},
+    {"type":"checkbox","id":"show_author","label":"显示作者","default":true}
+  ]
+}
+{% endschema %}

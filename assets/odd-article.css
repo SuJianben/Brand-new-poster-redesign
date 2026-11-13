@@ -1,0 +1,45 @@
+.odd-article { background: var(--paper); color: var(--ink); padding: 70px 5vw 110px; }
+.odd-article__inner { max-width: 1600px; margin: 0 auto; }
+.odd-article__breadcrumb { font: 10px "Archivo Black", sans-serif; letter-spacing: 1.5px; text-transform: uppercase; }
+.odd-article__breadcrumb span { color: var(--orange); margin: 0 6px; }
+.odd-article__breadcrumb a:hover { color: var(--orange); }
+.odd-article__header { max-width: 1000px; margin: 36px 0 44px; }
+.odd-article__tag { color: var(--purple); margin: 0 0 18px; font: 11px "Archivo Black", sans-serif; letter-spacing: 1.3px; text-transform: uppercase; }
+.odd-article__header h1 { margin: 0; font: clamp(38px, 5vw, 68px)/1.04 "Archivo Black", sans-serif; letter-spacing: -2px; overflow-wrap: break-word; }
+.odd-article__meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 24px; font-size: 13px; }
+.odd-article__cover { max-width: 1400px; margin: 0 auto 60px; border: 2px solid var(--ink); background: white; }
+.odd-article__cover img { display: block; width: 100%; height: auto; }
+.odd-article__body, .odd-article__comments { max-width: 840px; margin: 0 auto; font-size: 16px; line-height: 1.75; overflow-wrap: break-word; }
+.odd-article__body > :first-child { margin-top: 0; }
+.odd-article__body h2, .odd-article__body h3, .odd-article__body h4 { margin: 1.5em 0 .55em; font-family: "Archivo Black", sans-serif; line-height: 1.2; }
+.odd-article__body h2 { font-size: clamp(24px, 3vw, 38px); letter-spacing: -1px; }
+.odd-article__body h3 { font-size: 22px; }
+.odd-article__body h4 { font-size: 18px; }
+.odd-article__body p, .odd-article__body ul, .odd-article__body ol, .odd-article__body blockquote { margin: 0 0 1.25em; }
+.odd-article__body ul, .odd-article__body ol { padding-left: 1.5em; }
+.odd-article__body ul { list-style: disc; }
+.odd-article__body ol { list-style: decimal; }
+.odd-article__body a { text-decoration: underline; text-underline-offset: 3px; }
+.odd-article__body a:hover { color: var(--purple); }
+.odd-article__body img, .odd-article__body video, .odd-article__body iframe { max-width: 100%; }
+.odd-article__body img, .odd-article__body video { height: auto; }
+.odd-article__body table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin-bottom: 1.25em; }
+.odd-article__body th, .odd-article__body td { border: 1px solid var(--ink); padding: .65em; }
+.odd-article__body blockquote { border-left: 4px solid var(--orange); padding-left: 1em; }
+.odd-article__back { max-width: 840px; margin: 48px auto 0; }
+.odd-article__back a, .odd-article__comments button { display: inline-block; background: var(--ink); color: white; border: 2px solid var(--ink); padding: 16px 22px; font: 12px "Archivo Black", sans-serif; box-shadow: 5px 5px 0 var(--orange); transition: transform .2s, box-shadow .2s; }
+.odd-article__back a:hover, .odd-article__comments button:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--orange); }
+.odd-article__comments { margin-top: 80px; border-top: 2px solid var(--ink); padding-top: 28px; }
+.odd-article__comments h2, .odd-article__comments h3 { font-family: "Archivo Black", sans-serif; }
+.odd-article__comment { border-bottom: 1px solid var(--ink); padding: 16px 0; }
+.odd-article__comment time { margin-left: 16px; font-size: 12px; }
+.odd-article__comments form { display: grid; gap: 8px; margin-top: 32px; }
+.odd-article__comments input, .odd-article__comments textarea { width: 100%; padding: 12px; border: 2px solid var(--ink); background: white; color: var(--ink); font: inherit; }
+.odd-article__comments button { justify-self: start; cursor: pointer; margin-top: 12px; }
+@media (max-width: 600px) {
+  .odd-article { padding: 44px 5vw 70px; }
+  .odd-article__header { margin: 28px 0 32px; }
+  .odd-article__header h1 { letter-spacing: -1px; }
+  .odd-article__cover { margin-bottom: 36px; }
+  .odd-article__body, .odd-article__comments { font-size: 15px; }
+}
