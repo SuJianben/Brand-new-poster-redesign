@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { usePoster } from "../state";
 import { usePredictiveSearch } from "../usePredictiveSearch";
 import { Icon } from "../Icon";
@@ -11,6 +11,15 @@ export function SearchPanel() {
   const { items, status } = usePredictiveSearch(search, searchOpen, root);
   const input = useRef<HTMLInputElement>(null);
   const [headerHeight, setHeaderHeight] = useState(120);
+  const [originX, setOriginX] = useState("85%");
+  useLayoutEffect(() => {
+    if (!searchOpen) return;
+    const button = document.querySelector<HTMLElement>(".site-header .search-button");
+    if (button) {
+      const rect = button.getBoundingClientRect();
+      setOriginX(`${rect.left + rect.width / 2}px`);
+    }
+  }, [searchOpen]);
   useEffect(() => {
     const shell = document.querySelector<HTMLElement>("[data-poster-header-shell]");
     if (!shell) { setHeaderHeight(0); return; }
@@ -30,7 +39,7 @@ export function SearchPanel() {
   return (
     <div className={`search-panel ${searchOpen ? "is-open" : ""} ${scrolled ? "is-scrolled" : ""}`} aria-hidden={!searchOpen}>
       <button className="search-panel__backdrop" type="button" onClick={() => setSearchOpen(false)} aria-label="Close search" tabIndex={searchOpen ? 0 : -1} />
-      <div className="search-panel__sheet" style={{ top: headerHeight, height: `min(50vh, calc(100dvh - ${headerHeight}px))` }}>
+      <div className="search-panel__sheet" style={{ top: headerHeight, height: `min(50vh, calc(100dvh - ${headerHeight}px))`, "--search-origin-x": originX } as CSSProperties}>
         <form className="search-inner" action={searchUrl} method="get" role="search">
           <Icon name="search" />
           <input ref={input} name="q" value={search} onChange={(event) => setSearch(event.target.value)}
