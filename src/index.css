@@ -2433,6 +2433,11 @@ footer {
   .trust-section--no-score .trust-grid article:nth-child(-n + 2) {
     border-bottom: 1.5px solid var(--ink);
   }
+  .trust-section--no-score .trust-grid article strong {
+    max-width: 100%;
+    font-size: clamp(11px, 3.4vw, 13px);
+    letter-spacing: -0.4px;
+  }
   .faq-section .faq-heading h2 {
     font-size: 22px !important;
   }
