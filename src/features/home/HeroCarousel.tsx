@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Icon } from "./Icon";
 import { heroSlides } from "./data";
+import "./hero-mobile.css";
 export type HeroSlide = (typeof heroSlides)[number] & { id?: string; cta_link?: string };
 
 export function HeroCarousel({

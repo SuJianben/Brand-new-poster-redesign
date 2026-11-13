@@ -1,0 +1,23 @@
+@media (max-width: 600px) {
+  .hero.hero-carousel {
+    height: auto;
+    min-height: 0;
+    grid-template-rows: auto auto;
+  }
+
+  .hero.hero-carousel .hero-copy {
+    height: auto;
+    min-height: 0;
+    padding: 48px 22px 40px;
+  }
+
+  .hero.hero-carousel h1 {
+    font-size: clamp(40px, 12vw, 50px);
+    line-height: .94;
+    letter-spacing: -3px;
+    min-height: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .hero.hero-carousel .hero-copy > p { min-height: 0; }
+}
