@@ -11,7 +11,7 @@ function MenuItems({ items, onNavigate, nested = false }: { items: NavItem[]; on
           <a className="mobile-menu__all" href={headerHref(item.url)} onClick={onNavigate}>View all {item.title} <span aria-hidden="true">→</span></a>
           <MenuItems items={item.children} onNavigate={onNavigate} nested />
         </div>
-      </details> : <a href={headerHref(item.url)} onClick={onNavigate}>{item.title}<span aria-hidden="true">↗</span></a>}
+      </details> : <a href={headerHref(item.url)} onClick={onNavigate}>{item.title}<span aria-hidden="true">→</span></a>}
     </li>)}
   </ul>;
 }

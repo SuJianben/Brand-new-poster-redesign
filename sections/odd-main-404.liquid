@@ -7,7 +7,7 @@
       {% if section.settings.description != blank %}<p class="odd-404__description">{{ section.settings.description | escape | newline_to_br }}</p>{% endif %}
       <div class="odd-404__actions">
         <a class="odd-404__button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">→</span></a>
-        <a class="odd-404__home" href="{{ routes.root_url }}">{{ section.settings.home_label | escape }} <span aria-hidden="true">↗</span></a>
+        <a class="odd-404__home" href="{{ routes.root_url }}">{{ section.settings.home_label | escape }} <span aria-hidden="true">→</span></a>
       </div>
     </div>
     <div class="odd-404__visual" aria-hidden="true">
