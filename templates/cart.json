@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "odd-main-cart", "settings": {} }
+  },
+  "order": ["main"]
+}

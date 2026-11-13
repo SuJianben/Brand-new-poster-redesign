@@ -1,0 +1,30 @@
+{{ 'odd-cart.css' | asset_url | stylesheet_tag }}
+<section class="odd-cart" data-odd-cart>
+  <div class="odd-cart__inner">
+    <header class="odd-cart__header"><p><a href="{{ routes.root_url }}">HOME</a><span aria-hidden="true"> / </span>YOUR BAG</p><h1>Your bag<span>.</span></h1></header>
+    <div class="odd-cart__notice" data-odd-cart-notice role="status" aria-live="polite"></div>
+    <div class="odd-cart__layout" data-odd-cart-content>
+      {% if cart.item_count == 0 %}
+        <div class="odd-cart__empty"><h2>Your bag is empty.</h2><a href="{{ routes.all_products_collection_url }}">EXPLORE PRINTS <span aria-hidden="true">→</span></a></div>
+      {% else %}
+        <div class="odd-cart__fallback">
+          {% for item in cart.items %}
+            {% unless item.properties._framing_component != blank %}
+              <article class="odd-cart__fallback-item">
+                {% if item.image %}<a href="{{ item.url }}">{{ item.image | image_url: width: 360 | image_tag: loading: 'lazy' }}</a>{% endif %}
+                <div><a href="{{ item.url }}">{{ item.product.title | escape }}</a><p>{{ item.variant.title | escape }}</p><p>Quantity: {{ item.quantity }}</p></div>
+              </article>
+            {% endunless %}
+          {% endfor %}
+          <p>Subtotal: {{ cart.total_price | money }}</p>
+          <form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout">CHECKOUT →</button></form>
+          <noscript><p>Enable JavaScript to update quantities in your bag.</p></noscript>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+<script src="{{ 'odd-cart.js' | asset_url }}" defer></script>
+{% schema %}
+{"name":"购物车页面","settings":[]}
+{% endschema %}

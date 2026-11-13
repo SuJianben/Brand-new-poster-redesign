@@ -1,0 +1,40 @@
+.odd-cart { color: var(--ink); background: var(--paper); padding: 70px 5vw 110px; min-height: 60vh; }
+.odd-cart__inner { max-width: 1600px; margin: 0 auto; }
+.odd-cart__header p { margin: 0 0 25px; font: 10px 'Archivo Black', sans-serif; letter-spacing: 1.5px; }
+.odd-cart__header p span { color: var(--orange); margin: 0 6px; }
+.odd-cart__header h1 { font: clamp(44px, 6vw, 76px)/1 'Archivo Black', sans-serif; letter-spacing: -3px; margin: 0 0 50px; }
+.odd-cart__header h1 span, .odd-cart__summary h2 span { color: var(--orange); }
+.odd-cart__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 390px); gap: 5vw; align-items: start; }
+.odd-cart__items-heading { display: flex; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 16px; font: 11px 'Archivo Black', sans-serif; letter-spacing: 1px; }
+.odd-cart__item { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--ink); }
+.odd-cart .cd-drawer__image { width: 150px; height: 185px; margin: 0; border: 2px solid var(--ink); background: white; }
+.odd-cart__title { font: 20px/1.2 'Archivo Black', sans-serif; }
+.odd-cart__title:hover { color: var(--purple); }
+.odd-cart__variant, .odd-cart__component { margin-top: 8px; font-size: 13px; }
+.odd-cart__component { display: flex; gap: 16px; justify-content: space-between; }
+.odd-cart__item-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 22px; }
+.odd-cart__quantity { display: flex; align-items: stretch; border: 2px solid var(--ink); background: white; }
+.odd-cart__quantity button, .odd-cart__quantity output { display: grid; place-items: center; width: 38px; height: 36px; }
+.odd-cart__quantity button:hover { background: var(--lime); }
+.odd-cart__remove { text-decoration: underline; text-underline-offset: 4px; font-size: 12px; font-weight: 700; }
+.odd-cart__remove:hover { color: var(--orange); }
+.odd-cart__price { white-space: nowrap; font: 16px 'Archivo Black', sans-serif; }
+.odd-cart__summary { background: white; border: 2px solid var(--ink); box-shadow: 7px 7px 0 var(--orange); padding: 28px; }
+.odd-cart__summary h2 { font: 25px/1.1 'Archivo Black', sans-serif; letter-spacing: -1px; margin: 0 0 30px; }
+.odd-cart__total { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; border-top: 2px solid var(--ink); padding-top: 18px; font-weight: 700; }
+.odd-cart__total strong { font: 22px 'Archivo Black', sans-serif; }
+.odd-cart__saving, .odd-cart__note { font-size: 12px; margin-top: 12px; }
+.odd-cart__summary form { margin-top: 26px; }
+.odd-cart__summary form button, .odd-cart__empty a { display: flex; width: 100%; justify-content: space-between; align-items: center; background: var(--ink); color: white; padding: 17px 19px; font: 12px 'Archivo Black', sans-serif; transition: background .2s, transform .2s; }
+.odd-cart__summary form button:hover, .odd-cart__empty a:hover { background: var(--purple); transform: translateY(-2px); }
+.odd-cart__continue { display: inline-block; margin-top: 24px; font: 11px 'Archivo Black', sans-serif; }
+.odd-cart__continue:hover { color: var(--purple); }
+.odd-cart__empty { grid-column: 1/-1; border: 2px solid var(--ink); padding: 44px; background: white; }
+.odd-cart__empty h2 { font: clamp(24px, 3vw, 36px) 'Archivo Black', sans-serif; margin: 0 0 24px; }
+.odd-cart__empty a { width: min(100%, 240px); }
+.odd-cart__notice:not(:empty) { background: white; border: 2px solid var(--orange); padding: 14px; margin-bottom: 20px; }
+.odd-cart.is-busy .odd-cart__layout { opacity: .6; pointer-events: none; }
+.odd-cart__fallback-item { display: flex; gap: 20px; border-bottom: 1px solid var(--ink); padding: 20px 0; }
+.odd-cart__fallback-item img { width: 120px; height: auto; }
+@media (max-width: 800px) { .odd-cart { padding: 45px 5vw 75px; } .odd-cart__layout { grid-template-columns: 1fr; gap: 35px; } .odd-cart__header h1 { margin-bottom: 35px; } }
+@media (max-width: 540px) { .odd-cart__item { grid-template-columns: 90px minmax(0, 1fr); gap: 14px; } .odd-cart .cd-drawer__image { width: 90px; height: 120px; } .odd-cart__title { font-size: 16px; } .odd-cart__price { grid-column: 2; } .odd-cart__summary, .odd-cart__empty { padding: 22px; } }
