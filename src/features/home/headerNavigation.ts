@@ -35,7 +35,7 @@ export function readHeaderNavigation(settings: Settings): NavItem[] {
 // Homepage anchors need the locale-aware home URL outside the homepage.
 export function headerHref(url: string): string {
   const page = document.documentElement.dataset.posterPageType;
-  if ((page === "product" || page === "cart" || page === "collection" || page === "page" || page === "blog" || page === "article" || page === "search") && url.startsWith("#")) {
+  if ((page === "product" || page === "cart" || page === "collection" || page === "page" || page === "blog" || page === "article" || page === "search" || page === "404") && url.startsWith("#")) {
     return `${document.documentElement.dataset.posterHomeUrl || "/"}${url}`;
   }
   return url;
