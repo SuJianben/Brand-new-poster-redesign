@@ -8,12 +8,14 @@
 @media (max-width: 600px) {
   .poster-shop .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 12px; }
   .poster-shop .product-card { min-width: 0; }
+  .poster-shop .poster-wrap { aspect-ratio: auto; display: flex; flex-direction: column; gap: 8px; }
+  .poster-shop .poster-paper { height: auto; aspect-ratio: 4 / 5; flex: none; }
   .poster-shop .poster-title strong { font-size: clamp(11px, 3vw, 16px); line-height: 1; letter-spacing: -.5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .poster-shop .poster-index { font-size: 9px; padding: 2px 4px; }
   .poster-shop .poster-type { font-size: 8px; padding: 3px 5px; max-width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .poster-shop .like-btn { width: 32px; height: 32px; }
   .poster-shop .like-btn svg { width: 15px; }
-  .poster-shop .quick-add { padding: 8px; font-size: 11px; line-height: 1.2; gap: 4px; }
+  .poster-shop .quick-add { position: relative; inset: auto; width: 100%; padding: 8px; font-size: 11px; line-height: 1.2; gap: 4px; transform: none; }
   .poster-shop .quick-add svg { width: 15px; flex-shrink: 0; }
   .poster-shop .product-info { align-items: flex-start; flex-direction: column; gap: 7px; padding-top: 12px; }
   .poster-shop .product-info h3 { font-size: 14px; line-height: 1.25; }
