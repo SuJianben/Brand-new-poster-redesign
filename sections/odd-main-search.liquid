@@ -1,0 +1,57 @@
+{{ 'odd-collection.css' | asset_url | stylesheet_tag }}
+{{ 'odd-search.css' | asset_url | stylesheet_tag }}
+{% paginate search.results by section.settings.results_per_page %}
+  <section class="odd-search">
+    <div class="odd-search__inner">
+      <p class="odd-search__breadcrumb"><a href="{{ routes.root_url }}">HOME</a><span aria-hidden="true"> / </span>SEARCH</p>
+      <h1>Search<span>.</span></h1>
+      <form class="odd-search__form" action="{{ routes.search_url }}" method="get" role="search">
+        <label class="odd-search__label" for="Search-{{ section.id }}">Search the store</label>
+        <input id="Search-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search posters, moods, ideas...">
+        <button type="submit">SEARCH <span aria-hidden="true">→</span></button>
+      </form>
+      {% if search.performed %}
+        <p class="odd-search__count">{{ search.results_count }} {% if search.results_count == 1 %}RESULT{% else %}RESULTS{% endif %} FOR “{{ search.terms | escape }}”</p>
+        <div class="product-grid odd-collection__grid odd-search__grid">
+          {% for result in search.results %}
+            {% if result.object_type == 'product' %}
+              {% assign card_index = paginate.current_offset | plus: forloop.index %}
+              {% render 'odd-recommendation-card', product: result, index: card_index, collection_card: true %}
+            {% elsif result.object_type == 'article' or result.object_type == 'page' %}
+              <article class="odd-search__content-card">
+                {% if result.object_type == 'article' and result.image %}
+                  <a href="{{ result.url }}">{{ result.image | image_url: width: 700 | image_tag: loading: 'lazy', alt: result.title }}</a>
+                {% endif %}
+                <p class="odd-search__content-type">{% if result.object_type == 'article' %}JOURNAL{% else %}PAGE{% endif %}</p>
+                <h2><a href="{{ result.url }}">{{ result.title | escape }}</a></h2>
+                <p>{{ result.content | strip_html | truncatewords: 24 | escape }}</p>
+                <a class="odd-search__read" href="{{ result.url }}">READ MORE <span aria-hidden="true">→</span></a>
+              </article>
+            {% endif %}
+          {% else %}
+            <p class="odd-search__empty">No results found. Try a different search.</p>
+          {% endfor %}
+        </div>
+        {% if paginate.pages > 1 %}
+          <nav class="odd-search__pagination" aria-label="Search result pages">
+            {% if paginate.previous %}<a href="{{ paginate.previous.url }}" aria-label="Previous page">←</a>{% endif %}
+            {% for part in paginate.parts %}
+              {% if part.is_link %}<a href="{{ part.url }}">{{ part.title }}</a>
+              {% elsif part.title == paginate.current_page %}<span aria-current="page">{{ part.title }}</span>
+              {% else %}<span>{{ part.title }}</span>{% endif %}
+            {% endfor %}
+            {% if paginate.next %}<a href="{{ paginate.next.url }}" aria-label="Next page">→</a>{% endif %}
+          </nav>
+        {% endif %}
+      {% endif %}
+    </div>
+  </section>
+{% endpaginate %}
+{% schema %}
+{
+  "name": "搜索结果",
+  "settings": [
+    {"type":"range","id":"results_per_page","label":"每页结果数量","min":8,"max":48,"step":4,"default":24}
+  ]
+}
+{% endschema %}
