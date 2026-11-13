@@ -21,6 +21,19 @@
 }
 @media (max-width: 600px) {
   .ps-recs { padding: 72px 20px 80px; }
-  .ps-recs__grid { grid-template-columns: 1fr; }
+  .ps-recs .ps-recs__grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0 12px;
+  }
+  .ps-recs .ps-recs__grid::-webkit-scrollbar { display: none; }
+  .ps-recs .product-card { scroll-snap-align: start; }
   .ps-recs .poster-title strong { font-size: clamp(19px, 5vw, 28px); }
 }
