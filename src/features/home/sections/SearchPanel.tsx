@@ -39,6 +39,7 @@ export function SearchPanel() {
   return (
     <div className={`search-panel ${searchOpen ? "is-open" : ""} ${scrolled ? "is-scrolled" : ""}`} aria-hidden={!searchOpen}>
       <button className="search-panel__backdrop" type="button" onClick={() => setSearchOpen(false)} aria-label="Close search" tabIndex={searchOpen ? 0 : -1} />
+      <span className="search-panel__tail" aria-hidden="true" style={{ top: headerHeight, left: originX }} />
       <div className="search-panel__sheet" style={{ top: headerHeight, height: `min(50vh, calc(100dvh - ${headerHeight}px))`, "--search-origin-x": originX } as CSSProperties}>
         <form className="search-inner" action={searchUrl} method="get" role="search">
           <Icon name="search" />
