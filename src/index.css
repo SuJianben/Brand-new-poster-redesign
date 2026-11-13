@@ -1873,6 +1873,14 @@ footer {
   letter-spacing: 1.3px;
   color: #5b5b23;
 }
+.footer-column__toggle {
+  display: none;
+}
+.footer-column__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .footer-column a {
   position: relative;
   margin-bottom: 15px;
@@ -2609,10 +2617,46 @@ footer {
   .footer-column {
     border-left: 0;
     border-top: 1.5px solid var(--ink);
-    padding: 23px 0 18px;
+    padding: 0;
+    display: block;
   }
-  .footer-column > span {
-    margin-bottom: 18px;
+  .footer-column > .footer-column__heading {
+    display: none;
+  }
+  .footer-column__toggle {
+    width: 100%;
+    min-height: 60px;
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0;
+    background: transparent;
+    color: #5b5b23;
+    font: 10px "Archivo Black";
+    letter-spacing: 1.3px;
+    text-align: left;
+    cursor: pointer;
+  }
+  .footer-column__toggle svg {
+    width: 20px;
+    height: 20px;
+    color: var(--ink);
+  }
+  .footer-column__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows .3s ease, visibility 0s linear .3s;
+  }
+  .footer-column__panel.is-open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows .3s ease, visibility 0s;
+  }
+  .footer-column__links {
+    min-height: 0;
+    overflow: hidden;
   }
   .footer-column a {
     margin-bottom: 12px;
